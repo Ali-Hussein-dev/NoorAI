@@ -1,0 +1,60 @@
+{
+  "name": "your-chat-gpt-2",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "lint": "next lint",
+    "start": "next start",
+    "tc": "tsc --project ./tsconfig.json",
+    "pre-commit": "npm run tc & npm run lint & npm run build"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/server": "^11.10.0",
+    "@mantine/core": "^6.0.1",
+    "@mantine/hooks": "^6.0.1",
+    "@mantine/modals": "^6.0.1",
+    "@mantine/next": "^6.0.1",
+    "@mantine/nprogress": "^6.0.1",
+    "@mantine/prism": "^6.0.1",
+    "@tanstack/react-query": "^4.20.2",
+    "@trpc/client": "^10.9.0",
+    "@trpc/next": "^10.9.0",
+    "@trpc/react-query": "^10.9.0",
+    "@trpc/server": "^10.9.0",
+    "next": "^13.2.4",
+    "next-auth": "^4.20.1",
+    "openai": "^3.2.1",
+    "openapi": "^1.0.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.43.5",
+    "react-icons": "^4.8.0",
+    "superjson": "1.9.1",
+    "zod": "^3.20.6",
+    "zustand": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/eslint": "^8.21.1",
+    "@types/node": "^18.14.0",
+    "@types/prettier": "^2.7.2",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@typescript-eslint/eslint-plugin": "^5.53.0",
+    "@typescript-eslint/parser": "^5.53.0",
+    "autoprefixer": "^10.4.7",
+    "eslint": "^8.34.0",
+    "eslint-config-next": "^13.2.4",
+    "postcss": "^8.4.14",
+    "prettier": "^2.8.1",
+    "prettier-plugin-tailwindcss": "^0.2.1",
+    "tailwind-custom-utilities": "^1.0.2",
+    "tailwindcss": "^3.2.0",
+    "typescript": "^4.9.5"
+  },
+  "ct3aMetadata": {
+    "initVersion": "7.7.0"
+  }
+}
