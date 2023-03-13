@@ -3,7 +3,7 @@ const config = {
   content: ["./src/**/*.{ts,tsx}"],
   theme: {
     extend: {},
-    typography: (theme) => ({
+    typography: (/** @type {any} */ _theme) => ({
       DEFAULT: {
         css: {
           color: undefined,
