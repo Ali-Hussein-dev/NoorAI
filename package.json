@@ -17,6 +17,7 @@
     "@mantine/hooks": "^6.0.1",
     "@mantine/modals": "^6.0.1",
     "@mantine/next": "^6.0.1",
+    "@mantine/notifications": "^6.0.1",
     "@mantine/nprogress": "^6.0.1",
     "@mantine/prism": "^6.0.1",
     "@tanstack/react-query": "^4.20.2",

@@ -8,6 +8,7 @@ import {
   type ColorScheme,
   MantineProvider,
 } from "@mantine/core";
+import { Notifications } from "@mantine/notifications";
 import * as React from "react";
 
 const MyApp: AppType<{ session: Session | null }> = ({
@@ -33,6 +34,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
             /** Put your mantine theme override here */
           }}
         >
+          <Notifications position="top-center" />
           <Component {...pageProps} />
         </MantineProvider>
       </ColorSchemeProvider>

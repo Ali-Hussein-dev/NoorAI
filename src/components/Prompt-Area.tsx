@@ -35,6 +35,7 @@ export const PromptArea = () => {
         onKeyDown={queryStatus === "loading" ? undefined : onKeyPress}
       />
       <Button
+        type="submit"
         disabled={!watch("promptText") || queryStatus === "loading"}
         className="h-11 bg-transparent"
         color="gray"

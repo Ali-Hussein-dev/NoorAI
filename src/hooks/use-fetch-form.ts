@@ -7,6 +7,7 @@ import {
   type CreateChatCompletionResponse,
 } from "openai";
 import { useMutation } from "@tanstack/react-query";
+import { notifications } from "@mantine/notifications";
 
 interface FormData {
   promptText: string;
@@ -94,6 +95,15 @@ export const useFetchForm = () => {
 
   // const { mutate } = res;
   const onSubmit = async ({ promptText: input }: FormData) => {
+    if (!apiKey) {
+      notifications.show({
+        title: "API key is Required",
+        message: "Please add your API key!",
+        withCloseButton: true,
+        color: "orange",
+      });
+    }
+
     if (apiKey) {
       updateStatus("loading");
       // get and store previous messages
