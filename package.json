@@ -20,6 +20,7 @@
     "@mantine/notifications": "^6.0.1",
     "@mantine/nprogress": "^6.0.1",
     "@mantine/prism": "^6.0.1",
+    "@tailwindcss/typography": "^0.5.9",
     "@tanstack/react-query": "^4.20.2",
     "@trpc/client": "^10.9.0",
     "@trpc/next": "^10.9.0",
