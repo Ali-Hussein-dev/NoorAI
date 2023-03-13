@@ -4,8 +4,8 @@ import {
   type NextAuthOptions,
   type DefaultSession,
 } from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
-import { env } from "~/env.mjs";
+import GithubProvider from "next-auth/providers/github";
+import { env } from "../env.mjs";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -16,7 +16,7 @@ import { env } from "~/env.mjs";
 declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
-      id: string;
+      // id: string;
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
@@ -35,18 +35,18 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session({ session, user }) {
-      if (session.user) {
-        session.user.id = user.id;
-        // session.user.role = user.role; <-- put other properties on the session here
-      }
+    session({ session }) {
+      // if (session.user) {
+      //   session.user.id = user.id;
+      //   // session.user.role = user.role; <-- put other properties on the session here
+      // }
       return session;
     },
   },
   providers: [
-    DiscordProvider({
-      clientId: env.DISCORD_CLIENT_ID,
-      clientSecret: env.DISCORD_CLIENT_SECRET,
+    GithubProvider({
+      clientId: env.GITHUB_ID,
+      clientSecret: env.GITHUB_SECRET,
     }),
     /**
      * ...add more providers here.
