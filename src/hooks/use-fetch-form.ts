@@ -22,7 +22,6 @@ const openaiFetcher = ({
   body,
 }: OpenaiFetcherParams): Promise<CreateChatCompletionResponse> => {
   const customBody = {
-    max_tokens: 300,
     ...body,
   };
   return fetch("https://api.openai.com/v1/chat/completions", {
