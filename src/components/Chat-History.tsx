@@ -76,7 +76,11 @@ const ConversationLink = ({ id, name }: { id: string; name: string }) => {
               className="hidden group-hover:block"
               onClick={() => {
                 deleteConversation(id);
-                push(`/${conversations.at(-1)?.id || "chat"}`);
+                if (id === query.chatId) {
+                  push(`/${conversations.at(-1)?.id || "chat"}`);
+                } else {
+                  push(`/${query.chatId}`);
+                }
               }}
             >
               <MdDelete size="20" />
