@@ -44,7 +44,10 @@ const ConversationLink = ({ id, name }: { id: string; name: string }) => {
             <button
               type="button"
               className="btn-xs btn "
-              onClick={() => setEditing(false)}
+              onClick={() => {
+                setInput(name);
+                setEditing(false);
+              }}
             >
               <MdClear size="20" />
             </button>
