@@ -82,7 +82,7 @@ const SkeletonBlock = () => {
 //======================================
 export const Markdown = ({ content }: { content: string }) => {
   return (
-    <div className="w-full max-w-full pr-12 sm:text-[18px]">
+    <div className="prose w-full max-w-full pr-2 text-lg md:pr-12">
       <ReactMarkdown
         // eslint-disable-next-line react/no-children-prop
         children={content}
@@ -99,7 +99,7 @@ export const Markdown = ({ content }: { content: string }) => {
               </div>
             ) : (
               <code className={className} {...props}>
-                {children}{" "}
+                {children}
               </code>
             );
           },
@@ -118,7 +118,7 @@ export const Chats = () => {
   const thread = conversation?.thread || [];
 
   return (
-    <section className="w-full py-10 px-2">
+    <section className="w-full py-10">
       {thread.length > 0 ? (
         <>
           <h3 className="mb-3 text-center italic">

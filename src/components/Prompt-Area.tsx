@@ -1,7 +1,6 @@
 import { ActionIcon, Textarea, Loader } from "@mantine/core";
 import * as React from "react";
 import { MdSend } from "react-icons/md";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useFetchForm, useStore } from "../hooks";
 
 //======================================prompt-area
@@ -35,14 +34,12 @@ export const PromptArea = () => {
         onKeyDown={queryStatus === "loading" ? undefined : onKeyPress}
       />
       <ActionIcon
-        variant="default"
         type="submit"
         disabled={!watch("promptText") || queryStatus === "loading"}
         className="h-11 w-11 px-[2px]"
-        color="dark"
       >
         {queryStatus == "loading" ? (
-          <Loader color="gray" variant="dots" />
+          <Loader color="orange" variant="dots" />
         ) : (
           <MdSend size="19" />
         )}

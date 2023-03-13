@@ -31,7 +31,7 @@ const list = [
 //======================================
 export const Faqs = () => {
   return (
-    <section className="w-full max-w-lg pt-4">
+    <section className="w-full">
       <Title order={3} className="mb-2 pl-1 text-left">
         FAQs
       </Title>
@@ -69,12 +69,12 @@ export const ApiKeyModal = () => {
       <Modal.Root opened={opened} onClose={close} size="auto">
         <Modal.Overlay />
         <Modal.Content className="" radius="lg">
-          <Modal.Body className="p-[1px]">
-            <Paper className="grid w-full place-items-center px-2 pb-4 pt-10">
+          <Modal.Body>
+            <Paper className="grid w-full max-w-xl place-items-center space-y-4 pb-4 pt-10">
               <Title order={1}>
                 Your ChatGPT <Badge color="gray">beta</Badge>
               </Title>
-              <ul className="mb-4 grid grid-cols-1 gap-y-3 p-4 md:grid-cols-2 md:gap-x-8">
+              <ul className="mb-4 grid grid-cols-1 gap-y-3 md:grid-cols-2 md:gap-x-8">
                 {features.map((st) => (
                   <li key={st} className="gap-x-2 text-xl flex-row-start">
                     <HiBadgeCheck size="24" />
@@ -82,7 +82,7 @@ export const ApiKeyModal = () => {
                   </li>
                 ))}
               </ul>
-              <div className="mx-auto w-2/3 gap-2 flex-col-start ">
+              <div className="w-full gap-2 flex-col-start ">
                 <div className="flex w-full items-end justify-between gap-1">
                   <PasswordInput
                     type="password"
