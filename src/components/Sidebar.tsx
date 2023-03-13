@@ -9,7 +9,7 @@ import {
   useMantineColorScheme,
 } from "@mantine/core";
 import { FaSun } from "react-icons/fa";
-// import { APIkeyModal } from ".";
+import { ApiKeyModal } from ".";
 const ChatHistory = dynamic(() => import(".").then((a) => a.ChatHistory), {
   ssr: false,
 });
@@ -57,8 +57,7 @@ export const Sidebar = () => {
         </ScrollArea>
       </div>
       <div className="w-full border-t border-neutral-700 pb-2 pt-3 flex-row-center">
-        {/* <APIkeyModal /> */}
-        button modal
+        <ApiKeyModal />
       </div>
       {/* <ToggleTheme /> */}
     </div>

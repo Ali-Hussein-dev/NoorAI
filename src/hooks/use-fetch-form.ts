@@ -110,7 +110,7 @@ export const useFetchForm = () => {
               content: input.trim(),
             },
           ],
-          model: "gpt-3.5-turbo-0301",
+          model: "gpt-3.5-turbo",
         },
       });
     }
