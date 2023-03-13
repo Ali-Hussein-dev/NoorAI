@@ -1,4 +1,4 @@
-import { Textarea, Button } from "@mantine/core";
+import { ActionIcon, Textarea, Loader } from "@mantine/core";
 import * as React from "react";
 import { MdSend } from "react-icons/md";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
@@ -34,18 +34,19 @@ export const PromptArea = () => {
         className="w-full grow resize-none text-lg shadow-lg focus:border-neutral-300"
         onKeyDown={queryStatus === "loading" ? undefined : onKeyPress}
       />
-      <Button
+      <ActionIcon
+        variant="default"
         type="submit"
         disabled={!watch("promptText") || queryStatus === "loading"}
-        className="h-11 bg-transparent"
-        color="gray"
+        className="h-11 w-11 px-[2px]"
+        color="dark"
       >
-        {queryStatus === "loading" ? (
-          <AiOutlineLoading3Quarters size="19" className="animate-spin" />
+        {queryStatus == "loading" ? (
+          <Loader color="gray" variant="dots" />
         ) : (
           <MdSend size="19" />
         )}
-      </Button>
+      </ActionIcon>
     </form>
   );
 };
