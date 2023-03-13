@@ -10,12 +10,21 @@ import {
 } from "@mantine/core";
 import * as React from "react";
 import { Chats, PromptArea, Sidebar } from "~/components";
+import { useRouter } from "next/router";
+import { useStore } from "../hooks";
 
 //======================================
 const ChatPage = () => {
   const [opened, setOpened] = React.useState(false);
   const theme = useMantineTheme();
-
+  const { query, push } = useRouter();
+  const conversations = useStore((s) => s.conversations);
+  React.useLayoutEffect(() => {
+    const hasId = conversations.some((con) => con.id === query.chatId);
+    if (!hasId) {
+      push(`/${conversations[0]?.id || "chat"}`);
+    }
+  }, [conversations, push, query.chatId]);
   return (
     <>
       <Head>
