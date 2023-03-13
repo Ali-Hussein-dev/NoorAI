@@ -40,7 +40,7 @@ export const Sidebar = () => {
         <Button
           variant="outline"
           color="gray"
-          size="md"
+          // size="md"
           type="button"
           onClick={() => {
             const id = crypto.randomUUID();
@@ -52,11 +52,11 @@ export const Sidebar = () => {
           <BsPlus size="18" />
           <span>New Chat</span>
         </Button>
-        <ScrollArea className="h-full p-1">
+        <ScrollArea className="h-full max-h-[75vh] pt-2">
           <ChatHistory />
         </ScrollArea>
       </div>
-      <div className="w-full border-t border-neutral-700 pb-2 pt-3 flex-row-center">
+      <div className="sticky bottom-0 w-full border-t border-neutral-700 pb-2 pt-3 flex-row-center">
         <ApiKeyModal />
       </div>
       {/* <ToggleTheme /> */}
