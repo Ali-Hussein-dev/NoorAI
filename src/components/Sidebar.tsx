@@ -39,7 +39,7 @@ export const Sidebar = () => {
     <div className="h-full w-full gap-y-2 flex-col-center">
       <div className="h-full w-full space-y-2">
         <Button
-          variant="outline"
+          variant="default"
           color="gray"
           // size="md"
           type="button"

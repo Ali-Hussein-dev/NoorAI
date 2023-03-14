@@ -85,6 +85,7 @@ export const ApiKeyModal = () => {
               </ul>
               <div className="w-full gap-2 flex-col-start ">
                 <div className="flex w-full items-end justify-between gap-1">
+                  {/* // !bug clicking on show password doesn't work */}
                   <PasswordInput
                     type="password"
                     variant="filled"
@@ -98,6 +99,7 @@ export const ApiKeyModal = () => {
                   />
                   <Button
                     type="button"
+                    variant="default"
                     onClick={() => {
                       setForm((prv) => ({ ...prv, submitted: true }));
                       saveApiKey(form.input);
@@ -132,7 +134,12 @@ export const ApiKeyModal = () => {
           </Modal.Body>
         </Modal.Content>
       </Modal.Root>
-      <Button leftIcon={<MdAdd />} onClick={open} className="mx-auto w-full">
+      <Button
+        variant="default"
+        leftIcon={<MdAdd />}
+        onClick={open}
+        className="mx-auto w-full"
+      >
         <Text>Add Your API Key</Text>
       </Button>
     </>

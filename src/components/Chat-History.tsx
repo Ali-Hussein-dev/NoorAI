@@ -59,7 +59,10 @@ const ConversationLink = ({ id, name }: { id: string; name: string }) => {
                   {input.split(" ").length > 6 ? "..." : ""}
                 </Text>
               </HoverCard.Target>
-              {/* <HoverCard.Dropdown color="dark">{input}</HoverCard.Dropdown> */}
+              {/* <HoverCard.Dropdown color="blue">
+                Chats: {conversations.find((o) => o.id === id)?.thread.length}
+                <p>{input}</p>
+              </HoverCard.Dropdown> */}
             </HoverCard>
           </Link>
           <div className="flex gap-x-3">

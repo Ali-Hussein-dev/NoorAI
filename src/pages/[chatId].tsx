@@ -40,7 +40,7 @@ const ChatPage = () => {
             background:
               theme.colorScheme === "dark"
                 ? theme.colors.dark[9]
-                : theme.colors.gray[0],
+                : theme.colors.gray[2],
             // color:
             //   theme.colorScheme === "dark"
             //     ? theme.colors.dark[2]
