@@ -29,7 +29,8 @@ export const PromptArea = () => {
         {...register("promptText")}
         placeholder="Enter your prompt here..."
         minRows={1}
-        maxRows={4}
+        maxRows={3}
+        autosize
         className="w-full grow resize-none text-lg shadow-lg focus:border-neutral-300"
         onKeyDown={queryStatus === "loading" ? undefined : onKeyPress}
       />
