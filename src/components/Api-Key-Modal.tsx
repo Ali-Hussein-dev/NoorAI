@@ -13,6 +13,7 @@ import {
 import * as React from "react";
 import { useStore } from "../hooks";
 import { HiBadgeCheck } from "react-icons/hi";
+import { MdAdd } from "react-icons/md";
 
 const list = [
   {
@@ -68,7 +69,7 @@ export const ApiKeyModal = () => {
     <>
       <Modal.Root opened={opened} onClose={close} size="auto">
         <Modal.Overlay />
-        <Modal.Content className="" radius="lg">
+        <Modal.Content radius="lg">
           <Modal.Body>
             <Paper className="grid w-full max-w-xl place-items-center space-y-4 pb-4 pt-10">
               <Title order={1}>
@@ -101,9 +102,9 @@ export const ApiKeyModal = () => {
                       setForm((prv) => ({ ...prv, submitted: true }));
                       saveApiKey(form.input);
                     }}
-                    className="btn normal-case"
+                    className="normal-case"
                   >
-                    {form.submitted ? "Saved" : "save"}
+                    {form.submitted ? "Saved" : "Save"}
                   </Button>
                 </div>
                 <Anchor
@@ -131,11 +132,8 @@ export const ApiKeyModal = () => {
           </Modal.Body>
         </Modal.Content>
       </Modal.Root>
-      <Button
-        onClick={open}
-        className="btn mx-auto w-full rounded bg-transparent normal-case"
-      >
-        Add Your API Key
+      <Button leftIcon={<MdAdd />} onClick={open} className="mx-auto w-full">
+        <Text>Add Your API Key</Text>
       </Button>
     </>
   );

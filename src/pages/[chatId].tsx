@@ -1,4 +1,5 @@
 import Head from "next/head";
+import clsx from "clsx";
 import {
   MediaQuery,
   AppShell,
@@ -81,10 +82,14 @@ const ChatPage = () => {
             <Chats />
           </div>
           <Paper
-            color="dark"
             p={0}
             radius={0}
-            className="sticky bottom-0 flex h-14 w-full items-start justify-center bg-[#101113]/40 backdrop-blur-sm md:h-20"
+            className={clsx(
+              "sticky bottom-0 flex h-14 w-full items-start justify-center backdrop-blur-sm md:h-20",
+              theme.colorScheme === "dark"
+                ? "bg-[#101113]/40"
+                : `bg-[#f8f9fa]/30`
+            )}
           >
             <PromptArea />
           </Paper>
