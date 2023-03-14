@@ -189,12 +189,13 @@ export const useStore = create<StoreStateT>()(
             set((s) => {
               const { conversations } = s;
               const filtered = [];
+              const lowerCaseInput = input.toLowerCase();
               for (const con of conversations) {
-                if (con.name?.includes(input)) {
+                if (con.name?.toLowerCase().includes(lowerCaseInput)) {
                   filtered.push(con);
                 } else {
                   const hasInput = con.thread.some((chatPair) =>
-                    chatPair.input.toLowerCase().includes(input.toLowerCase())
+                    chatPair.input.toLowerCase().includes(lowerCaseInput)
                   );
                   if (hasInput) {
                     filtered.push(con);

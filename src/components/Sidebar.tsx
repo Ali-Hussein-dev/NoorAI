@@ -22,6 +22,7 @@ export function ToggleTheme() {
     <ActionIcon
       variant="outline"
       color={dark ? "yellow" : "blue"}
+      size="lg"
       onClick={() => toggleColorScheme()}
       title="Toggle color scheme"
     >
@@ -38,7 +39,7 @@ export const Sidebar = () => {
     <div className="h-full w-full gap-y-2 flex-col-center">
       <div className="h-full w-full space-y-2">
         <Button
-          variant="outline"
+          variant="default"
           color="gray"
           // size="md"
           type="button"
@@ -56,10 +57,10 @@ export const Sidebar = () => {
           <ChatHistory />
         </ScrollArea>
       </div>
-      <div className="sticky bottom-0 w-full border-t border-neutral-700 pb-2 pt-3 flex-row-center">
+      <div className="sticky bottom-0 w-full border-t border-neutral-500 pb-2 pt-3 flex-row-center">
         <ApiKeyModal />
       </div>
-      {/* <ToggleTheme /> */}
+      <ToggleTheme />
     </div>
   );
 };

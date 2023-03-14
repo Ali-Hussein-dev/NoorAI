@@ -15,7 +15,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
-  const [colorScheme, setColorScheme] = React.useState<ColorScheme>("light");
+  const [colorScheme, setColorScheme] = React.useState<ColorScheme>("dark");
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
 
@@ -29,8 +29,8 @@ const MyApp: AppType<{ session: Session | null }> = ({
           withGlobalStyles
           withNormalizeCSS
           theme={{
-            colorScheme: "dark",
-            primaryColor: "cyan",
+            colorScheme,
+            primaryColor: "orange",
             /** Put your mantine theme override here */
           }}
         >

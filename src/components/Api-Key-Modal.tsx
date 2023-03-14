@@ -13,6 +13,7 @@ import {
 import * as React from "react";
 import { useStore } from "../hooks";
 import { HiBadgeCheck } from "react-icons/hi";
+import { MdAdd } from "react-icons/md";
 
 const list = [
   {
@@ -68,7 +69,7 @@ export const ApiKeyModal = () => {
     <>
       <Modal.Root opened={opened} onClose={close} size="auto">
         <Modal.Overlay />
-        <Modal.Content className="" radius="lg">
+        <Modal.Content radius="lg">
           <Modal.Body>
             <Paper className="grid w-full max-w-xl place-items-center space-y-4 pb-4 pt-10">
               <Title order={1}>
@@ -84,6 +85,7 @@ export const ApiKeyModal = () => {
               </ul>
               <div className="w-full gap-2 flex-col-start ">
                 <div className="flex w-full items-end justify-between gap-1">
+                  {/* // !bug clicking on show password doesn't work */}
                   <PasswordInput
                     type="password"
                     variant="filled"
@@ -97,13 +99,14 @@ export const ApiKeyModal = () => {
                   />
                   <Button
                     type="button"
+                    variant="default"
                     onClick={() => {
                       setForm((prv) => ({ ...prv, submitted: true }));
                       saveApiKey(form.input);
                     }}
-                    className="btn normal-case"
+                    className="normal-case"
                   >
-                    {form.submitted ? "Saved" : "save"}
+                    {form.submitted ? "Saved" : "Save"}
                   </Button>
                 </div>
                 <Anchor
@@ -132,10 +135,12 @@ export const ApiKeyModal = () => {
         </Modal.Content>
       </Modal.Root>
       <Button
+        variant="default"
+        leftIcon={<MdAdd />}
         onClick={open}
-        className="btn mx-auto w-full rounded bg-transparent normal-case"
+        className="mx-auto w-full"
       >
-        Add Your API Key
+        <Text>Add Your API Key</Text>
       </Button>
     </>
   );
