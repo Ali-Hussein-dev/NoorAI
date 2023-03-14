@@ -7,8 +7,11 @@ import {
   Button,
   ActionIcon,
   useMantineColorScheme,
+  Tabs,
 } from "@mantine/core";
 import { FaSun } from "react-icons/fa";
+import { AiOutlineHistory } from "react-icons/ai";
+import { HiOutlineRectangleStack } from "react-icons/hi2";
 import { ApiKeyModal } from ".";
 const ChatHistory = dynamic(() => import(".").then((a) => a.ChatHistory), {
   ssr: false,
@@ -28,6 +31,32 @@ export function ToggleTheme() {
     >
       {dark ? <FaSun size="1.1rem" /> : <BsMoonStarsFill size="1.1rem" />}
     </ActionIcon>
+  );
+}
+function PromptsTabs() {
+  return (
+    <Tabs defaultValue="1">
+      <Tabs.List grow>
+        <Tabs.Tab value="1" icon={<AiOutlineHistory />}>
+          History
+        </Tabs.Tab>
+        <Tabs.Tab value="2" icon={<HiOutlineRectangleStack />}>
+          Libray
+        </Tabs.Tab>
+      </Tabs.List>
+
+      <Tabs.Panel value="1">
+        {" "}
+        <ScrollArea className="h-full max-h-[75vh] pt-2">
+          <ChatHistory />
+        </ScrollArea>
+      </Tabs.Panel>
+      <Tabs.Panel value="2">
+        <ScrollArea className="h-full max-h-[75vh] pt-2">
+          <p className="pt-2 text-center">Coming soon...</p>
+        </ScrollArea>
+      </Tabs.Panel>
+    </Tabs>
   );
 }
 //======================================
@@ -53,14 +82,12 @@ export const Sidebar = () => {
           <BsPlus size="18" />
           <span>New Chat</span>
         </Button>
-        <ScrollArea className="h-full max-h-[75vh] pt-2">
-          <ChatHistory />
-        </ScrollArea>
+        <PromptsTabs />
       </div>
-      <div className="sticky bottom-0 w-full border-t border-neutral-500 pb-2 pt-3 flex-row-center">
+      <div className="sticky bottom-0 w-full gap-2 border-t border-neutral-500 pb-2 pt-3 flex-row-center">
+        <ToggleTheme />
         <ApiKeyModal />
       </div>
-      <ToggleTheme />
     </div>
   );
 };
