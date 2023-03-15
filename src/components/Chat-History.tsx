@@ -10,18 +10,20 @@ import {
   MdSearch,
 } from "react-icons/md";
 import { HiCheck } from "react-icons/hi2";
-import { ActionIcon, HoverCard, Text, TextInput } from "@mantine/core";
+import { useMantineTheme, ActionIcon, Text, TextInput } from "@mantine/core";
+import { useColorScheme } from "@mantine/hooks";
 
 const ConversationLink = ({ id, name }: { id: string; name: string }) => {
   const { push, query } = useRouter();
   const [editing, setEditing] = React.useState(false);
   const [input, setInput] = React.useState(name);
   const { renameConversation, deleteConversation, conversations } = useStore();
-
+  const theme = useColorScheme();
+  const { colors } = useMantineTheme();
   return (
     <div
       className={clsx(
-        "mx-w-fit group group relative w-full cursor-pointer gap-2 rounded-sm py-2 text-lg flex-row-between ",
+        "mx-w-fit group relative w-full cursor-pointer gap-2 rounded-sm py-2 text-lg flex-row-between ",
         query.chatId === id && "bg-zinc-700/20"
       )}
     >
@@ -57,18 +59,13 @@ const ConversationLink = ({ id, name }: { id: string; name: string }) => {
       ) : (
         <>
           <Link href={`/${id}`} className="w-full pl-1 capitalize">
-            <HoverCard width={280} shadow="lg" withArrow openDelay={200}>
-              <HoverCard.Target>
-                <Text color={query.chatId === id ? "" : "dimmed"}>
-                  {input.split(" ").splice(0, 4).join(" ")}{" "}
-                  {input.split(" ").length > 6 ? "..." : ""}
-                </Text>
-              </HoverCard.Target>
-              {/* <HoverCard.Dropdown color="blue">
-                Chats: {conversations.find((o) => o.id === id)?.thread.length}
-                <p>{input}</p>
-              </HoverCard.Dropdown> */}
-            </HoverCard>
+            <Text
+              c={theme === "dark" ? colors.gray[6] : colors.gray[7]}
+              truncate="end"
+            >
+              {input.split(" ").splice(0, 5).join(" ")}{" "}
+              {/* {input.split(" ").length > 4 ? "..." : ""} */}
+            </Text>
           </Link>
           <div className="flex gap-x-3">
             {/* //------------------------------RENAME BUTTON */}
