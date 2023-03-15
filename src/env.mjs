@@ -25,6 +25,8 @@ const server = z.object({
   GOOGLE_CLIENT_SECRET: z.string().min(1),
   GITHUB_ID: z.string().min(1),
   GITHUB_SECRET: z.string().min(1),
+  NOTION_API_KEY: z.string().min(1),
+  NOTION_TAGS_DB_ID: z.string().min(1),
 });
 
 /**
@@ -54,6 +56,9 @@ const processEnv = {
   // github
   GITHUB_ID: process.env.GITHUB_ID,
   GITHUB_SECRET: process.env.GITHUB_SECRET,
+  // github
+  NOTION_API_KEY: process.env.NOTION_API_KEY,
+  NOTION_TAGS_DB_ID: process.env.NOTION_TAGS_DB_ID,
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 };
 
