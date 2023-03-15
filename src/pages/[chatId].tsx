@@ -88,7 +88,7 @@ const ChatPage = () => {
               "sticky bottom-0 flex h-14 w-full items-start justify-center backdrop-blur-sm md:h-20",
               theme.colorScheme === "dark"
                 ? "bg-[#101113]/40"
-                : `bg-[#f8f9fa]/30`
+                : `bg-[#E9ECEF]/30`
             )}
           >
             <PromptArea />
