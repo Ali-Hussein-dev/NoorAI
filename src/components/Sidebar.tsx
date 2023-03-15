@@ -17,7 +17,7 @@ import {
   Loader,
 } from "@mantine/core";
 import { FaSun } from "react-icons/fa";
-import { MdSend } from "react-icons/md";
+import { MdContentCopy, MdSend } from "react-icons/md";
 import { AiOutlineHistory } from "react-icons/ai";
 import { HiOutlineRectangleStack } from "react-icons/hi2";
 import { ApiKeyModal } from ".";
@@ -93,20 +93,7 @@ const PromptsLib = () => {
           {data?.map(
             ({ text, tags }: { text: string; tags: { name: string }[] }) => (
               <Card key={text} className="group" p="xl" shadow="sm">
-                <Card.Section
-                  component="button"
-                  onClick={() => {
-                    if ("clipboard" in navigator) {
-                      navigator.clipboard.writeText(text);
-                    }
-                    notifications.show({
-                      message: "Prompt Copied",
-                      withCloseButton: true,
-                      color: "cyan",
-                    });
-                  }}
-                  className="text-left"
-                >
+                <Card.Section className="text-left">
                   <Spoiler
                     maxHeight={52}
                     showLabel="Show more"
@@ -128,6 +115,22 @@ const PromptsLib = () => {
                       {obj.name}
                     </Badge>
                   ))}
+                </Card.Section>
+                <Card.Section className="pr-1 flex-row-end">
+                  <ActionIcon
+                    onClick={() => {
+                      if ("clipboard" in navigator) {
+                        navigator.clipboard.writeText(text);
+                      }
+                      notifications.show({
+                        message: "Prompt Copied",
+                        withCloseButton: true,
+                        color: "cyan",
+                      });
+                    }}
+                  >
+                    <MdContentCopy />
+                  </ActionIcon>
                 </Card.Section>
               </Card>
             )

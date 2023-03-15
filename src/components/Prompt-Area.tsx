@@ -40,7 +40,7 @@ export const PromptArea = () => {
         className="h-11 w-11 px-[2px]"
       >
         {queryStatus == "loading" ? (
-          <Loader color="orange" variant="dots" />
+          <Loader color="orange" variant="dots" size="sm" />
         ) : (
           <MdSend size="19" />
         )}
