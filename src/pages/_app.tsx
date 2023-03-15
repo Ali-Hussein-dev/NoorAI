@@ -7,6 +7,7 @@ import {
   ColorSchemeProvider,
   type ColorScheme,
   MantineProvider,
+  TypographyStylesProvider,
 } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
 import * as React from "react";
@@ -36,7 +37,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
           }}
         >
           <Notifications position="top-center" />
-          <Component {...pageProps} />
+          <TypographyStylesProvider>
+            <Component {...pageProps} />
+          </TypographyStylesProvider>
           <Analytics />
         </MantineProvider>
       </ColorSchemeProvider>
