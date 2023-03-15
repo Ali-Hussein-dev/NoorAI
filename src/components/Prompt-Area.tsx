@@ -21,30 +21,35 @@ export const PromptArea = () => {
     updateStatus("idle");
   }, [updateStatus]);
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="mx-auto mb-2 w-full max-w-3xl gap-2 rounded flex-row-between"
-    >
-      <Textarea
-        {...register("promptText")}
-        placeholder="Enter your prompt here..."
-        minRows={1}
-        maxRows={3}
-        autosize
-        className="w-full grow resize-none text-lg shadow-lg focus:border-neutral-300"
-        onKeyDown={queryStatus === "loading" ? undefined : onKeyPress}
-      />
-      <ActionIcon
-        type="submit"
-        disabled={!watch("promptText") || queryStatus === "loading"}
-        className="h-11 w-11 px-[2px]"
+    <div className="mx-auto mb-2 w-full max-w-3xl">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="gap-2 rounded flex-row-between"
       >
-        {queryStatus == "loading" ? (
-          <Loader color="orange" variant="dots" size="sm" />
-        ) : (
-          <MdSend size="19" />
-        )}
-      </ActionIcon>
-    </form>
+        <Textarea
+          {...register("promptText")}
+          placeholder="Enter your prompt here..."
+          minRows={1}
+          maxRows={3}
+          autosize
+          className="w-full grow resize-none  text-lg shadow-lg"
+          onKeyDown={queryStatus === "loading" ? undefined : onKeyPress}
+          rightSection={
+            <ActionIcon
+              type="submit"
+              disabled={!watch("promptText") || queryStatus === "loading"}
+              className="grid h-11 w-11 place-items-center"
+              unstyled
+            >
+              {queryStatus == "loading" ? (
+                <Loader color="gray" variant="dots" size="sm" />
+              ) : (
+                <MdSend size="19" />
+              )}
+            </ActionIcon>
+          }
+        />
+      </form>
+    </div>
   );
 };

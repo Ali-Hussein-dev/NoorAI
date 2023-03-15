@@ -76,18 +76,18 @@ const PromptsLib = () => {
           data={tags || []}
           placeholder="Search by tags"
           className="grow"
+          rightSection={
+            !filterQuery || filterQuery.length > 0 ? (
+              <ActionIcon type="submit" size="md">
+                {status == "loading" ? (
+                  <Loader variant="dots" size="sm" />
+                ) : (
+                  <MdSend />
+                )}
+              </ActionIcon>
+            ) : undefined
+          }
         />
-        <ActionIcon
-          type="submit"
-          disabled={!filterQuery || filterQuery.length < 1}
-          size="lg"
-        >
-          {status == "loading" ? (
-            <Loader variant="dots" size="sm" />
-          ) : (
-            <MdSend />
-          )}
-        </ActionIcon>
       </form>
       <ScrollArea h="70vh" scrollHideDelay={500} className="pt-2">
         <div className="h-full space-y-2">

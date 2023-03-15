@@ -3,7 +3,12 @@ import { useRouter } from "next/router";
 import * as React from "react";
 import Link from "next/link";
 import clsx from "clsx";
-import { MdClear, MdDelete, MdDriveFileRenameOutline } from "react-icons/md";
+import {
+  MdClear,
+  MdDelete,
+  MdDriveFileRenameOutline,
+  MdSearch,
+} from "react-icons/md";
 import { HiCheck } from "react-icons/hi2";
 import { ActionIcon, HoverCard, Text, TextInput } from "@mantine/core";
 
@@ -112,12 +117,15 @@ export const ChatHistory = () => {
             setInput(e.target.value);
             filter(e.target.value);
           }}
+          icon={<MdSearch size="20" />}
+          rightSection={
+            input ? (
+              <ActionIcon onClick={() => setInput("")} size="md">
+                <MdClear size="20" />
+              </ActionIcon>
+            ) : undefined
+          }
         />
-        {input && (
-          <ActionIcon onClick={() => setInput("")} size="lg">
-            <MdClear size="20" />
-          </ActionIcon>
-        )}
       </div>
       <div className="w-full">
         {list.map(({ id, name = null, thread }, i: number) => (
