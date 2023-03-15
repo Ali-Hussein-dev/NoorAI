@@ -10,6 +10,7 @@ import {
 } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
 import * as React from "react";
+import { Analytics } from "@vercel/analytics/react";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -36,6 +37,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         >
           <Notifications position="top-center" />
           <Component {...pageProps} />
+          <Analytics />
         </MantineProvider>
       </ColorSchemeProvider>
     </SessionProvider>
