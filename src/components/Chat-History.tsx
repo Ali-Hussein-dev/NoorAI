@@ -59,12 +59,9 @@ const ConversationLink = ({ id, name }: { id: string; name: string }) => {
       ) : (
         <>
           <Link href={`/${id}`} className="w-full pl-1 capitalize">
-            <Text
-              c={theme === "dark" ? colors.gray[6] : colors.gray[7]}
-              truncate="end"
-            >
-              {input.split(" ").splice(0, 5).join(" ")}{" "}
-              {/* {input.split(" ").length > 4 ? "..." : ""} */}
+            <Text c={theme === "dark" ? colors.gray[6] : colors.gray[7]}>
+              {input.split(" ").splice(0, 4).join(" ")}{" "}
+              {input.split(" ").length > 4 ? "..." : ""}
             </Text>
           </Link>
           <div className="flex gap-x-3">
