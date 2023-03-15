@@ -121,9 +121,9 @@ export const Chats = () => {
     <section className="w-full py-10">
       {thread.length > 0 ? (
         <>
-          <h3 className="mb-3 text-center italic">
+          <Title order={2} className="mb-3 text-center italic">
             Total Messages: {thread.length}
-          </h3>
+          </Title>
           <div className="gap-4 flex-col-center">
             {thread.map((o, i) => (
               <div key={i} className=" w-full">

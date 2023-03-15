@@ -233,7 +233,7 @@ const MarkedPrompts = () => {
 };
 function PromptsTabs() {
   return (
-    <Tabs defaultValue="3">
+    <Tabs defaultValue="1">
       <Tabs.List grow>
         <Tabs.Tab value="1" icon={<AiOutlineHistory />}>
           History
