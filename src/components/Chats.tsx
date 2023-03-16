@@ -38,7 +38,7 @@ const list = [
   },
   {
     prefix: "Give Context: ",
-    p: "If your question pertains to a particular subject. such as programming, healthy care, ...etc",
+    p: "If your question pertains to a particular subject. such as programming, health care, ...etc",
   },
 ];
 //======================================
