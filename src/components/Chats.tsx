@@ -1,6 +1,10 @@
 import { useStore, type ConversationT } from "~/hooks";
 import { useRouter } from "next/router";
-import { BsRobot } from "react-icons/bs";
+import {
+  BsFillEmojiFrownFill,
+  BsFillEmojiSmileFill,
+  BsRobot,
+} from "react-icons/bs";
 import { MdDelete, MdInfo } from "react-icons/md";
 import ReactMarkdown from "react-markdown";
 import { type Language } from "prism-react-renderer";
@@ -11,55 +15,132 @@ import {
   Avatar,
   Text,
   Paper,
+  Drawer,
+  Card,
+  Divider,
 } from "@mantine/core";
 import { Prism } from "@mantine/prism";
 import remarkGfm from "remark-gfm";
+import { useDisclosure } from "@mantine/hooks";
+import * as React from "react";
+import clsx from "clsx";
+import { HiArrowSmRight } from "react-icons/hi";
 
 const list = [
   {
-    prefix: "Be Specific & Clear: ",
-    p: "Be specific and clear: ask a well-defined question",
+    title: "Start with a verb",
+    description:
+      "You don’t have to be polite, you can start with a verb explain, summarize …etc. Don't ask yes/no questions.",
+    g: "Compare and contrast the advantages and disadvantages of studying abroad.",
+    b: "I was wondering if you could maybe discuss the pros and cons of going to college in another country if that's okay with you? (not starting with a verb and using overly polite language)",
   },
   {
-    prefix: "Use Proper Grammar: ",
-    p: "Write complete sentences and use appropriate grammar.",
+    title: "Be Specific & Clear",
+    description:
+      "Ask a well-defined question, avoid asking too many questions in one prompt & delete the questions that are not relevant to the whole conversation",
+    g: "What are the best practices for creating a successful email marketing campaign?",
+    b: "Can you tell me everything there is to know about digital marketing? Also, what's the best way to increase website traffic and how do I make sure my social media posts are effective? (grammatical error - should be 'were' instead of 'was')",
   },
   {
-    prefix: "Use Keywords ",
-    p: " Include relevant keywords that are relevant to your prompt.",
+    title: "Proofread",
+    description:
+      "Before submitting, double-check your prompt to ensure that it is well-written and grammatically correct.",
+    g: "Describe a time when you faced a difficult challenge and how you overcame it.",
+    b: "Tell me about a time when you was doing something difficult.",
   },
   {
-    prefix: "Be Brief: ",
-    p: "Avoid asking too many questions in one prompt and keep your questions short and straightforward.",
+    title: "Provide Context",
+    description:
+      "Include not just relevant but more specific keywords that helps identify the context of what you are ask for. and avoid using broad keywords with broad meaning and context.",
+    g: "What are the most effective ways to reduce stress and anxiety among college students during exams? (specific keywords - stress, anxiety, college students, exams)",
+    b: "How can we improve mental health in society? (broad keywords with broad context - mental health, society)",
   },
   {
-    prefix: "Proofread: ",
-    p: "Before submitting, double-check your prompt to ensure that it is well-written and grammatically correct.",
-  },
-  {
-    prefix: "Give Context: ",
-    p: "If your question pertains to a particular subject. such as programming, health care, ...etc",
+    title: "Few-shot",
+    description:
+      "Provide an Example of what you are expecting, This approach is very effective especially if you expect complex and unusual results and can save you a lot of time and typing.",
+    g: "Based on the following format ..., write an article with same format about something",
+    b: "Write an article about something",
   },
 ];
 //======================================
 export const PromptTips = () => {
+  const [opened, { open, close }] = useDisclosure(false);
+  const [drawerChildren, setdrawerChildren] = React.useState(<div></div>);
   return (
-    <div className="prose max-w-full p-1">
+    <div className="prose max-w-full p-1 sm:px-4">
       <Title
         order={2}
         className="mb-4 gap-2 text-2xl text-teal-300 flex-row-center"
       >
         <MdInfo size="30" />
-        Prompt Tips For Better Results
+        Prompt Tips & Tricks
       </Title>
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+      <Drawer
+        opened={opened}
+        onClose={close}
+        title={""}
+        overlayProps={{
+          opacity: 0.2,
+        }}
+        position="right"
+        size="sm"
+      >
+        {drawerChildren}
+      </Drawer>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-6">
         {list.map((o, i) => (
-          <Paper key={i} className="rounded-sm " p="sm">
-            <Title order={4} className="mb-1">
-              {o.prefix}
-            </Title>
-            <Text size="lg">{o.p}</Text>
-          </Paper>
+          <div
+            key={i}
+            className={clsx(
+              i < 3 && "lg:col-span-2",
+              i == 3 && "lg:col-span-3",
+              i == 4 && "col-span-full lg:col-span-3"
+            )}
+          >
+            <Card
+              component="button"
+              onClick={() => {
+                open();
+                setdrawerChildren(
+                  <div className="space-y-3">
+                    <Title order={4} color="dimmed">
+                      {o.title}
+                    </Title>
+                    <Text size="lg">{o.description}</Text>
+                    <Divider />
+                    <Title order={5}>Examples:</Title>
+                    <div className="flex flex-col items-start gap-y-2">
+                      <BsFillEmojiFrownFill size="28" />
+                      <Text size="lg" color="dimmed">
+                        {o.b}
+                      </Text>
+                    </div>
+                    <div className="flex flex-col items-start gap-y-2">
+                      <BsFillEmojiSmileFill size="28" />
+                      <Text size="lg" color="dimmed">
+                        {o.g}
+                      </Text>
+                    </div>
+                  </div>
+                );
+              }}
+              p="xs"
+              h="100%"
+              w="100%"
+              className="group"
+            >
+              <div className="flex-col-start">
+                <div className="w-full gap-x-2 flex-row-between">
+                  <Title order={4}>{o.title}</Title>
+                  <HiArrowSmRight className="mt-5 hidden group-hover:inline-block" />
+                </div>
+                <Text size="lg" color="dimmed" ta="left">
+                  {o.description}
+                </Text>
+              </div>
+            </Card>
+          </div>
         ))}
       </div>
     </div>
