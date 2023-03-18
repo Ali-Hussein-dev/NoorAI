@@ -20,7 +20,7 @@ const ChatPage = () => {
   const theme = useMantineTheme();
   const { query, push } = useRouter();
   const conversations = useStore((s) => s.conversations);
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     const hasId = conversations.some((con) => con.id === query.chatId);
     if (!hasId) {
       push(`/${conversations[0]?.id || "chat"}`);

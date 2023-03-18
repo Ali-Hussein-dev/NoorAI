@@ -239,7 +239,7 @@ function PromptsTabs() {
           History
         </Tabs.Tab>
         <Tabs.Tab value="2" icon={<HiOutlineRectangleStack />}>
-          Libray
+          Library
         </Tabs.Tab>
         <Tabs.Tab value="3" icon={<TiStarOutline />}>
           Saved
