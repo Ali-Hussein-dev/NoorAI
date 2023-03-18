@@ -15,6 +15,10 @@ import {
   Card,
   MultiSelect,
   Loader,
+  Title,
+  TextInput,
+  Textarea,
+  Collapse,
 } from "@mantine/core";
 import { FaSun } from "react-icons/fa";
 import { MdContentCopy, MdOutlineDelete, MdSend } from "react-icons/md";
@@ -25,6 +29,7 @@ import { ApiKeyModal } from ".";
 import * as React from "react";
 import { notifications } from "@mantine/notifications";
 import { api } from "~/utils/api";
+import { useDisclosure } from "@mantine/hooks";
 
 const ChatHistory = dynamic(() => import(".").then((a) => a.ChatHistory), {
   ssr: false,
@@ -76,6 +81,7 @@ const PromptsLib = () => {
           data={tags || []}
           placeholder="Search by tags"
           className="grow"
+          searchable
           rightSection={
             !filterQuery || filterQuery.length > 0 ? (
               <ActionIcon type="submit" size="md">
@@ -163,15 +169,101 @@ const PromptsLib = () => {
     </div>
   );
 };
+const CreatePromptForm = () => {
+  const [opened, { toggle }] = useDisclosure(false);
+  const create = useMarkedPrompts((s) => s.create);
+  const [form, setForm] = React.useState<{
+    text: string;
+    tags: Array<{ value: string; label: string }>;
+  }>({ text: "", tags: [] });
+  const [tags, setTags] = React.useState<Array<string>>([]);
+  return (
+    <div className="mb-3">
+      <Button
+        onClick={toggle}
+        className="my-2 w-full"
+        variant="outline"
+        color="gray"
+      >
+        {opened ? "X" : "Create Prompt"}
+      </Button>
+      <div>
+        <Collapse in={opened} className="">
+          <Paper className="space-y-2 px-2 pt-3 pb-1" withBorder>
+            <Textarea
+              required
+              autosize
+              placeholder="Your Prompt..."
+              minRows={2}
+              maxRows={5}
+              value={form.text}
+              onChange={(e) =>
+                setForm({ ...form, text: e.currentTarget.value })
+              }
+            />
+            <MultiSelect
+              searchable
+              creatable
+              clearable
+              data={form.tags}
+              value={tags}
+              onChange={setTags}
+              placeholder="Add tags"
+              getCreateLabel={(query) => `+ Create ${query}`}
+              onCreate={(query) => {
+                const item = { value: query, label: query };
+                setForm((prv) => ({
+                  text: prv.text,
+                  tags: [...prv.tags, item],
+                }));
+                return item;
+              }}
+            />
+            <div className="gap-2 flex-row-between">
+              <Button
+                color="dark"
+                variant="filled"
+                className="w-full"
+                onClick={() => setForm({ text: "", tags: [] })}
+                size="xs"
+              >
+                Reset
+              </Button>
+              <Button
+                color="dark"
+                disabled={!form.text}
+                variant="filled"
+                className="w-full"
+                onClick={() => {
+                  create(
+                    form.text,
+                    form.tags.map((t) => ({ name: t.value as string }))
+                  );
+                  setForm({ text: "", tags: [] });
+                  setTags([]);
+                }}
+                size="xs"
+              >
+                Save
+              </Button>
+            </div>
+          </Paper>
+        </Collapse>
+      </div>
+    </div>
+  );
+};
+
 const MarkedPrompts = () => {
-  const markedPrompts = useMarkedPrompts((s) => s.list);
+  const userPrompts = useMarkedPrompts((s) => s.list);
   const drop = useMarkedPrompts((s) => s.drop);
   return (
-    <ScrollArea h="70vh" scrollHideDelay={50} className="pt-2">
+    <ScrollArea h="70vh" scrollHideDelay={50} className="pt-1">
+      <CreatePromptForm />
       <div className="h-full space-y-2">
-        {markedPrompts.map(({ tags, text, id }, i) => (
+        {userPrompts.map(({ tags, text, id }, i) => (
           <Card key={i} shadow="sm" p="xl" pb="md">
-            <Card.Section className="text-left">
+            <Card.Section className="mb-2 text-left">
               <Spoiler maxHeight={52} showLabel="Show more" hideLabel="Hide">
                 <Text>{text}</Text>
               </Spoiler>
@@ -233,7 +325,7 @@ const MarkedPrompts = () => {
 };
 function PromptsTabs() {
   return (
-    <Tabs defaultValue="1">
+    <Tabs defaultValue="3">
       <Tabs.List grow>
         <Tabs.Tab value="1" icon={<AiOutlineHistory />}>
           History

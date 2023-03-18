@@ -1,16 +1,18 @@
 import { create } from "zustand";
 import { persist, devtools, createJSONStorage } from "zustand/middleware";
+
+type TagT = { name: string };
 interface PromptT {
-  text: string;
   id: string;
-  tags: { name: string }[];
+  text: string;
+  tags: TagT[];
 }
 interface StoreMarkedPromptsT {
   list: PromptT[];
   drop: (id: string) => void;
   push: (prompt: PromptT) => void;
+  create: (prompt: string, tags: TagT[]) => void;
   //   edit: (id: string, text: string, tags: string[]) => void;
-  //   create: (text: string, tags: string[]) => void;
 }
 
 export const useMarkedPrompts = create<StoreMarkedPromptsT>()(
@@ -33,7 +35,19 @@ export const useMarkedPrompts = create<StoreMarkedPromptsT>()(
             ),
           push: (prompt) =>
             set((s) => ({ list: [...s.list, prompt] }), false, "push prompt"),
-          //   create: () => set((s) => ({}), false, "edit create prompt"),
+          create: (prompt, tags) =>
+            set(
+              (s) => {
+                const userPrompt: PromptT = {
+                  id: new Date().getTime().toString(),
+                  text: prompt,
+                  tags,
+                };
+                return { list: [userPrompt, ...s.list] };
+              },
+              false,
+              "Create prompt"
+            ),
           //   edit: (id) => set((s) => ({}), false, "edit marked prompt"),
         };
       },
