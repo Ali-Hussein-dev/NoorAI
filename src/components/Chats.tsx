@@ -69,11 +69,8 @@ export const PromptTips = () => {
   const [drawerChildren, setdrawerChildren] = React.useState(<div></div>);
   return (
     <div className="prose max-w-full">
-      <Title
-        order={2}
-        className="mb-4 gap-2 text-2xl text-teal-300 flex-row-center"
-      >
-        <MdInfo size="30" />
+      <Title order={2} className="gap-2 flex-row-center">
+        <MdInfo size="24" />
         Prompt Tips & Tricks
       </Title>
       <Drawer
