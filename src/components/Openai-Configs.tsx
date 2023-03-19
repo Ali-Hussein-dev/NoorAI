@@ -19,32 +19,38 @@ const openaiModels = [
   {
     label: "GPT-4",
     value: "gpt-4",
-    description: "API key required",
+    description: "",
+    // description: "API key required",
   },
   {
     label: "GPT-turbo-3.5",
     value: "gpt-turbo-3.5",
-    description: "API key required",
+    description: "",
+    // description: "API key required",
   },
   {
     label: "Text-davinci-003",
     value: "text-davinci-003",
-    description: "API key required",
+    description: "",
+    // description: "API key required",
   },
   {
     label: "Text-curie-001",
     value: "text-curie-001",
-    description: "Free to use",
+    description: "",
+    // description: "Free to use",
   },
   {
     label: "Text-babbage-001",
     value: "text-babbage-001",
-    description: "Free to use",
+    description: "",
+    // description: "Free to use",
   },
   {
     label: "Text-ada-001",
     value: "text-ada-001",
-    description: "Free to use",
+    description: "",
+    // description: "Free to use",
   },
 ];
 
@@ -119,7 +125,7 @@ export const Content = () => {
           {form.submitted ? "Saved" : "Save"}
         </Button>
       </div>
-      <div className="min-h-[300px] space-y-3">
+      <div className="min-h-[370px] space-y-3">
         <div className="w-full gap-1 flex-col-start">
           {/* // !bug clicking on show password doesn't work */}
           <PasswordInput
