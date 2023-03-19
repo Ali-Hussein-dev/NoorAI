@@ -77,15 +77,15 @@ const ChatPage = () => {
         }
       >
         {/* Content */}
-        <div className="flex h-full w-full flex-col px-2 md:px-0">
-          <div className="mx-auto w-full max-w-3xl grow ">
+        <div className="flex h-full w-full flex-col px-2 md:px-4">
+          <div className="mx-auto w-full max-w-3xl grow">
             <Chats />
           </div>
           <Paper
             p={0}
             radius={0}
             className={clsx(
-              "sticky bottom-0 flex h-14 w-full items-start justify-center backdrop-blur-sm md:h-20",
+              "sticky bottom-0 z-10 flex h-14 w-full items-start justify-center backdrop-blur-sm md:h-20",
               theme.colorScheme === "dark"
                 ? "bg-[#101113]/40"
                 : `bg-[#E9ECEF]/30`
