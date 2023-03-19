@@ -1,7 +1,5 @@
-import { BsPlus } from "react-icons/bs";
-import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
-import { useMarkedPrompts, useStore } from "../hooks";
+import { useMarkedPrompts } from "../hooks";
 import {
   ScrollArea,
   Button,
@@ -302,8 +300,6 @@ const MarkedPrompts = () => {
   );
 };
 function PromptsTabs() {
-  const createConversation = useStore((s) => s.createConversation);
-  const { push } = useRouter();
   return (
     <Tabs defaultValue="1">
       <Tabs.List grow>
@@ -319,20 +315,6 @@ function PromptsTabs() {
       </Tabs.List>
 
       <Tabs.Panel value="1" className="pt-2">
-        <Button
-          variant="default"
-          color="gray"
-          type="button"
-          onClick={() => {
-            const id = crypto.randomUUID();
-            createConversation(id);
-            push(`/${id}`);
-          }}
-          className="w-full"
-        >
-          <BsPlus size="17" />
-          <span>New Chat</span>
-        </Button>
         <ScrollArea scrollHideDelay={50} h="70vh" className="pt-1">
           <ChatHistory />
         </ScrollArea>
