@@ -5,6 +5,7 @@ import type {
   CreateCompletionResponseChoicesInner,
 } from "openai";
 import { type FetchStatus, type QueryStatus } from "@tanstack/react-query";
+import { type OpenaiModelsT } from "~/types/global";
 
 /**
  **Request
@@ -54,6 +55,8 @@ export interface StoreStateT {
   filtered: ConversationsT | never[];
   conversations: ConversationsT;
   apiKey: string;
+  model: OpenaiModelsT;
+  setModel: (model: OpenaiModelsT) => void;
   /**
    * @required
    */
@@ -104,6 +107,8 @@ export const useStore = create<StoreStateT>()(
           id: new Date().getTime(),
           status: "idle",
           apiKey: "",
+          model: "text-curie-001",
+          setModel: (model) => set({ model }),
           filtered: [],
           conversations: [
             {

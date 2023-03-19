@@ -68,12 +68,9 @@ export const PromptTips = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const [drawerChildren, setdrawerChildren] = React.useState(<div></div>);
   return (
-    <div className="prose max-w-full p-1 sm:px-4">
-      <Title
-        order={2}
-        className="mb-4 gap-2 text-2xl text-teal-300 flex-row-center"
-      >
-        <MdInfo size="30" />
+    <div className="prose max-w-full">
+      <Title order={2} className="gap-2 flex-row-center">
+        <MdInfo size="24" />
         Prompt Tips & Tricks
       </Title>
       <Drawer
@@ -88,7 +85,7 @@ export const PromptTips = () => {
       >
         {drawerChildren}
       </Drawer>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-6">
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-6">
         {list.map((o, i) => (
           <div
             key={i}

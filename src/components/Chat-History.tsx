@@ -10,8 +10,15 @@ import {
   MdSearch,
 } from "react-icons/md";
 import { HiCheck } from "react-icons/hi2";
-import { useMantineTheme, ActionIcon, Text, TextInput } from "@mantine/core";
+import {
+  useMantineTheme,
+  ActionIcon,
+  Text,
+  TextInput,
+  Tooltip,
+} from "@mantine/core";
 import { useColorScheme } from "@mantine/hooks";
+import { BsPlus } from "react-icons/bs";
 
 const ConversationLink = ({ id, name }: { id: string; name: string }) => {
   const { push, query } = useRouter();
@@ -96,8 +103,10 @@ const ConversationLink = ({ id, name }: { id: string; name: string }) => {
 //---------------------------------------------------
 export const ChatHistory = () => {
   const conversations = useStore((s) => s.conversations);
+  const createConversation = useStore((s) => s.createConversation);
   const filter = useStore((s) => s.filter);
   const filtered = useStore((s) => s.filtered);
+  const { push } = useRouter();
   const [input, setInput] = React.useState("");
   const list = input ? filtered : conversations;
   return (
@@ -120,6 +129,21 @@ export const ChatHistory = () => {
             ) : undefined
           }
         />
+        <Tooltip label="New Chat">
+          <ActionIcon
+            variant="default"
+            color="gray"
+            type="button"
+            onClick={() => {
+              const id = crypto.randomUUID();
+              createConversation(id);
+              push(`/${id}`);
+            }}
+            size="lg"
+          >
+            <BsPlus size="17" />
+          </ActionIcon>
+        </Tooltip>
       </div>
       <div className="w-full">
         {list.map(({ id, name = null, thread }, i: number) => (

@@ -1,12 +1,9 @@
-import { BsMoonStarsFill, BsPlus } from "react-icons/bs";
-import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
-import { useMarkedPrompts, useStore } from "../hooks";
+import { useMarkedPrompts } from "../hooks";
 import {
   ScrollArea,
   Button,
   ActionIcon,
-  useMantineColorScheme,
   Tabs,
   Text,
   Badge,
@@ -15,17 +12,14 @@ import {
   Card,
   MultiSelect,
   Loader,
-  Title,
-  TextInput,
   Textarea,
   Collapse,
 } from "@mantine/core";
-import { FaSun } from "react-icons/fa";
 import { MdContentCopy, MdOutlineDelete, MdSend } from "react-icons/md";
 import { AiOutlineHistory } from "react-icons/ai";
 import { HiOutlineRectangleStack } from "react-icons/hi2";
 import { TiStarOutline } from "react-icons/ti";
-import { ApiKeyModal } from ".";
+import { InfoModal, OpenaiConfig } from ".";
 import * as React from "react";
 import { notifications } from "@mantine/notifications";
 import { api } from "~/utils/api";
@@ -34,23 +28,6 @@ import { useDisclosure } from "@mantine/hooks";
 const ChatHistory = dynamic(() => import(".").then((a) => a.ChatHistory), {
   ssr: false,
 });
-
-export function ToggleTheme() {
-  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
-  const dark = colorScheme === "dark";
-
-  return (
-    <ActionIcon
-      variant="outline"
-      color={dark ? "yellow" : "blue"}
-      size="lg"
-      onClick={() => toggleColorScheme()}
-      title="Toggle color scheme"
-    >
-      {dark ? <FaSun size="1.1rem" /> : <BsMoonStarsFill size="1.1rem" />}
-    </ActionIcon>
-  );
-}
 
 const useFetchPrompts = () => {
   const [filterQuery, setFilterQuery] = React.useState<never[] | string[]>([]);
@@ -73,7 +50,7 @@ const PromptsLib = () => {
     useFetchPrompts();
   const { push } = useMarkedPrompts();
   return (
-    <div className="h-full pt-2 ">
+    <div className="h-full">
       <form onSubmit={onSubmit} className="gap-2 flex-row-start">
         <MultiSelect
           value={filterQuery}
@@ -95,7 +72,7 @@ const PromptsLib = () => {
           }
         />
       </form>
-      <ScrollArea h="70vh" scrollHideDelay={500} className="pt-2">
+      <ScrollArea h="70vh" scrollHideDelay={500} className="pt-2 pb-8">
         <div className="h-full space-y-2">
           <Text italic>Prompts Found: {data?.length}</Text>
           {data?.map(
@@ -164,7 +141,6 @@ const PromptsLib = () => {
             )
           )}
         </div>
-        <div className="h-10 w-full" />
       </ScrollArea>
     </div>
   );
@@ -181,8 +157,8 @@ const CreatePromptForm = () => {
     <div className="mb-3">
       <Button
         onClick={toggle}
-        className="my-2 w-full"
-        variant="outline"
+        className="mb-2 w-full"
+        variant="default"
         color="gray"
       >
         {opened ? "X" : "Create Prompt"}
@@ -338,16 +314,15 @@ function PromptsTabs() {
         </Tabs.Tab>
       </Tabs.List>
 
-      <Tabs.Panel value="1">
-        {" "}
-        <ScrollArea scrollHideDelay={50} className="h-full max-h-[70vh] pt-2">
+      <Tabs.Panel value="1" className="pt-2">
+        <ScrollArea scrollHideDelay={50} h="70vh" className="pt-1">
           <ChatHistory />
         </ScrollArea>
       </Tabs.Panel>
-      <Tabs.Panel value="2">
+      <Tabs.Panel value="2" className="pt-2">
         <PromptsLib />
       </Tabs.Panel>
-      <Tabs.Panel value="3">
+      <Tabs.Panel value="3" className="pt-2">
         <MarkedPrompts />
       </Tabs.Panel>
     </Tabs>
@@ -355,35 +330,15 @@ function PromptsTabs() {
 }
 //======================================
 export const Sidebar = () => {
-  const createConversation = useStore((s) => s.createConversation);
-  const { push } = useRouter();
-
   return (
     <div className="h-full w-full gap-y-2 flex-col-center">
-      <div className="h-full w-full space-y-2">
-        <Button
-          variant="default"
-          color="gray"
-          type="button"
-          onClick={() => {
-            const id = crypto.randomUUID();
-            createConversation(id);
-            push(`/${id}`);
-          }}
-          className="w-full"
-        >
-          <BsPlus size="18" />
-          <span>New Chat</span>
-        </Button>
+      <div className="w-full grow space-y-2">
         <PromptsTabs />
       </div>
-      <Paper
-        radius={0}
-        className="sticky bottom-0 w-full gap-2 border-t border-neutral-500 pb-2 pt-3 flex-row-center"
-      >
-        <ToggleTheme />
-        <ApiKeyModal />
-      </Paper>
+      <div className="sticky bottom-0 w-full gap-2 border-t border-neutral-600 pb-2 pt-3 flex-row-center">
+        <OpenaiConfig />
+        <InfoModal />
+      </div>
     </div>
   );
 };

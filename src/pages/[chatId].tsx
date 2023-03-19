@@ -1,18 +1,10 @@
 import Head from "next/head";
 import clsx from "clsx";
-import {
-  MediaQuery,
-  AppShell,
-  Navbar,
-  Header,
-  Burger,
-  useMantineTheme,
-  Paper,
-} from "@mantine/core";
+import { AppShell, Navbar, useMantineTheme, Paper } from "@mantine/core";
 import * as React from "react";
-import { Chats, PromptArea, Sidebar } from "~/components";
 import { useRouter } from "next/router";
 import { useStore } from "../hooks";
+import { Header, Chats, PromptArea, Sidebar } from "~/components";
 
 //======================================
 const ChatPage = () => {
@@ -33,8 +25,6 @@ const ChatPage = () => {
       </Head>
       <AppShell
         padding={0}
-        pt={36}
-        px={0}
         styles={{
           main: {
             background:
@@ -60,21 +50,7 @@ const ChatPage = () => {
           </Navbar>
         }
         footer={undefined}
-        header={
-          <Header height={{ base: 60 }} p="md">
-            <div className="flex-row-start">
-              <MediaQuery largerThan="sm" styles={{ display: "none" }}>
-                <Burger
-                  opened={opened}
-                  onClick={() => setOpened((o) => !o)}
-                  size="sm"
-                  mr="xl"
-                />
-              </MediaQuery>
-              {/* <HeaderContent /> */}
-            </div>
-          </Header>
-        }
+        header={<Header opened={opened} setOpened={setOpened} />}
       >
         {/* Content */}
         <div className="flex h-full w-full flex-col px-2 md:px-4">

@@ -3,7 +3,6 @@ import {
   Button,
   Modal,
   Accordion,
-  PasswordInput,
   Paper,
   Badge,
   Title,
@@ -11,9 +10,8 @@ import {
   Text,
 } from "@mantine/core";
 import * as React from "react";
-import { useStore } from "../hooks";
 import { HiBadgeCheck } from "react-icons/hi";
-import { MdAdd } from "react-icons/md";
+import { BsInfoCircle } from "react-icons/bs";
 
 const list = [
   {
@@ -49,22 +47,17 @@ export const Faqs = () => {
 };
 
 const features = [
+  "Model GPT-4",
   "Prompts History Search",
-  "Intuitive user interface",
+  "Prompt Library",
   "Use your own API key",
-  "Store data locally on browser",
-  "No login required",
+  "Store data on browser",
   "... and more soon",
 ];
 //======================================
-export const ApiKeyModal = () => {
+export const InfoModal = () => {
   const [opened, { open, close }] = useDisclosure(false);
-  const saveApiKey = useStore((s) => s.saveApiKey);
-  const apiKey = useStore((s) => s.apiKey);
-  const [form, setForm] = React.useState({
-    input: apiKey,
-    submitted: false,
-  });
+
   return (
     <>
       <Modal.Root opened={opened} onClose={close} size="auto">
@@ -83,44 +76,10 @@ export const ApiKeyModal = () => {
                   </li>
                 ))}
               </ul>
-              <div className="w-full gap-2 flex-col-start ">
-                <div className="flex w-full items-end justify-between gap-1">
-                  {/* // !bug clicking on show password doesn't work */}
-                  <PasswordInput
-                    type="password"
-                    variant="filled"
-                    value={form.input}
-                    onChange={(e) => {
-                      setForm({ submitted: false, input: e.target.value });
-                    }}
-                    placeholder="Your API key"
-                    className="input w-full"
-                    description=" API is required to use the app"
-                  />
-                  <Button
-                    type="button"
-                    variant="default"
-                    onClick={() => {
-                      setForm((prv) => ({ ...prv, submitted: true }));
-                      saveApiKey(form.input);
-                    }}
-                    className="normal-case"
-                  >
-                    {form.submitted ? "Saved" : "Save"}
-                  </Button>
-                </div>
-                <Anchor
-                  href="https://platform.openai.com/account/api-keys"
-                  className="link px-1"
-                  target="_blank"
-                >
-                  Get API key from OpenAI
-                </Anchor>
-              </div>
               <Faqs />
               <div>
                 <Text className="pt-3 text-center">
-                  Do you have feedback? You can send a DM on{" "}
+                  Do you have feedback? You can send me a DM on{" "}
                   <Anchor
                     href="https://twitter.com/AliHussein_20"
                     color="blue"
@@ -136,11 +95,11 @@ export const ApiKeyModal = () => {
       </Modal.Root>
       <Button
         variant="default"
-        leftIcon={<MdAdd />}
+        leftIcon={<BsInfoCircle size="17" />}
         onClick={open}
-        className="mx-auto w-full"
+        className="w-full"
       >
-        <Text>Add Your API Key</Text>
+        <Text>Info</Text>
       </Button>
     </>
   );
