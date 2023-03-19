@@ -4,6 +4,7 @@ import {
   type ReconnectInterval,
 } from "eventsource-parser";
 import { env } from "~/env.mjs";
+import { type OpenaiModelsT } from "~/types/global";
 
 export type ChatGPTAgent = "user" | "system";
 
@@ -12,10 +13,8 @@ export interface ChatGPTMessage {
   content: string;
 }
 
-export type OpenAiModel = "gpt-3.5-turbo" | "text-ada-001";
-
 export interface OpenAIStreamPayload {
-  model: OpenAiModel;
+  model: OpenaiModelsT;
   messages: ChatGPTMessage[];
   stream: boolean;
   //   temperature: number;
@@ -73,6 +72,7 @@ export async function openaiStreamParser(payload: OpenAIStreamPayload) {
       // this ensures we properly read chunks and invoke an event for each SSE event stream
       const parser = createParser(onParse);
       // https://web.dev/streams/#asynchronous-iteration
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       for await (const chunk of res.body as any) {
         parser.feed(decoder.decode(chunk));
       }
