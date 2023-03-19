@@ -44,16 +44,6 @@ export const useFetchForm = () => {
   const apiKey = useStore((s) => s.apiKey);
   const { getValues } = methods;
   const conversationId = query.chatId as string;
-  // disabled/ //------------------------------INTERNAL API
-  // const trpcRes = api.openai.simple.useMutation({
-  //   onSuccess: (d) => {
-  // // save data in store, and update status
-  // // @ts-expect-error when request is not correct
-  //     if (!d.error) {
-  //       push(conversationId, d as ChatPairT);
-  //     }
-  //   },
-  // });
   //------------------------------OpenAI
   const openAPI = useMutation(
     ["openai"],

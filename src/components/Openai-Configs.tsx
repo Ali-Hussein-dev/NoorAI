@@ -148,7 +148,7 @@ export const Content = () => {
             Get API key from OpenAI
           </Anchor>
         </div>
-        <SelectModel />
+        {/* <SelectModel /> */}
       </div>
     </Paper>
   );

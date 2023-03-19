@@ -107,7 +107,7 @@ export const useStore = create<StoreStateT>()(
           id: new Date().getTime(),
           status: "idle",
           apiKey: "",
-          model: "text-curie-001",
+          model: "gpt-turbo-3.5",
           setModel: (model) => set({ model }),
           filtered: [],
           conversations: [
