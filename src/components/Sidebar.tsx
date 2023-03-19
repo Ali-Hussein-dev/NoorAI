@@ -52,7 +52,7 @@ const PromptsLib = () => {
     useFetchPrompts();
   const { push } = useMarkedPrompts();
   return (
-    <div className="h-full pt-2 ">
+    <div className="h-full">
       <form onSubmit={onSubmit} className="gap-2 flex-row-start">
         <MultiSelect
           value={filterQuery}
@@ -159,8 +159,8 @@ const CreatePromptForm = () => {
     <div className="mb-3">
       <Button
         onClick={toggle}
-        className="my-2 w-full"
-        variant="outline"
+        className="mb-2 w-full"
+        variant="default"
         color="gray"
       >
         {opened ? "X" : "Create Prompt"}
@@ -302,8 +302,10 @@ const MarkedPrompts = () => {
   );
 };
 function PromptsTabs() {
+  const createConversation = useStore((s) => s.createConversation);
+  const { push } = useRouter();
   return (
-    <Tabs defaultValue="1" className="">
+    <Tabs defaultValue="1">
       <Tabs.List grow>
         <Tabs.Tab value="1" icon={<AiOutlineHistory />}>
           History
@@ -316,29 +318,7 @@ function PromptsTabs() {
         </Tabs.Tab>
       </Tabs.List>
 
-      <Tabs.Panel value="1">
-        {" "}
-        <ScrollArea scrollHideDelay={50} h="70vh" className="pt-1">
-          <ChatHistory />
-        </ScrollArea>
-      </Tabs.Panel>
-      <Tabs.Panel value="2">
-        <PromptsLib />
-      </Tabs.Panel>
-      <Tabs.Panel value="3">
-        <MarkedPrompts />
-      </Tabs.Panel>
-    </Tabs>
-  );
-}
-//======================================
-export const Sidebar = () => {
-  const createConversation = useStore((s) => s.createConversation);
-  const { push } = useRouter();
-
-  return (
-    <div className="h-full w-full gap-y-2 flex-col-center">
-      <div className="w-full grow space-y-2">
+      <Tabs.Panel value="1" className="pt-2">
         <Button
           variant="default"
           color="gray"
@@ -350,9 +330,27 @@ export const Sidebar = () => {
           }}
           className="w-full"
         >
-          <BsPlus size="18" />
+          <BsPlus size="17" />
           <span>New Chat</span>
         </Button>
+        <ScrollArea scrollHideDelay={50} h="70vh" className="pt-1">
+          <ChatHistory />
+        </ScrollArea>
+      </Tabs.Panel>
+      <Tabs.Panel value="2" className="pt-2">
+        <PromptsLib />
+      </Tabs.Panel>
+      <Tabs.Panel value="3" className="pt-2">
+        <MarkedPrompts />
+      </Tabs.Panel>
+    </Tabs>
+  );
+}
+//======================================
+export const Sidebar = () => {
+  return (
+    <div className="h-full w-full gap-y-2 flex-col-center">
+      <div className="w-full grow space-y-2">
         <PromptsTabs />
       </div>
       <div className="sticky bottom-0 w-full gap-2 border-t border-neutral-600 pb-2 pt-3 flex-row-center">
