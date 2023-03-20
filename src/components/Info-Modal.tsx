@@ -47,7 +47,7 @@ export const Faqs = () => {
 };
 
 const features = [
-  "Model GPT-4",
+  "Model GPT 3.5 turbo",
   "Prompts History Search",
   "Prompt Library",
   "Use your own API key",

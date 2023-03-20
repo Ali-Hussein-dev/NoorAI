@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Start with a verb",
+    "description": "You don’t have to be polite, you can start with a verb explain, summarize …etc. Don't ask yes/no questions.",
+    "g": "Compare and contrast the advantages and disadvantages of studying abroad.",
+    "b": "I was wondering if you could maybe discuss the pros and cons of going to college in another country if that's okay with you? (not starting with a verb and using overly polite language)"
+  },
+  {
+    "title": "Be Specific & Clear",
+    "description": "Ask a well-defined question, avoid asking too many questions in one prompt & delete the questions that are not relevant to the whole conversation",
+    "g": "What are the best practices for creating a successful email marketing campaign?",
+    "b": "Can you tell me everything there is to know about digital marketing? Also, what's the best way to increase website traffic and how do I make sure my social media posts are effective? (grammatical error - should be 'were' instead of 'was')"
+  },
+  {
+    "title": "Proofread",
+    "description": "Before submitting, double-check your prompt to ensure that it is well-written and grammatically correct.",
+    "g": "Describe a time when you faced a difficult challenge and how you overcame it.",
+    "b": "Tell me about a time when you was doing something difficult."
+  },
+  {
+    "title": "Provide Context",
+    "description": "Include not just relevant but more specific keywords that helps identify the context of what you are ask for. and avoid using broad keywords with broad meaning and context.",
+    "g": "What are the most effective ways to reduce stress and anxiety among college students during exams? (specific keywords - stress, anxiety, college students, exams)",
+    "b": "How can we improve mental health in society? (broad keywords with broad context - mental health, society)"
+  },
+  {
+    "title": "Few-shot",
+    "description": "Provide an Example of what you are expecting, This approach is very effective especially if you expect complex and unusual results and can save you a lot of time and typing.",
+    "g": "Based on the following format ..., write an article with same format about something",
+    "b": "Write an article about something"
+  }
+]

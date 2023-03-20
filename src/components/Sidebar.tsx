@@ -27,6 +27,11 @@ import { useDisclosure } from "@mantine/hooks";
 
 const ChatHistory = dynamic(() => import(".").then((a) => a.ChatHistory), {
   ssr: false,
+  loading: () => (
+    <div className="grid h-full w-full place-items-center text-xl">
+      Loading...
+    </div>
+  ),
 });
 
 const useFetchPrompts = () => {
