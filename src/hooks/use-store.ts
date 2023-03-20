@@ -1,11 +1,7 @@
 import { create } from "zustand";
 import { persist, devtools, createJSONStorage } from "zustand/middleware";
-import type {
-  ChatCompletionResponseMessage,
-  CreateCompletionResponseChoicesInner,
-} from "openai";
+import type { ChatCompletionResponseMessage } from "openai";
 import { type FetchStatus, type QueryStatus } from "@tanstack/react-query";
-import { type OpenaiModelsT } from "~/types/global";
 
 /**
  **Request
@@ -29,11 +25,6 @@ export interface ChatPairT {
    */
   input: string;
   /**
-   * @deprecated replace with message
-   *
-   */
-  response?: CreateCompletionResponseChoicesInner[];
-  /**
    * @description
    * content string,
    * role "user"| "assistent" | "system"
@@ -55,8 +46,8 @@ export interface StoreStateT {
   filtered: ConversationsT | never[];
   conversations: ConversationsT;
   apiKey: string;
-  model: OpenaiModelsT;
-  setModel: (model: OpenaiModelsT) => void;
+  // model: OpenaiModelsT;
+  // setModel: (model: OpenaiModelsT) => void;
   /**
    * @required
    */
@@ -107,8 +98,8 @@ export const useStore = create<StoreStateT>()(
           id: new Date().getTime(),
           status: "idle",
           apiKey: "",
-          model: "gpt-turbo-3.5",
-          setModel: (model) => set({ model }),
+          // model: "gpt-turbo-3.5",
+          // setModel: (model) => set({ model }),
           filtered: [],
           conversations: [
             {
@@ -229,21 +220,3 @@ export const useStore = create<StoreStateT>()(
     { enabled: false }
   )
 );
-
-// type setT = <
-//   A extends
-//     | string
-//     | {
-//         type: unknown;
-//       }
-// >(
-//   partial:
-//     | StoreStateT
-//     | Partial<StoreStateT>
-//     | ((state: StoreStateT) => StoreStateT | Partial<StoreStateT>),
-//   replace?: boolean | undefined,
-//   action?: A | undefined
-// ) => void;
-
-// const middlewares = (f) =>
-//   devtools(persist(f, { name: localStorageKey }), { enabled: false });
