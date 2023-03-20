@@ -38,7 +38,7 @@ export const PromptArea = () => {
             <ActionIcon
               type="submit"
               disabled={!watch("promptText") || queryStatus === "loading"}
-              className="grid h-11 w-11 place-items-center"
+              className="grid h-11 w-11 place-items-center pr-2"
               unstyled
             >
               {queryStatus == "loading" ? (
