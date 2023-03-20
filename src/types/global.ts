@@ -1,6 +1,6 @@
 export type OpenaiModelsT =
   | "gpt-4"
-  | "gpt-turbo-3.5"
+  | "gpt-3.5-turbo"
   | "text-davinci-003"
   | "text-curie-001"
   | "text-babbage-001"
