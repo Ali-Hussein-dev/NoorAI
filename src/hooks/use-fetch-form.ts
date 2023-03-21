@@ -8,6 +8,7 @@ import {
 } from "openai";
 import { useMutation } from "@tanstack/react-query";
 import { notifications } from "@mantine/notifications";
+import React from "react";
 
 interface FormData {
   promptText: string;
@@ -46,8 +47,10 @@ export const useFetchForm = () => {
   const conversation = conversations.find((o) => o.id === conversationId) || {
     thread: [],
   };
-  const threadIndex =
-    conversation.thread.length === 0 ? 0 : conversation.thread.length - 1;
+  const threadLength = conversation.thread.length;
+  const [threadIndex, setThreadIndex] = React.useState(
+    threadLength === 0 ? 0 : threadLength - 1
+  );
   //------------------------------OpenAI
   const openAPI = useMutation(
     ["openai"],
@@ -71,6 +74,7 @@ export const useFetchForm = () => {
             },
             threadIndex
           );
+          setThreadIndex((prv) => prv + 1);
         } else {
           console.warn(d);
         }
