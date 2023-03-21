@@ -13,11 +13,11 @@ const handler = async (req: Request): Promise<Response> => {
   const payload: OpenAIStreamPayload = {
     model: "gpt-3.5-turbo",
     messages: [
-      // {
-      //   role: "system",
-      //   content:
-      //     "Before you response, follow these instructions:\n 1.  be concise with your answer\n 2.  don't repeat what I say.\n 3.  If you are unsure, or don't know, just say 'Sorry, I don't know'.",
-      // },
+      {
+        role: "system",
+        content:
+          "Before you response, follow these instructions:\n 1.  be concise with your answer\n 2.  don't repeat what I say.\n 3.  If you are unsure, or don't know, just say 'Sorry, I don't know'.",
+      },
       ...messages,
     ],
     // messages: [{ role: "user", content: prompt }],
