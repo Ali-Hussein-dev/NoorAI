@@ -4,7 +4,7 @@ import { AppShell, Navbar, useMantineTheme, Paper } from "@mantine/core";
 import * as React from "react";
 import { useRouter } from "next/router";
 import { useStore } from "../hooks";
-import { Header, Chats, PromptArea, Sidebar } from "~/components";
+import { useDidUpdate } from "@mantine/hooks";
 
 //======================================
 const ChatPage = () => {
@@ -12,7 +12,7 @@ const ChatPage = () => {
   const theme = useMantineTheme();
   const { query, push } = useRouter();
   const conversations = useStore((s) => s.conversations);
-  React.useEffect(() => {
+  useDidUpdate(() => {
     const hasId = conversations.some((con) => con.id === query.chatId);
     if (!hasId) {
       push(`/${conversations[0]?.id || "chat"}`);
