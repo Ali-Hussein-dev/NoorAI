@@ -19,7 +19,7 @@ import { MdContentCopy, MdOutlineDelete, MdSend } from "react-icons/md";
 import { AiOutlineHistory } from "react-icons/ai";
 import { HiOutlineRectangleStack } from "react-icons/hi2";
 import { TiStarOutline } from "react-icons/ti";
-import { InfoModal, OpenaiConfig } from ".";
+import { InfoModal } from ".";
 import * as React from "react";
 import { notifications } from "@mantine/notifications";
 import { api } from "~/utils/api";
@@ -341,7 +341,7 @@ export const Sidebar = () => {
         <PromptsTabs />
       </div>
       <div className="sticky bottom-0 w-full gap-2 border-t border-neutral-600 pb-2 pt-3 flex-row-center">
-        <OpenaiConfig />
+        {/* <OpenaiConfig /> */}
         <InfoModal />
       </div>
     </div>

@@ -18,10 +18,10 @@ const list = [
     q: "How it works?",
     a: "The web application is static and does not possess a backend server. Your API key is stored safely and locally on your browser once entered. The API requests are directly transmitted from your browser to the OpenAI server to communicate with ChatGPT. In a sense, it acts as an HTTP client for your ChatGPT API, but with several useful features.",
   },
-  {
-    q: "How is the API key handled?",
-    a: "The API you're using is secure and saved on your device. This is a fixed application, so it doesn't have a server-side component. All information is kept in the local storage of your browser, and requests to Open AI's API are sent straight from your current browser. You can verify this by checking the Network tab in your console.",
-  },
+  // {
+  //   q: "How is the API key handled?",
+  //   a: "The API you're using is secure and saved on your device. This is a fixed application, so it doesn't have a server-side component. All information is kept in the local storage of your browser, and requests to Open AI's API are sent straight from your current browser. You can verify this by checking the Network tab in your console.",
+  // },
   {
     q: "Which model is used?",
     a: "gpt-3.5-turbo. according to OpenAI it is	most capable GPT-3.5 model and optimized for chat at 1/10th the cost of text-davinci-003. Will be updated with our latest model iteration.",
@@ -50,7 +50,7 @@ const features = [
   "Model GPT 3.5 turbo",
   "Prompts History Search",
   "Prompt Library",
-  "Use your own API key",
+  "Dark/Light Mode",
   "Store data on browser",
   "... and more soon",
 ];
