@@ -50,7 +50,7 @@ const features = [
   "Model GPT 3.5 turbo",
   "Prompts History Search",
   "Prompt Library",
-  "Use your own API key",
+  "Dark/Light Mode",
   "Store data on browser",
   "... and more soon",
 ];
