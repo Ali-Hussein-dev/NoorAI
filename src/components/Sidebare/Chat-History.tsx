@@ -1,4 +1,4 @@
-import { useStore } from "../hooks";
+import { useStore } from "../../hooks";
 import { useRouter } from "next/router";
 import * as React from "react";
 import Link from "next/link";
@@ -111,7 +111,7 @@ export const ChatHistory = () => {
   const list = input ? filtered : conversations;
   return (
     <div className="h-full grow">
-      <div className="group mb-1 w-full gap-x-1 flex-row-between">
+      <div className="group mb-2 w-full gap-x-1 flex-row-between">
         <TextInput
           value={input}
           placeholder="Search prompts history"

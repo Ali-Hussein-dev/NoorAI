@@ -1,8 +1,9 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-
+import { useStore } from "~/hooks";
 const Home: NextPage = () => {
+  const conversations = useStore((state) => state.conversations);
   return (
     <>
       <Head>
@@ -13,7 +14,13 @@ const Home: NextPage = () => {
       <main className="grid min-h-screen place-items-center">
         <div className="flex-col-center">
           <h1>Experimental Project</h1>
-          <Link href="/chat">start chating..</Link>
+          <Link
+            href={
+              conversations?.[0]?.id ? `/${conversations?.[0].id}` : "/chat"
+            }
+          >
+            start chating..
+          </Link>
         </div>
       </main>
     </>
