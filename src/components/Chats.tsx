@@ -17,6 +17,7 @@ import {
   Drawer,
   Card,
   Divider,
+  Tooltip,
 } from "@mantine/core";
 import remarkGfm from "remark-gfm";
 import { useDisclosure } from "@mantine/hooks";
@@ -139,7 +140,7 @@ export const Markdown = ({ content }: { content: string }) => {
 };
 //======================================
 export const Chats = () => {
-  const { conversations, delChatPair } = useStore();
+  const { conversations, delChatPair, status } = useStore();
   const { query } = useRouter();
   const conversation = conversations.find(
     (o) => o.id === query.chatId
@@ -158,23 +159,25 @@ export const Chats = () => {
           <div key={i} className=" w-full">
             <div className="group flex w-full items-start gap-x-2 px-2 py-3">
               <Avatar radius="xl">{i + 1}</Avatar>
-              <p className="grow text-lg">{o.input}</p>
-              <div className="tooltip" data-tip="Remove unrelated chat">
+              <p className="grow text-lg">{o?.input}</p>
+              <Tooltip label="Remove unrelated chat" withArrow position="left">
                 <ActionIcon
+                  color="red"
                   radius="xl"
                   size="lg"
+                  disabled={status == "loading"}
                   onClick={() => delChatPair(i, conversation.id)}
                   className="ml-0 opacity-0 group-hover:opacity-100"
                 >
-                  <MdDelete size="20" className="text-red-700" />
+                  <MdDelete size="20" />
                 </ActionIcon>
-              </div>
+              </Tooltip>
             </div>
             <Paper radius="sm" className="flex items-start gap-x-2 py-4 px-2">
               <Avatar radius="xl">
                 <BsRobot />
               </Avatar>
-              {typeof o.message?.content === "string" && (
+              {typeof o?.message?.content === "string" && (
                 <Markdown content={o.message?.content} />
               )}
             </Paper>

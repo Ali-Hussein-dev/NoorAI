@@ -40,10 +40,14 @@ export const useFetchForm = () => {
   const methods = useForm<FormData>();
 
   const { query } = useRouter();
-  const push = useStore((s) => s.push);
-  const apiKey = useStore((s) => s.apiKey);
   const { getValues } = methods;
   const conversationId = query.chatId as string;
+  const { push, apiKey, conversations, updateStatus } = useStore();
+  const conversation = conversations.find((o) => o.id === conversationId) || {
+    thread: [],
+  };
+  const threadIndex =
+    conversation.thread.length === 0 ? 0 : conversation.thread.length - 1;
   //------------------------------OpenAI
   const openAPI = useMutation(
     ["openai"],
@@ -52,17 +56,21 @@ export const useFetchForm = () => {
       onSuccess: (d) => {
         if (d?.choices) {
           updateStatus("success");
-          push(conversationId, {
-            input: getValues("promptText"),
-            message: d.choices.reduce(
-              (acc, { message }) => ({
-                ...acc,
-                role: message?.role,
-                content: message?.content,
-              }),
-              {}
-            ) as ChatCompletionRequestMessage,
-          });
+          push(
+            conversationId,
+            {
+              input: getValues("promptText"),
+              message: d.choices.reduce(
+                (acc, { message }) => ({
+                  ...acc,
+                  role: message?.role,
+                  content: message?.content,
+                }),
+                {}
+              ) as ChatCompletionRequestMessage,
+            },
+            threadIndex
+          );
         } else {
           console.warn(d);
         }
@@ -76,13 +84,59 @@ export const useFetchForm = () => {
       },
     }
   );
-  const updateStatus = useStore((s) => s.updateStatus);
+  // const fetchStreaming = async (input: string) => {
+  //   updateStatus("loading");
+  //   // eslint-disable-next-line prefer-const
+  //   let threadIndex = conversation.thread.length;
+  //   const res = await fetch("api/openai-stream", {
+  //     method: "POST",
+  //     body: JSON.stringify({
+  //       messages: [
+  //         ...conversation?.thread.map((o) => ({
+  //           content: o.input,
+  //           role: o?.message?.role || "user",
+  //         })),
+  //         {
+  //           role: "user",
+  //           content: input,
+  //         },
+  //       ],
+  //     }),
+  //   });
+  //   // This data is a ReadableStream
+  //   const data = res.body;
+  //   if (!data) {
+  //     return;
+  //   }
+  //   const reader = data.getReader();
+  //   const decoder = new TextDecoder("utf-8");
+  //   let done = false;
 
-  const conversation = useStore((s) => s.conversations).find(
-    (o) => o.id === conversationId
-  );
-
-  // const { mutate } = res;
+  //   while (!done) {
+  //     const { value, done: doneReading } = await reader.read();
+  //     done = doneReading;
+  //     const chunkValue = decoder.decode(value);
+  //     if (chunkValue) {
+  //       push(
+  //         conversationId,
+  //         {
+  //           input: input,
+  //           message: { role: "user", content: chunkValue },
+  //         },
+  //         threadIndex
+  //       );
+  //     }
+  //   }
+  //   window.scrollTo({
+  //     top: document.body.scrollHeight,
+  //     behavior: "smooth",
+  //   });
+  //   updateStatus("success");
+  //   if (done) {
+  //     threadIndex += 1;
+  //     return;
+  //   }
+  // };
   const onSubmit = async ({ promptText: input }: FormData) => {
     if (!apiKey) {
       notifications.show({
@@ -113,12 +167,13 @@ export const useFetchForm = () => {
         },
       });
     }
+    // else {
+    //   fetchStreaming(input.trim());
+    // }
     window.scrollTo({
       top: document.body.scrollHeight,
       behavior: "smooth",
     });
-    // save status in store
-    // mutate({ promptText: input.trim() });
   };
   return { methods, onSubmit };
 };

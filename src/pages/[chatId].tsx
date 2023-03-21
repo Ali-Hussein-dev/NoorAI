@@ -31,10 +31,10 @@ const ChatPage = () => {
               theme.colorScheme === "dark"
                 ? theme.colors.dark[9]
                 : theme.colors.gray[2],
-            // color:
-            //   theme.colorScheme === "dark"
-            //     ? theme.colors.dark[2]
-            //     : theme.colors.gray[5],
+            color:
+              theme.colorScheme === "dark"
+                ? theme.colors.dark[2]
+                : theme.colors.gray[6],
           },
         }}
         navbar={
@@ -55,7 +55,9 @@ const ChatPage = () => {
         {/* Content */}
         <div className="flex h-full w-full flex-col px-2 md:px-4">
           <div className="mx-auto w-full max-w-3xl grow">
-            <Chats />
+            <React.Suspense fallback={<div>Loading....</div>}>
+              <Chats />
+            </React.Suspense>
           </div>
           <Paper
             p={0}

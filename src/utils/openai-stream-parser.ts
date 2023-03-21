@@ -17,12 +17,12 @@ export interface OpenAIStreamPayload {
   model: OpenaiModelsT;
   messages: ChatGPTMessage[];
   stream: boolean;
-  //   temperature: number;
-  //   top_p: number;
-  //   frequency_penalty: number;
-  //   presence_penalty: number;
-  //   max_tokens: number;
-  //   n: number;
+  temperature: number;
+  top_p: number;
+  frequency_penalty: number;
+  presence_penalty: number;
+  //  max_tokens: number;
+  n: number;
 }
 
 export async function openaiStreamParser(payload: OpenAIStreamPayload) {

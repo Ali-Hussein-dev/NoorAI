@@ -61,7 +61,7 @@ export interface StoreStateT {
    * @params id: conversation id from router
    * @param chatPair { input: string, response: {text:string}[] }
    */
-  push: (id: number | string, chatPair: ChatPairT) => void;
+  push: (id: number | string, chatPair: ChatPairT, threadIndex: number) => void;
   /**
    * @required
    * create an empty conversation when creating a new chat (new chat button)
@@ -109,7 +109,7 @@ export const useStore = create<StoreStateT>()(
               createdAt: new Date().getTime(),
             },
           ],
-          push: (id, chatPair) => {
+          push: (id, chatPair, threadIndex) => {
             return set(
               (state) => {
                 const { conversations } = state;
@@ -117,7 +117,19 @@ export const useStore = create<StoreStateT>()(
                 const index = state.conversations.findIndex((o) => o.id === id);
 
                 if (index >= -1) {
-                  conversations[index]?.thread.push(chatPair);
+                  const thread = conversations[index]?.thread;
+                  const currentChatpair = thread?.[threadIndex];
+
+                  const meregedChatPair = {
+                    ...chatPair,
+                    message: {
+                      content:
+                        (currentChatpair?.message?.content || "") +
+                          chatPair.message?.content || "",
+                      role: chatPair?.message?.role || "user",
+                    },
+                  };
+                  (thread || [])[threadIndex] = meregedChatPair;
                 } else {
                   console.warn("push action: index is not found", {
                     index,
