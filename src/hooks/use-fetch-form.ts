@@ -84,7 +84,59 @@ export const useFetchForm = () => {
       },
     }
   );
+  // const fetchStreaming = async (input: string) => {
+  //   updateStatus("loading");
+  //   // eslint-disable-next-line prefer-const
+  //   let threadIndex = conversation.thread.length;
+  //   const res = await fetch("api/openai-stream", {
+  //     method: "POST",
+  //     body: JSON.stringify({
+  //       messages: [
+  //         ...conversation?.thread.map((o) => ({
+  //           content: o.input,
+  //           role: o?.message?.role || "user",
+  //         })),
+  //         {
+  //           role: "user",
+  //           content: input,
+  //         },
+  //       ],
+  //     }),
+  //   });
+  //   // This data is a ReadableStream
+  //   const data = res.body;
+  //   if (!data) {
+  //     return;
+  //   }
+  //   const reader = data.getReader();
+  //   const decoder = new TextDecoder("utf-8");
+  //   let done = false;
 
+  //   while (!done) {
+  //     const { value, done: doneReading } = await reader.read();
+  //     done = doneReading;
+  //     const chunkValue = decoder.decode(value);
+  //     if (chunkValue) {
+  //       push(
+  //         conversationId,
+  //         {
+  //           input: input,
+  //           message: { role: "user", content: chunkValue },
+  //         },
+  //         threadIndex
+  //       );
+  //     }
+  //   }
+  //   window.scrollTo({
+  //     top: document.body.scrollHeight,
+  //     behavior: "smooth",
+  //   });
+  //   updateStatus("success");
+  //   if (done) {
+  //     threadIndex += 1;
+  //     return;
+  //   }
+  // };
   const onSubmit = async ({ promptText: input }: FormData) => {
     if (!apiKey) {
       notifications.show({
@@ -114,59 +166,10 @@ export const useFetchForm = () => {
           model: "gpt-3.5-turbo",
         },
       });
-    } else {
-      updateStatus("loading");
-      // eslint-disable-next-line prefer-const
-      let threadIndex = conversation.thread.length;
-      const res = await fetch("api/openai-stream", {
-        method: "POST",
-        body: JSON.stringify({
-          messages: [
-            ...conversation?.thread.map((o) => ({
-              content: o.input,
-              role: o?.message?.role || "user",
-            })),
-            {
-              role: "user",
-              content: input.trim(),
-            },
-          ],
-        }),
-      });
-      // This data is a ReadableStream
-      const data = res.body;
-      if (!data) {
-        return;
-      }
-      const reader = data.getReader();
-      const decoder = new TextDecoder("utf-8");
-      let done = false;
-
-      while (!done) {
-        const { value, done: doneReading } = await reader.read();
-        done = doneReading;
-        const chunkValue = decoder.decode(value);
-        if (chunkValue) {
-          push(
-            conversationId,
-            {
-              input: input.trim(),
-              message: { role: "user", content: chunkValue },
-            },
-            threadIndex
-          );
-        }
-      }
-      window.scrollTo({
-        top: document.body.scrollHeight,
-        behavior: "smooth",
-      });
-      updateStatus("success");
-      if (done) {
-        threadIndex += 1;
-        return;
-      }
     }
+    // else {
+    //   fetchStreaming(input.trim());
+    // }
     window.scrollTo({
       top: document.body.scrollHeight,
       behavior: "smooth",
