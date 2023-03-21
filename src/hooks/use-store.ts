@@ -170,7 +170,7 @@ export const useStore = create<StoreStateT>()(
                 if (index > -1) {
                   conversations.splice(index, 1);
                 }
-                return { ...s };
+                return s;
               },
               false,
               "deleteConversation"
