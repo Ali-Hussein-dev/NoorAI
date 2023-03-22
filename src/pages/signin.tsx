@@ -1,5 +1,6 @@
 import { Button, Title, Paper } from "@mantine/core";
-import { getProviders, signIn, useSession } from "next-auth/react";
+import { type GetServerSidePropsContext } from "next";
+import { getProviders, getSession, signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { BsGithub, BsGoogle } from "react-icons/bs";
@@ -10,13 +11,6 @@ const Signin = ({
 }: {
   providers: Awaited<ReturnType<typeof getProviders>>;
 }) => {
-  const { data: sessionData } = useSession();
-  const conversations = useStore((s) => s.conversations);
-  const { push } = useRouter();
-  if (sessionData) {
-    const path = conversations?.[0]?.id ? `/${conversations?.[0].id}` : "/chat";
-    push(path);
-  }
   return (
     <div className="grid min-h-screen place-items-center">
       <Paper radius="lg" withBorder shadow="lg" p="xl" className="px-20">
@@ -47,8 +41,17 @@ const Signin = ({
 };
 export default Signin;
 
-export async function getServerSideProps() {
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const providers = await getProviders();
+  const session = await getSession(ctx);
+
+  if (session)
+    return {
+      redirect: {
+        destination: "/chat",
+        permanent: false,
+      },
+    };
   return {
     props: {
       providers,
