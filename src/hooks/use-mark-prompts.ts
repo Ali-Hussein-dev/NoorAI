@@ -12,7 +12,7 @@ interface StoreMarkedPromptsT {
   drop: (id: string) => void;
   push: (prompt: PromptT) => void;
   create: (prompt: string, tags: TagT[]) => void;
-  //   edit: (id: string, text: string, tags: string[]) => void;
+  edit: (id: string, text: string, tags: TagT[]) => void;
 }
 
 export const useMarkedPrompts = create<StoreMarkedPromptsT>()(
@@ -34,7 +34,16 @@ export const useMarkedPrompts = create<StoreMarkedPromptsT>()(
               "edit drop prompt"
             ),
           push: (prompt) =>
-            set((s) => ({ list: [...s.list, prompt] }), false, "push prompt"),
+            set(
+              (s) => ({
+                list: [
+                  ...s.list,
+                  { ...prompt, id: new Date().getTime().toString() },
+                ],
+              }),
+              false,
+              "push prompt"
+            ),
           create: (prompt, tags) =>
             set(
               (s) => {
@@ -48,7 +57,21 @@ export const useMarkedPrompts = create<StoreMarkedPromptsT>()(
               false,
               "Create prompt"
             ),
-          //   edit: (id) => set((s) => ({}), false, "edit marked prompt"),
+          edit: (id, text, tags) =>
+            set(
+              (s) => {
+                // find prompt by id
+                const prompt = s.list.find((o) => o.id === id);
+                // update prompt1
+                if (prompt) {
+                  prompt.text = text;
+                  prompt.tags = tags;
+                }
+                return s;
+              },
+              false,
+              "edit marked prompt"
+            ),
         };
       },
       { name: "markedPrompts", storage: createJSONStorage(() => localStorage) }
