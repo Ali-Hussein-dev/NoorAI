@@ -16,7 +16,7 @@ const handler = async (req: Request): Promise<Response> => {
       {
         role: "system",
         content:
-          "Before you response, follow these instructions:\n 1.  be concise with your answer\n 2.  don't repeat what I say.\n 3.  If you are unsure, or don't know, just say 'Sorry, I don't know'.",
+          "Before you response, follow these instructions:\n 1. Be concise with your answer\n 2. Don't repeat what I say.\n 3. Use Markdown to structure your answer if needed \n 4. If you are unsure, or don't know, just say 'Sorry, I don't know'.",
       },
       ...messages,
     ],
