@@ -4,7 +4,13 @@ import { AppShell, Navbar, useMantineTheme, Paper } from "@mantine/core";
 import * as React from "react";
 import { useRouter } from "next/router";
 import { useStore } from "../hooks";
-import { Header, Chats, PromptArea, Sidebar } from "~/components";
+import { Header, PromptArea, Sidebar } from "~/components";
+import { useDidUpdate } from "@mantine/hooks";
+import dynamic from "next/dynamic";
+
+const Chats = dynamic(() => import("../components").then((c) => c.Chats), {
+  ssr: false,
+});
 
 //======================================
 const ChatPage = () => {
@@ -12,7 +18,7 @@ const ChatPage = () => {
   const theme = useMantineTheme();
   const { query, push } = useRouter();
   const conversations = useStore((s) => s.conversations);
-  React.useEffect(() => {
+  useDidUpdate(() => {
     const hasId = conversations.some((con) => con.id === query.chatId);
     if (!hasId) {
       push(`/${conversations[0]?.id || "chat"}`);
@@ -55,7 +61,7 @@ const ChatPage = () => {
         {/* Content */}
         <div className="flex h-full w-full flex-col px-2 md:px-4">
           <div className="mx-auto w-full max-w-3xl grow">
-            <React.Suspense fallback={<div>Loading....</div>}>
+            <React.Suspense fallback={<div>Loading...</div>}>
               <Chats />
             </React.Suspense>
           </div>

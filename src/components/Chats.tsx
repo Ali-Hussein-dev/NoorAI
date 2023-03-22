@@ -18,6 +18,7 @@ import {
   Card,
   Divider,
   Tooltip,
+  useMantineTheme,
 } from "@mantine/core";
 import remarkGfm from "remark-gfm";
 import { useDisclosure } from "@mantine/hooks";
@@ -113,11 +114,22 @@ export const PromptTips = () => {
 
 //======================================
 export const Markdown = ({ content }: { content: string }) => {
+  const theme = useMantineTheme();
   return (
-    <div className="prose w-full max-w-full pr-2 text-lg md:pr-12">
+    <div
+      style={{
+        color:
+          theme.colorScheme === "dark"
+            ? theme.colors.gray[6]
+            : theme.colors.gray[7],
+      }}
+      className="prose w-full max-w-full pr-2 text-lg md:pr-12"
+    >
       <ReactMarkdown
         // eslint-disable-next-line react/no-children-prop
         children={content}
+        // className="text-neutral-400"
+
         remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
         components={{
           code({ inline, className, children, ...props }) {
@@ -147,6 +159,8 @@ export const Chats = () => {
   ) as ConversationT;
   const thread = conversation?.thread || [];
 
+  const theme = useMantineTheme();
+
   if (thread.length < 1) return <PromptTips />;
 
   return (
@@ -173,7 +187,16 @@ export const Chats = () => {
                 </ActionIcon>
               </Tooltip>
             </div>
-            <Paper radius="sm" className="flex items-start gap-x-2 py-4 px-2">
+            <Paper
+              style={{
+                backgroundColor:
+                  theme.colorScheme === "dark"
+                    ? theme.colors.dark[7]
+                    : theme.colors.gray[1],
+              }}
+              radius="sm"
+              className="flex items-start gap-x-2 px-2 pt-5"
+            >
               <Avatar radius="xl">
                 <BsRobot />
               </Avatar>
