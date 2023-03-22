@@ -1,10 +1,9 @@
 import { Button, Title, Paper } from "@mantine/core";
 import { type GetServerSidePropsContext } from "next";
-import { getProviders, getSession, signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { getProviders, getSession, signIn } from "next-auth/react";
+
 import * as React from "react";
 import { BsGithub, BsGoogle } from "react-icons/bs";
-import { useStore } from "~/hooks";
 //======================================
 const Signin = ({
   providers,

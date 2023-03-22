@@ -27,6 +27,8 @@ const server = z.object({
   GITHUB_SECRET: z.string().min(1),
   NOTION_API_KEY: z.string().min(1),
   NOTION_TAGS_DB_ID: z.string().min(1),
+  UPSTASH_REDIS_URL: z.string().min(1),
+  UPSTASH_REDIS_TOKEN: z.string().min(1),
 });
 
 /**
@@ -59,6 +61,8 @@ const processEnv = {
   // github
   NOTION_API_KEY: process.env.NOTION_API_KEY,
   NOTION_TAGS_DB_ID: process.env.NOTION_TAGS_DB_ID,
+  UPSTASH_REDIS_URL: process.env.UPSTASH_REDIS_URL,
+  UPSTASH_REDIS_TOKEN: process.env.UPSTASH_REDIS_TOKEN,
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 };
 
