@@ -2,12 +2,14 @@ import { ActionIcon, Textarea, Loader } from "@mantine/core";
 import * as React from "react";
 import { MdSend } from "react-icons/md";
 import { useFetchForm, useStore } from "../hooks";
+import { BsStopFill } from "react-icons/bs";
 
 //======================================prompt-area
 export const PromptArea = () => {
   const {
     methods: { watch, handleSubmit, register },
     onSubmit,
+    stopStreaming,
   } = useFetchForm();
   const onKeyPress: React.KeyboardEventHandler = (e) => {
     if (e.code === "Enter" && !e.shiftKey) {
@@ -34,17 +36,25 @@ export const PromptArea = () => {
           autosize
           className="w-full grow resize-none  text-lg shadow-lg"
           onKeyDown={queryStatus === "loading" ? undefined : onKeyPress}
+          styles={{ icon: { pointerEvents: "all" } }}
+          icon={
+            queryStatus === "loading" ? (
+              <ActionIcon type="button" onClick={stopStreaming}>
+                <BsStopFill className="z-10 text-red-700" size="20" />
+              </ActionIcon>
+            ) : undefined
+          }
           rightSection={
             <ActionIcon
               type="submit"
+              size="md"
               disabled={!watch("promptText") || queryStatus === "loading"}
-              className="grid h-11 w-11 place-items-center pr-2"
-              unstyled
+              variant="transparent"
             >
               {queryStatus == "loading" ? (
-                <Loader color="gray" variant="dots" size="sm" />
+                <Loader color="orange" variant="dots" size="sm" />
               ) : (
-                <MdSend size="19" />
+                <MdSend size="17" />
               )}
             </ActionIcon>
           }
