@@ -5,7 +5,18 @@ import {
   type DefaultSession,
 } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
-import { env } from "../env.mjs";
+import GoogleProvider from "next-auth/providers/google";
+import { env } from "~/env.mjs";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { prisma } from "./db";
+
+// import { UpstashRedisAdapter } from "@next-auth/upstash-redis-adapter";
+// import { Redis } from "@upstash/redis";
+
+// const redis = new Redis({
+//   url: env.UPSTASH_REDIS_URL,
+//   token: env.UPSTASH_REDIS_TOKEN,
+// });
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -16,14 +27,14 @@ import { env } from "../env.mjs";
 declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
-      // id: string;
+      id: string;
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
   }
 
   // interface User {
-  //   // ...other properties
+  //   //  ...other properties
   //   // role: UserRole;
   // }
 }
@@ -35,18 +46,31 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session({ session }) {
-      // if (session.user) {
-      //   session.user.id = user.id;
-      //   // session.user.role = user.role; <-- put other properties on the session here
-      // }
+    session(param) {
+      const { session, user } = param;
+      if (session?.user) {
+        session.user.id = user.id as string;
+        // session.user.role = user.role; <-- put other properties on the session here
+      }
       return session;
     },
   },
+  adapter: PrismaAdapter(prisma),
   providers: [
     GithubProvider({
       clientId: env.GITHUB_ID,
       clientSecret: env.GITHUB_SECRET,
+    }),
+    GoogleProvider({
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
     }),
     /**
      * ...add more providers here.
@@ -69,5 +93,9 @@ export const getServerAuthSession = (ctx: {
   req: GetServerSidePropsContext["req"];
   res: GetServerSidePropsContext["res"];
 }) => {
+  // console.log("-----------------------headers");
+  // console.log(ctx.req.headers, ctx.req.cookies);
+  // console.log("-----------------------cookies");
+  // console.log(ctx.req.cookies?.["next-auth.csrf-token"]);
   return getServerSession(ctx.req, ctx.res, authOptions);
 };

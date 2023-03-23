@@ -6,7 +6,12 @@ import {
   MediaQuery,
   Header as MantineHeader,
   Burger,
+  Button,
+  Avatar,
+  Tooltip,
 } from "@mantine/core";
+import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 
 export function ToggleTheme() {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
@@ -25,6 +30,18 @@ export function ToggleTheme() {
 }
 
 //======================================
+export const UserDropdown = () => {
+  const { data: sessionData } = useSession();
+  // const [opened, { toggle }] = useDisclosure(false);
+  return (
+    <ActionIcon onClick={() => void signOut()}>
+      <Tooltip label="Logout">
+        <Avatar radius="xl" size="md" src={sessionData?.user.image} />
+      </Tooltip>
+    </ActionIcon>
+  );
+};
+//======================================
 export const Header = ({
   opened,
   setOpened,
@@ -32,6 +49,8 @@ export const Header = ({
   opened: boolean;
   setOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const { data: sessionData } = useSession();
+
   return (
     <MantineHeader
       height={{ base: 60 }}
@@ -49,7 +68,18 @@ export const Header = ({
         </MediaQuery>
         <div className=" sm:w-[180px] lg:w-[280px]"></div>
         <div className="mx-auto w-full max-w-3xl flex-row-center"></div>
-        <ToggleTheme />
+        <div className="gap-x-2 flex-row-center">
+          <ToggleTheme />
+          {sessionData ? (
+            <UserDropdown />
+          ) : (
+            <Link href="/signin">
+              <Button variant="outline" color="gray" radius="md">
+                Login
+              </Button>
+            </Link>
+          )}
+        </div>
       </div>
     </MantineHeader>
   );
