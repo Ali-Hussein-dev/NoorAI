@@ -7,14 +7,16 @@ import {
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { env } from "~/env.mjs";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { prisma } from "./db";
 
-import { UpstashRedisAdapter } from "@next-auth/upstash-redis-adapter";
-import { Redis } from "@upstash/redis";
+// import { UpstashRedisAdapter } from "@next-auth/upstash-redis-adapter";
+// import { Redis } from "@upstash/redis";
 
-const redis = new Redis({
-  url: env.UPSTASH_REDIS_URL,
-  token: env.UPSTASH_REDIS_TOKEN,
-});
+// const redis = new Redis({
+//   url: env.UPSTASH_REDIS_URL,
+//   token: env.UPSTASH_REDIS_TOKEN,
+// });
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -53,7 +55,7 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
-  adapter: UpstashRedisAdapter(redis),
+  adapter: PrismaAdapter(prisma),
   providers: [
     GithubProvider({
       clientId: env.GITHUB_ID,
