@@ -99,7 +99,7 @@ export const useFetchForm = () => {
   };
   console.log(sessionData);
   const onSubmit = async ({ promptText: input }: FormData) => {
-    if (conversation.thread.length > 3 && !sessionData?.user) {
+    if (!sessionData?.user) {
       notifications.show({
         title: "Login required",
         message: "You have to login to continue use the app",
