@@ -2,6 +2,8 @@ import { useForm } from "react-hook-form";
 import { useStore } from ".";
 import { useRouter } from "next/router";
 import React from "react";
+import { notifications } from "@mantine/notifications";
+import { useSession } from "next-auth/react";
 
 interface FormData {
   promptText: string;
@@ -20,7 +22,7 @@ export const useFetchForm = () => {
   const [controller, setController] = React.useState<null | AbortController>(
     null
   );
-
+  const { data: sessionData } = useSession();
   const stopStreaming = () => {
     if (controller) {
       controller.abort();
@@ -95,36 +97,17 @@ export const useFetchForm = () => {
       return;
     }
   };
+  console.log(sessionData);
   const onSubmit = async ({ promptText: input }: FormData) => {
-    // if (!apiKey) {
-    //   notifications.show({
-    //     title: "API key is Required",
-    //     message: "Please add your API key!",
-    //     withCloseButton: true,
-    //     color: "orange",
-    //   });
-    // }
-
-    // if (apiKey) {
-    //   updateStatus("loading");
-    //   // get and store previous messages
-    //   openAPI.mutate({
-    //     apiKey,
-    //     body: {
-    //       messages: [
-    //         ...(conversation?.thread.map((o) => ({
-    //           content: o.input,
-    //           role: o?.message?.role || "user",
-    //         })) || []),
-    //         {
-    //           role: "user",
-    //           content: input.trim(),
-    //         },
-    //       ],
-    //       model: "gpt-3.5-turbo",
-    //     },
-    //   });
-    // }
+    if (!sessionData?.user) {
+      notifications.show({
+        title: "Login required",
+        message: "You have to login to continue use the app",
+        withCloseButton: true,
+        color: "red",
+      });
+      return;
+    }
     await fetchStreaming(input.trim());
     window.scrollTo({
       top: document.body.scrollHeight,
