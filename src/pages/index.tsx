@@ -1,3 +1,4 @@
+import { Button } from "@mantine/core";
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -19,7 +20,7 @@ const Home: NextPage = () => {
               conversations?.[0]?.id ? `/${conversations?.[0].id}` : "/chat"
             }
           >
-            start chating..
+            <Button>Start chating</Button>
           </Link>
         </div>
       </main>

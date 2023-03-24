@@ -123,13 +123,11 @@ export const Markdown = ({ content }: { content: string }) => {
             ? theme.colors.gray[6]
             : theme.colors.gray[7],
       }}
-      className="prose w-full max-w-full pr-2 text-lg md:pr-12"
+      className="prose w-full max-w-full overflow-hidden pr-2 md:pr-12"
     >
       <ReactMarkdown
         // eslint-disable-next-line react/no-children-prop
         children={content}
-        // className="text-neutral-400"
-
         remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
         components={{
           code({ inline, className, children, ...props }) {
@@ -173,7 +171,9 @@ export const Chats = () => {
           <div key={i} className=" w-full">
             <div className="group flex w-full items-start gap-x-2 px-2 py-3">
               <Avatar radius="xl">{i + 1}</Avatar>
-              <p className="grow text-lg">{o?.input}</p>
+              <Text color="dimmed" className="grow">
+                {o?.input}
+              </Text>
               <Tooltip label="Remove unrelated chat" withArrow position="left">
                 <ActionIcon
                   color="red"
