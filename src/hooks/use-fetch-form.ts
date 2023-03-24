@@ -97,7 +97,6 @@ export const useFetchForm = () => {
       return;
     }
   };
-  console.log(sessionData);
   const onSubmit = async ({ promptText: input }: FormData) => {
     if (!sessionData?.user) {
       notifications.show({
