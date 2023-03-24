@@ -30,7 +30,7 @@ const ConversationLink = ({ id, name }: { id: string; name: string }) => {
   return (
     <div
       className={clsx(
-        "mx-w-fit group relative w-full cursor-pointer gap-2 rounded-sm py-2 text-lg flex-row-between ",
+        "mx-w-fit group relative w-full cursor-pointer gap-2 rounded-sm py-2 flex-row-between ",
         query.chatId === id && "bg-zinc-700/20"
       )}
     >
@@ -65,7 +65,7 @@ const ConversationLink = ({ id, name }: { id: string; name: string }) => {
         </>
       ) : (
         <>
-          <Link href={`/${id}`} className="w-full pl-1 capitalize">
+          <Link href={`/${id}`} className="w-full pl-1 text-sm capitalize">
             <Text c={theme === "dark" ? colors.gray[6] : colors.gray[7]}>
               {input.split(" ").splice(0, 4).join(" ")}{" "}
               {input.split(" ").length > 4 ? "..." : ""}

@@ -72,25 +72,18 @@ export const PromptsLib = () => {
               tags: { name: string }[];
             }) => (
               <Card key={text} p="xl" shadow="sm">
-                <Card.Section className="text-left">
+                <Card.Section className="mb-1 text-left">
                   <Spoiler
                     maxHeight={52}
                     showLabel="Show more"
                     hideLabel="Hide"
                   >
-                    <Text>{text}</Text>
+                    <Text color="dimmed">{text}</Text>
                   </Spoiler>
                 </Card.Section>
-                <Card.Section className="gap-x-2 pt-1 pb-2 flex-row-start">
+                <Card.Section className="flex-wrap gap-2 pt-1 pb-2 flex-row-start">
                   {tags.map((obj, i) => (
-                    <Badge
-                      key={i}
-                      variant="filled"
-                      color="gray"
-                      radius="xs"
-                      py="sm"
-                      px={4}
-                    >
+                    <Badge key={i} variant="filled" color="gray">
                       {obj.name}
                     </Badge>
                   ))}
