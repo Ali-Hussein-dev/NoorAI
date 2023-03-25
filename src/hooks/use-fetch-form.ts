@@ -4,16 +4,54 @@ import { useRouter } from "next/router";
 import React from "react";
 import { notifications } from "@mantine/notifications";
 import { useSession } from "next-auth/react";
+import { useAudioRecorder } from "react-audio-voice-recorder";
 
 interface FormData {
   promptText: string;
 }
-
+const useRecorder = () => {
+  const fetcher = (audioFile: Blob) => {
+    const formData = new FormData();
+    formData.append("file", audioFile, "audio.wav");
+    console.log("🚀 fetcher formData:", formData);
+    return fetch("/api/whisper", {
+      method: "POST",
+      body: formData,
+    }).then((res) => res.json());
+  };
+  const recorderControls = useAudioRecorder();
+  const { startRecording, stopRecording, recordingBlob, isRecording } =
+    recorderControls;
+  const [transcript, setTranscript] = React.useState<string | null>(null);
+  React.useEffect(() => {
+    if (recordingBlob) {
+      fetcher(recordingBlob)
+        .then((res) => {
+          setTranscript(res.text);
+          return res;
+        })
+        .catch((err) => console.error(err));
+    }
+  }, [recordingBlob, isRecording]);
+  return {
+    startRecording,
+    stopRecording,
+    fetcher,
+    isRecording,
+    transcript,
+  };
+};
 export const useFetchForm = () => {
   const methods = useForm<FormData>();
-
+  const recorderControls = useRecorder();
   const { query } = useRouter();
   const { reset } = methods;
+  // update textarea with transcript
+  React.useEffect(() => {
+    if (recorderControls.transcript) {
+      reset({ promptText: recorderControls.transcript });
+    }
+  }, [recorderControls.transcript, reset]);
   const conversationId = query.chatId as string;
   const { push, conversations, updateStatus } = useStore();
   const conversation = conversations.find((o) => o.id === conversationId) || {
@@ -51,6 +89,7 @@ export const useFetchForm = () => {
             content: input,
           },
         ],
+        model: "gpt-4",
       }),
     });
     // This data is a ReadableStream
@@ -113,5 +152,5 @@ export const useFetchForm = () => {
       behavior: "smooth",
     });
   };
-  return { methods, onSubmit, stopStreaming };
+  return { methods, onSubmit, stopStreaming, recorderControls };
 };

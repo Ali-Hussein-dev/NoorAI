@@ -1,8 +1,9 @@
-import { ActionIcon, Textarea, Loader } from "@mantine/core";
+import { ActionIcon, Textarea, Loader, Tooltip } from "@mantine/core";
 import * as React from "react";
 import { MdSend } from "react-icons/md";
 import { useFetchForm, useStore } from "../hooks";
 import { BsStopFill } from "react-icons/bs";
+import { HiMicrophone } from "react-icons/hi";
 
 //======================================prompt-area
 export const PromptArea = () => {
@@ -10,7 +11,9 @@ export const PromptArea = () => {
     methods: { watch, handleSubmit, register },
     onSubmit,
     stopStreaming,
+    recorderControls: { startRecording, stopRecording, isRecording },
   } = useFetchForm();
+
   const onKeyPress: React.KeyboardEventHandler = (e) => {
     if (e.code === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -22,6 +25,7 @@ export const PromptArea = () => {
   React.useEffect(() => {
     updateStatus("idle");
   }, [updateStatus]);
+
   return (
     <div className="mx-auto mb-2 w-full max-w-3xl">
       <form
@@ -59,6 +63,22 @@ export const PromptArea = () => {
             </ActionIcon>
           }
         />
+        {/* recorder */}
+        <Tooltip label="Start recording | Lang: En" withArrow position="left">
+          <ActionIcon
+            type="button"
+            size="lg"
+            radius="xl"
+            variant={isRecording ? "default" : "transparent"}
+            onClick={isRecording ? stopRecording : startRecording}
+          >
+            {isRecording ? (
+              <BsStopFill className="z-10 text-red-700" size="20" />
+            ) : (
+              <HiMicrophone size="17" />
+            )}
+          </ActionIcon>
+        </Tooltip>
       </form>
     </div>
   );

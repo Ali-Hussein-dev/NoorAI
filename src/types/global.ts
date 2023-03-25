@@ -4,4 +4,5 @@ export type OpenaiModelsT =
   | "text-davinci-003"
   | "text-curie-001"
   | "text-babbage-001"
+  | "whisper-1"
   | "text-ada-001";
