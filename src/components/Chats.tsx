@@ -171,7 +171,7 @@ export const Chats = () => {
           <div key={i} className=" w-full">
             <div className="group flex w-full items-start gap-x-2 px-2 py-3">
               <Avatar radius="xl">{i + 1}</Avatar>
-              <Text color="dimmed" className="grow">
+              <Text color="dimmed" className="mt-1 grow">
                 {o?.input}
               </Text>
               <Tooltip label="Remove unrelated chat" withArrow position="left">

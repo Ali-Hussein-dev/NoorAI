@@ -8,10 +8,10 @@ export const config = {
 };
 
 const handler = async (req: Request): Promise<Response> => {
-  const { messages } = await req.json();
+  const { model = "gpt-3.5-turbo", messages } = await req.json();
 
   const payload: OpenAIStreamPayload = {
-    model: "gpt-3.5-turbo",
+    model,
     messages: [
       {
         role: "system",
@@ -20,7 +20,6 @@ const handler = async (req: Request): Promise<Response> => {
       },
       ...messages,
     ],
-    // messages: [{ role: "user", content: prompt }],
     stream: true,
     temperature: 0.7,
     top_p: 1,
