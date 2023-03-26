@@ -9,11 +9,10 @@ import { useAudioRecorder } from "react-audio-voice-recorder";
 interface FormData {
   promptText: string;
 }
-const useRecorder = () => {
-  const fetcher = (audioFile: Blob) => {
+const useRecorder = (isAuthed: boolean) => {
+  const fetcher = async (audioFile: Blob) => {
     const formData = new FormData();
     formData.append("file", audioFile, "audio.wav");
-    console.log("🚀 fetcher formData:", formData);
     return fetch("/api/whisper", {
       method: "POST",
       body: formData,
@@ -24,7 +23,14 @@ const useRecorder = () => {
     recorderControls;
   const [transcript, setTranscript] = React.useState<string | null>(null);
   React.useEffect(() => {
-    if (recordingBlob) {
+    if (!isAuthed) {
+      notifications.show({
+        title: "Login required",
+        message: "You have to login to continue using the app",
+        withCloseButton: true,
+        color: "red",
+      });
+    } else if (recordingBlob) {
       fetcher(recordingBlob)
         .then((res) => {
           setTranscript(res.text);
@@ -32,7 +38,7 @@ const useRecorder = () => {
         })
         .catch((err) => console.error(err));
     }
-  }, [recordingBlob, isRecording]);
+  }, [recordingBlob, isRecording, isAuthed]);
   return {
     startRecording,
     stopRecording,
@@ -43,15 +49,9 @@ const useRecorder = () => {
 };
 export const useFetchForm = () => {
   const methods = useForm<FormData>();
-  const recorderControls = useRecorder();
   const { query } = useRouter();
   const { reset } = methods;
-  // update textarea with transcript
-  React.useEffect(() => {
-    if (recorderControls.transcript) {
-      reset({ promptText: recorderControls.transcript });
-    }
-  }, [recorderControls.transcript, reset]);
+
   const conversationId = query.chatId as string;
   const { push, conversations, updateStatus } = useStore();
   const conversation = conversations.find((o) => o.id === conversationId) || {
@@ -61,6 +61,13 @@ export const useFetchForm = () => {
     null
   );
   const { data: sessionData } = useSession();
+  const recorderControls = useRecorder(!!sessionData?.user);
+  // update textarea with transcript
+  React.useEffect(() => {
+    if (recorderControls.transcript) {
+      reset({ promptText: recorderControls.transcript });
+    }
+  }, [recorderControls.transcript, reset]);
   const stopStreaming = () => {
     if (controller) {
       controller.abort();
@@ -140,7 +147,7 @@ export const useFetchForm = () => {
     if (!sessionData?.user) {
       notifications.show({
         title: "Login required",
-        message: "You have to login to continue use the app",
+        message: "You have to login to continue using the app",
         withCloseButton: true,
         color: "red",
       });
