@@ -146,9 +146,9 @@ export const ChatHistory = () => {
         </Tooltip>
       </div>
       <div className="w-full">
-        {list.map(({ id, name = null, thread }, i: number) => (
+        {list.map(({ id, name = null, thread }) => (
           <ConversationLink
-            key={i}
+            key={id}
             id={id}
             name={name || thread?.[0]?.input || "new chat"}
           />
