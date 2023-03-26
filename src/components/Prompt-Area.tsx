@@ -1,4 +1,4 @@
-import { ActionIcon, Textarea, Loader, Tooltip } from "@mantine/core";
+import { Divider, ActionIcon, Textarea, Loader, Tooltip } from "@mantine/core";
 import * as React from "react";
 import { MdSend } from "react-icons/md";
 import { useFetchForm, useStore } from "../hooks";
@@ -50,52 +50,59 @@ export const PromptArea = () => {
               </ActionIcon>
             ) : undefined
           }
+          rightSectionWidth="auto"
           rightSection={
-            <ActionIcon
-              type="submit"
-              size="md"
-              disabled={!watch("promptText") || queryStatus === "loading"}
-              variant="transparent"
-            >
-              {queryStatus == "loading" ? (
-                <Loader color="orange" variant="dots" size="sm" />
-              ) : (
-                <MdSend size="17" />
-              )}
-            </ActionIcon>
+            <div className=" pr-1 flex-row-start">
+              <Tooltip
+                label="Start recording | Lang: En"
+                withArrow
+                position="left"
+              >
+                <ActionIcon
+                  type="button"
+                  variant={isRecording ? "default" : "transparent"}
+                  onClick={
+                    isRecording
+                      ? stopRecording
+                      : () => {
+                          if (!sessionData?.user) {
+                            notifications.show({
+                              title: "Login required",
+                              message:
+                                "You have to login to continue using the app",
+                              withCloseButton: true,
+                              color: "red",
+                            });
+                          } else {
+                            startRecording();
+                          }
+                        }
+                  }
+                >
+                  {isRecording ? (
+                    <BsStopFill className="z-10 text-red-700" size="20" />
+                  ) : (
+                    <HiMicrophone size="17" />
+                  )}
+                </ActionIcon>
+              </Tooltip>
+              <Divider className="m-1 " orientation="vertical" />
+              <ActionIcon
+                type="submit"
+                size="md"
+                disabled={!watch("promptText") || queryStatus === "loading"}
+                variant="transparent"
+              >
+                {queryStatus == "loading" ? (
+                  <Loader color="orange" variant="dots" size="sm" />
+                ) : (
+                  <MdSend size="17" />
+                )}
+              </ActionIcon>
+            </div>
           }
         />
         {/* recorder */}
-        <Tooltip label="Start recording | Lang: En" withArrow position="left">
-          <ActionIcon
-            type="button"
-            size="lg"
-            radius="xl"
-            variant={isRecording ? "default" : "transparent"}
-            onClick={
-              isRecording
-                ? stopRecording
-                : () => {
-                    if (!sessionData?.user) {
-                      notifications.show({
-                        title: "Login required",
-                        message: "You have to login to continue using the app",
-                        withCloseButton: true,
-                        color: "red",
-                      });
-                    } else {
-                      startRecording();
-                    }
-                  }
-            }
-          >
-            {isRecording ? (
-              <BsStopFill className="z-10 text-red-700" size="20" />
-            ) : (
-              <HiMicrophone size="17" />
-            )}
-          </ActionIcon>
-        </Tooltip>
       </form>
     </div>
   );
