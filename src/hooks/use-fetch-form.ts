@@ -23,14 +23,7 @@ const useRecorder = (isAuthed: boolean) => {
     recorderControls;
   const [transcript, setTranscript] = React.useState<string | null>(null);
   React.useEffect(() => {
-    if (!isAuthed) {
-      notifications.show({
-        title: "Login required",
-        message: "You have to login to continue using the app",
-        withCloseButton: true,
-        color: "red",
-      });
-    } else if (recordingBlob) {
+    if (recordingBlob) {
       fetcher(recordingBlob)
         .then((res) => {
           setTranscript(res.text);

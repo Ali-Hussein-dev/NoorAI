@@ -4,6 +4,8 @@ import { MdSend } from "react-icons/md";
 import { useFetchForm, useStore } from "../hooks";
 import { BsStopFill } from "react-icons/bs";
 import { HiMicrophone } from "react-icons/hi";
+import { useSession } from "next-auth/react";
+import { notifications } from "@mantine/notifications";
 
 //======================================prompt-area
 export const PromptArea = () => {
@@ -25,7 +27,7 @@ export const PromptArea = () => {
   React.useEffect(() => {
     updateStatus("idle");
   }, [updateStatus]);
-
+  const { data: sessionData } = useSession();
   return (
     <div className="mx-auto mb-2 w-full max-w-3xl">
       <form
@@ -70,7 +72,22 @@ export const PromptArea = () => {
             size="lg"
             radius="xl"
             variant={isRecording ? "default" : "transparent"}
-            onClick={isRecording ? stopRecording : startRecording}
+            onClick={
+              isRecording
+                ? stopRecording
+                : () => {
+                    if (!sessionData?.user) {
+                      notifications.show({
+                        title: "Login required",
+                        message: "You have to login to continue using the app",
+                        withCloseButton: true,
+                        color: "red",
+                      });
+                    } else {
+                      startRecording();
+                    }
+                  }
+            }
           >
             {isRecording ? (
               <BsStopFill className="z-10 text-red-700" size="20" />
