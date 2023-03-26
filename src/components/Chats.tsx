@@ -19,6 +19,10 @@ import {
   Divider,
   Tooltip,
   useMantineTheme,
+  Badge,
+  Spoiler,
+  Collapse,
+  Button,
 } from "@mantine/core";
 import remarkGfm from "remark-gfm";
 import { useDisclosure } from "@mantine/hooks";
@@ -27,88 +31,173 @@ import clsx from "clsx";
 import { HiArrowSmRight } from "react-icons/hi";
 import dynamic from "next/dynamic";
 import promptTips from "~/content/prompt-tips.json";
+import verbs from "~/content/verbs.json";
+import tones from "~/content/tones.json";
+
 const Prism = dynamic(() => import("@mantine/prism").then((c) => c.Prism), {
   ssr: false,
 });
-
+const List = ({
+  list,
+  title,
+}: {
+  title: string;
+  list: Array<{ name: string }>;
+}) => {
+  const [opened, { toggle }] = useDisclosure(false);
+  return (
+    <>
+      <Title order={3}>{title}</Title>
+      <div className="grid grid-cols-3 gap-y-5 gap-x-3 sm:grid-cols-5 md:grid-cols-6">
+        {list.splice(0, 6).map((o, i) => (
+          <Badge key={i} color="gray" size="lg">
+            <Text color="dimmed" tt="none">
+              {o.name}
+            </Text>
+          </Badge>
+        ))}
+      </div>
+      <div className="w-full flex-row-center">
+        <Button onClick={toggle}>{opened ? "Hide" : "Show more"}</Button>
+      </div>
+      <Collapse in={opened}>
+        <div className="grid grid-cols-3 gap-y-5 gap-x-3 sm:grid-cols-5 md:grid-cols-6">
+          {tones.map((o, i) => (
+            <Badge key={i} color="gray" size="lg">
+              <Text color="dimmed" tt="none">
+                {o.name}
+              </Text>
+            </Badge>
+          ))}
+        </div>
+      </Collapse>
+    </>
+  );
+};
 //======================================
 export const PromptTips = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const [drawerChildren, setdrawerChildren] = React.useState(<div></div>);
   return (
-    <div className="prose max-w-full">
-      <Title order={2} className="gap-2 flex-row-center">
-        <MdInfo size="24" />
-        Prompt Tips & Tricks
-      </Title>
-      <Drawer
-        opened={opened}
-        onClose={close}
-        title={""}
-        overlayProps={{
-          opacity: 0.2,
-        }}
-        position="right"
-        size="sm"
-      >
-        {drawerChildren}
-      </Drawer>
-      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-6">
-        {promptTips.map((o, i) => (
-          <div
-            key={i}
-            className={clsx(
-              i < 3 && "lg:col-span-2",
-              i == 3 && "lg:col-span-3",
-              i == 4 && "col-span-full lg:col-span-3"
-            )}
-          >
-            <Card
-              component="button"
-              onClick={() => {
-                open();
-                setdrawerChildren(
-                  <div className="space-y-3">
-                    <Title order={4} color="dimmed">
-                      {o.title}
-                    </Title>
-                    <Text size="lg">{o.description}</Text>
-                    <Divider />
-                    <Title order={5}>Examples:</Title>
-                    <div className="flex flex-col items-start gap-y-2">
-                      <BsFillEmojiFrownFill size="28" />
-                      <Text size="lg" color="dimmed">
-                        {o.b}
-                      </Text>
-                    </div>
-                    <div className="flex flex-col items-start gap-y-2">
-                      <BsFillEmojiSmileFill size="28" />
-                      <Text size="lg" color="dimmed">
-                        {o.g}
-                      </Text>
-                    </div>
-                  </div>
-                );
-              }}
-              p="xs"
-              h="100%"
-              w="100%"
-              className="group"
+    <>
+      <div className="prose max-w-full">
+        <Title order={2} className="gap-2 flex-row-center">
+          <MdInfo size="24" />
+          Prompt Tips & Tricks
+        </Title>
+        <Drawer
+          opened={opened}
+          onClose={close}
+          title={""}
+          overlayProps={{
+            opacity: 0.2,
+          }}
+          position="right"
+          size="sm"
+        >
+          {drawerChildren}
+        </Drawer>
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-6">
+          {promptTips.map((o, i) => (
+            <div
+              key={i}
+              className={clsx(
+                i < 3 && "lg:col-span-2",
+                i == 3 && "lg:col-span-3",
+                i == 4 && "col-span-full lg:col-span-3"
+              )}
             >
-              <div className="flex-col-start">
-                <div className="w-full gap-x-2 flex-row-between">
-                  <Title order={4}>{o.title}</Title>
-                  <HiArrowSmRight className="mt-5 hidden group-hover:inline-block" />
+              <Card
+                component="button"
+                onClick={() => {
+                  open();
+                  setdrawerChildren(
+                    <div className="space-y-3">
+                      <Title order={4} color="dimmed">
+                        {o.title}
+                      </Title>
+                      <Text size="lg">{o.description}</Text>
+                      <Divider />
+                      <Title order={5}>Examples:</Title>
+                      <div className="flex flex-col items-start gap-y-2">
+                        <BsFillEmojiFrownFill size="28" />
+                        <Text size="lg" color="dimmed">
+                          {o.b}
+                        </Text>
+                      </div>
+                      <div className="flex flex-col items-start gap-y-2">
+                        <BsFillEmojiSmileFill size="28" />
+                        <Text size="lg" color="dimmed">
+                          {o.g}
+                        </Text>
+                      </div>
+                    </div>
+                  );
+                }}
+                p="xs"
+                h="100%"
+                w="100%"
+                className="group"
+              >
+                <div className="flex-col-start">
+                  <div className="w-full gap-x-2 flex-row-between">
+                    <Title order={4}>{o.title}</Title>
+                    <HiArrowSmRight className="mt-5 hidden group-hover:inline-block" />
+                  </div>
+                  <Text size="lg" color="dimmed" ta="left">
+                    {o.description}
+                  </Text>
                 </div>
-                <Text size="lg" color="dimmed" ta="left">
-                  {o.description}
-                </Text>
-              </div>
-            </Card>
-          </div>
-        ))}
+              </Card>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+      <div className="space-y-10 pb-10">
+        <div>
+          <Title ta="center" order={3} mb={24}>
+            Tone Of Voice Examples
+          </Title>
+          <Spoiler
+            maxHeight={80}
+            showLabel="Show more"
+            hideLabel="Hide"
+            styles={{ control: { width: "100%" } }}
+          >
+            <div className="grid grid-cols-3 gap-y-5 gap-x-3 sm:grid-cols-5 md:grid-cols-6">
+              {tones.map((o, i) => (
+                <Badge key={i} color="gray" size="lg">
+                  <Text color="dimmed" tt="none">
+                    {o.name}
+                  </Text>
+                </Badge>
+              ))}
+            </div>
+          </Spoiler>
+        </div>
+        <div>
+          <Title ta="center" order={3} mb={24}>
+            Verbs Examples
+          </Title>
+          <Spoiler
+            maxHeight={80}
+            showLabel="Show more"
+            hideLabel="Hide"
+            styles={{ control: { width: "100%" } }}
+          >
+            <div className="grid grid-cols-3 gap-y-5 gap-x-3 sm:grid-cols-5 md:grid-cols-6">
+              {verbs.map((o, i) => (
+                <Badge color="gray" key={i} size="lg">
+                  <Text color="dimmed" tt="none">
+                    {o.name}
+                  </Text>
+                </Badge>
+              ))}
+            </div>
+          </Spoiler>
+        </div>
+      </div>
+    </>
   );
 };
 
@@ -171,7 +260,7 @@ export const Chats = () => {
           <div key={i} className=" w-full">
             <div className="group flex w-full items-start gap-x-2 px-2 py-3">
               <Avatar radius="xl">{i + 1}</Avatar>
-              <Text color="dimmed" className="grow">
+              <Text color="dimmed" className="mt-1 grow">
                 {o?.input}
               </Text>
               <Tooltip label="Remove unrelated chat" withArrow position="left">

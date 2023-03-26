@@ -151,12 +151,12 @@ export const useStore = create<StoreStateT>()(
               (s) =>
                 ({
                   conversations: [
-                    ...s.conversations,
                     {
                       id,
                       created: new Date().getTime(),
                       thread: [],
                     },
+                    ...s.conversations,
                   ],
                 } as StoreStateT),
               false,
