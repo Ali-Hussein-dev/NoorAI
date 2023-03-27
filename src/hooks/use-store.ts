@@ -45,7 +45,6 @@ export interface StoreStateT {
   id: number;
   filtered: ConversationsT | never[];
   conversations: ConversationsT;
-  apiKey: string;
   // model: OpenaiModelsT;
   // setModel: (model: OpenaiModelsT) => void;
   /**
@@ -54,10 +53,8 @@ export interface StoreStateT {
   status: QueryStatus | FetchStatus;
   updateStatus: (s: QueryStatus | FetchStatus) => void;
 
-  saveApiKey: (apiKey: string) => void;
   /**
    * @required push
-   *
    * @params id: conversation id from router
    * @param chatPair { input: string, response: {text:string}[] }
    */
@@ -97,9 +94,6 @@ export const useStore = create<StoreStateT>()(
         return {
           id: new Date().getTime(),
           status: "idle",
-          apiKey: "",
-          // model: "gpt-turbo-3.5",
-          // setModel: (model) => set({ model }),
           filtered: [],
           conversations: [
             {
@@ -212,7 +206,6 @@ export const useStore = create<StoreStateT>()(
               }
               return { filtered };
             }),
-          saveApiKey: (apiKey) => set({ apiKey }),
           updateStatus: (status) => set(() => ({ status: status })),
           delChatPair: (index, conversationId) =>
             set((s) => {
