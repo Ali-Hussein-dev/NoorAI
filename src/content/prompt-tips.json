@@ -19,13 +19,13 @@
   },
   {
     "title": "Provide Context",
-    "description": "Include more specific keywords that help identify the context of what you are asking for. Avoid using broad keywords with broad meanings and context.",
+    "description": "To better identify what you are requesting, use specific keywords that are relevant to the context. Refrain from using general keywords that have ambiguous meanings and contexts.",
     "g": "What are the most effective ways to reduce stress and anxiety among college students during exams? (specific keywords - stress, anxiety, college students, exams)",
     "b": "How can we improve mental health in society? (broad keywords with broad context - mental health, society)"
   },
   {
     "title": "Few-shot",
-    "description": "Provide an example of what you are expecting. This approach is very effective, especially if you expect complex and unusual results. Also, it can save you a lot of time and typing.",
+    "description": "Giving an example of your anticipated outcome can be highly advantageous, particularly when seeking intricate and uncommon results. This technique can also result in a significant reduction in effort and typing.",
     "g": "Based on the following format ..., write an article with same format about something",
     "b": "Write an article about something"
   }
