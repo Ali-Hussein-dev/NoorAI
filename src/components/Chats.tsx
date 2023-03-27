@@ -21,8 +21,6 @@ import {
   useMantineTheme,
   Badge,
   Spoiler,
-  Collapse,
-  Button,
 } from "@mantine/core";
 import remarkGfm from "remark-gfm";
 import { useDisclosure } from "@mantine/hooks";
@@ -37,43 +35,7 @@ import tones from "~/content/tones.json";
 const Prism = dynamic(() => import("@mantine/prism").then((c) => c.Prism), {
   ssr: false,
 });
-const List = ({
-  list,
-  title,
-}: {
-  title: string;
-  list: Array<{ name: string }>;
-}) => {
-  const [opened, { toggle }] = useDisclosure(false);
-  return (
-    <>
-      <Title order={3}>{title}</Title>
-      <div className="grid grid-cols-3 gap-y-5 gap-x-3 sm:grid-cols-5 md:grid-cols-6">
-        {list.splice(0, 6).map((o, i) => (
-          <Badge key={i} color="gray" size="lg">
-            <Text color="dimmed" tt="none">
-              {o.name}
-            </Text>
-          </Badge>
-        ))}
-      </div>
-      <div className="w-full flex-row-center">
-        <Button onClick={toggle}>{opened ? "Hide" : "Show more"}</Button>
-      </div>
-      <Collapse in={opened}>
-        <div className="grid grid-cols-3 gap-y-5 gap-x-3 sm:grid-cols-5 md:grid-cols-6">
-          {tones.map((o, i) => (
-            <Badge key={i} color="gray" size="lg">
-              <Text color="dimmed" tt="none">
-                {o.name}
-              </Text>
-            </Badge>
-          ))}
-        </div>
-      </Collapse>
-    </>
-  );
-};
+
 //======================================
 export const PromptTips = () => {
   const [opened, { open, close }] = useDisclosure(false);
