@@ -19,13 +19,13 @@
   },
   {
     "title": "Provide Context",
-    "description": "Include not just relevant but more specific keywords that helps identify the context of what you are ask for. and avoid using broad keywords with broad meaning and context.",
+    "description": "Include more specific keywords that help identify the context of what you are asking for. Avoid using broad keywords with broad meanings and context.",
     "g": "What are the most effective ways to reduce stress and anxiety among college students during exams? (specific keywords - stress, anxiety, college students, exams)",
     "b": "How can we improve mental health in society? (broad keywords with broad context - mental health, society)"
   },
   {
     "title": "Few-shot",
-    "description": "Provide an Example of what you are expecting, This approach is very effective especially if you expect complex and unusual results and can save you a lot of time and typing.",
+    "description": "Provide an example of what you are expecting. This approach is very effective, especially if you expect complex and unusual results. Also, it can save you a lot of time and typing.",
     "g": "Based on the following format ..., write an article with same format about something",
     "b": "Write an article about something"
   }
