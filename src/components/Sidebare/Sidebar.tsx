@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import { AiOutlineHistory } from "react-icons/ai";
 import { HiOutlineRectangleStack } from "react-icons/hi2";
 import { TiStarOutline } from "react-icons/ti";
-import { InfoModal } from "..";
+import { InfoModal, OpenaiConfig } from "..";
 import { ScrollArea, Tabs } from "@mantine/core";
 import { PromptsLib } from "./Prompts-Lib";
 
@@ -58,7 +58,7 @@ export const Sidebar = () => {
         <PromptsTabs />
       </div>
       <div className="sticky bottom-0 w-full gap-2 border-t border-neutral-600 pb-2 pt-3 flex-row-center">
-        {/* <OpenaiConfig /> */}
+        <OpenaiConfig />
         <InfoModal />
       </div>
     </div>
