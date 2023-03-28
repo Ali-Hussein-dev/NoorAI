@@ -18,7 +18,9 @@ import { useStore } from "~/hooks";
 export const SelectModel = () => {
   const whisperLang = useStore((state) => state.whisperLang);
   const setWhisperLang = useStore((state) => state.setWhisperLang);
-  const [value, setValue] = React.useState<string | null>(whisperLang);
+  const [value, setValue] = React.useState<string | null>(
+    languages[whisperLang as keyof typeof languages]
+  );
   return (
     <Select
       placeholder="Recording Language"
