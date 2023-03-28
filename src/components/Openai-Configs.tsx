@@ -14,13 +14,34 @@ import { useDisclosure } from "@mantine/hooks";
 import languages from "../content/languages.json";
 import { useStore } from "~/hooks";
 
+/**
+ * label: lang name
+ * whisper: lang code
+ * langauges object: label: code
+ */
+type langKeyT = keyof typeof languages;
+
+const getCode = (label: langKeyT) => {
+  for (const [key, code] of Object.entries(languages)) {
+    if (key === label) {
+      return code;
+    }
+  }
+  return null;
+};
+const getName = (code: string) => {
+  for (const [key, value] of Object.entries(languages)) {
+    if (value === code) {
+      return key;
+    }
+  }
+  return null;
+};
 //======================================
 export const SelectModel = () => {
   const whisperLang = useStore((state) => state.whisperLang);
   const setWhisperLang = useStore((state) => state.setWhisperLang);
-  const [value, setValue] = React.useState<string | null>(
-    languages[whisperLang as keyof typeof languages]
-  );
+  const [value, setValue] = React.useState<string | null>(getName(whisperLang));
   return (
     <Select
       placeholder="Recording Language"
@@ -29,9 +50,10 @@ export const SelectModel = () => {
       data={Object.keys(languages)}
       rightSection={<IoChevronDown size="1rem" />}
       value={value}
-      onChange={(value) => {
-        setValue(value);
-        setWhisperLang(value as keyof typeof languages);
+      onChange={(langName: langKeyT) => {
+        setValue(langName);
+        const code = getCode(langName);
+        code && setWhisperLang(code);
       }}
       dropdownPosition="bottom"
       className="mb-1"
