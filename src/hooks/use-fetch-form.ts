@@ -56,7 +56,7 @@ export const useFetchForm = () => {
             content: input,
           },
         ],
-        maximum_Length: maxLength,
+        max_tokens: maxLength,
         temperature,
       }),
     });

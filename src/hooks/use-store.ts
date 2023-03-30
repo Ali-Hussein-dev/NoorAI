@@ -126,7 +126,11 @@ export const useStore = create<StoreStateT>()(
             set(() => ({ recordingMode: mode }), false, "setRecordingMode"),
           temperature: 0.5,
           setTemperature: (temp) =>
-            set(() => ({ temperature: temp }), false, "setTemperature"),
+            set(
+              () => ({ temperature: +temp.toFixed(1) }),
+              false,
+              "setTemperature"
+            ),
           maxLength: 250,
           setMaxLength: (length) =>
             set(() => ({ maxLength: length }), false, "setMaxLength"),
