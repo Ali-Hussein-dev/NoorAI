@@ -15,7 +15,12 @@ export const useFetchForm = () => {
   const { query } = useRouter();
   const { reset } = methods;
   const conversationId = query.chatId as string;
-  const { push, conversations, updateStatus } = useStore();
+  const conversations = useStore((s) => s.conversations);
+  const push = useStore((s) => s.push);
+  const updateStatus = useStore((s) => s.updateStatus);
+  const temperature = useStore((s) => s.temperature);
+  const maxLength = useStore((s) => s.maxLength);
+
   const conversation = conversations.find((o) => o.id === conversationId) || {
     thread: [],
   };
@@ -51,6 +56,8 @@ export const useFetchForm = () => {
             content: input,
           },
         ],
+        maximum_Length: maxLength,
+        temperature,
       }),
     });
     // This data is a ReadableStream

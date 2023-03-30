@@ -63,6 +63,11 @@ export interface StoreStateT {
   recordingMode: "transcriptions" | "translations";
   setRecordingMode: (mode: "transcriptions" | "translations") => void;
   //------------------------------
+  // configs
+  temperature: number;
+  setTemperature: (temp: number) => void;
+  maxLength: number;
+  setMaxLength: (length: number) => void;
   /**
    * @required push
    * @params id: conversation id from router
@@ -119,6 +124,12 @@ export const useStore = create<StoreStateT>()(
           recordingMode: "transcriptions",
           setRecordingMode: (mode) =>
             set(() => ({ recordingMode: mode }), false, "setRecordingMode"),
+          temperature: 0.5,
+          setTemperature: (temp) =>
+            set(() => ({ temperature: temp }), false, "setTemperature"),
+          maxLength: 250,
+          setMaxLength: (length) =>
+            set(() => ({ maxLength: length }), false, "setMaxLength"),
           push: (id, chatPair, threadIndex) => {
             return set(
               (state) => {

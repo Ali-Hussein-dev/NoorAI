@@ -6,6 +6,8 @@ import {
   Paper,
   Drawer,
   Text,
+  Slider,
+  NumberInput,
 } from "@mantine/core";
 import * as React from "react";
 import { RiSettings3Line } from "react-icons/ri";
@@ -83,15 +85,80 @@ export const RecordingMode = () => {
     </div>
   );
 };
+const Temperature = () => {
+  const temperature = useStore((state) => state.temperature);
+  const setTemperature = useStore((state) => state.setTemperature);
+  const [value, setValue] = React.useState(temperature);
+  const marks = [
+    { value: 0, label: "Precise" },
+    { value: 0.5, label: "Balanced" },
+    { value: 1, label: "Surprising" },
+  ];
+  return (
+    <div className="pb-10">
+      <Text className="mb-1">Response Style</Text>
+      <Slider
+        min={0}
+        max={1}
+        step={0.1}
+        value={value}
+        onChange={(value: number) => {
+          setValue(value);
+          setTemperature(value);
+        }}
+        label={(value) => value.toFixed(1)}
+        marks={marks}
+        color="gray"
+        size="md"
+        className="px-2"
+      />
+    </div>
+  );
+};
+const ResponseLength = () => {
+  const maxLength = useStore((s) => s.maxLength);
+  const setMaxLength = useStore((s) => s.setMaxLength);
+  const [value, setValue] = React.useState(maxLength);
+  const handleChange = (value: number) => {
+    setValue(value);
+    setMaxLength(value);
+  };
+  return (
+    <div className="pb-4">
+      <div className="mb-2 w-full gap-x-2 flex-row-between ">
+        <Text className="">Response Length</Text>
+        <NumberInput
+          value={value}
+          onChange={handleChange}
+          size="xs"
+          className="max-w-[50px]"
+          hideControls
+        />
+      </div>
+      <Slider
+        min={10}
+        max={1500}
+        step={5}
+        value={value}
+        onChange={handleChange}
+        color="gray"
+        size="md"
+        label={null}
+      />
+    </div>
+  );
+};
 //======================================
 export const Content = () => {
   return (
     <Paper className="h-full space-y-4 md:w-[200px] lg:w-[270px]">
       <div className="min-h-[400px]">
-        <Divider my="xs" label="Recording Settings" labelPosition="center" />
+        <Divider label="Text Settings" labelPosition="center" />
+        <Temperature />
+        <ResponseLength />
+        {/* <Divider label="Recording Settings" labelPosition="center" />
         <SelectModel />
-        <RecordingMode />
-        <Divider my="sm" />
+        <RecordingMode /> */}
       </div>
     </Paper>
   );
