@@ -8,8 +8,8 @@ import { prisma } from "~/server/db";
 
 export const promptsRouter = createTRPCRouter({
   prompts: publicProcedure
-    .input(z.object({ prompts: z.array(z.string()) }))
-    .mutation(async ({ input: { prompts } }) => {
+    .input(z.object({ tags: z.array(z.string()) }))
+    .mutation(async ({ input: { tags: prompts } }) => {
       const res = await prisma.prompt.findMany({
         where: { tags: { hasEvery: prompts } },
       });

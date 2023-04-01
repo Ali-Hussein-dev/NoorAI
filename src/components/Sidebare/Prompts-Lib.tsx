@@ -26,7 +26,7 @@ const useFetchPrompts = () => {
   const { mutate } = res;
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    mutate({ prompts: filterQuery });
+    mutate({ tags: filterQuery });
   };
   return { filterQuery, setFilterQuery, ...res, onSubmit, tags: tags.data };
 };
@@ -89,6 +89,9 @@ export const PromptsLib = () => {
                   ))}
                 </Card.Section>
                 <Card.Section withBorder className="gap-2 pr-1 flex-row-end">
+                  {/* <Text size="sm" color="dimmed" className="w-full">
+                    Popularity {0}
+                  </Text> */}
                   <ActionIcon
                     onClick={() => {
                       push({
