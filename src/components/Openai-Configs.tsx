@@ -89,14 +89,9 @@ const Temperature = () => {
   const temperature = useStore((state) => state.temperature);
   const setTemperature = useStore((state) => state.setTemperature);
   const [value, setValue] = React.useState(temperature);
-  const marks = [
-    { value: 0, label: "Precise" },
-    { value: 0.5, label: "Balanced" },
-    { value: 1, label: "Surprising" },
-  ];
   return (
-    <div className="pb-10">
-      <Text className="mb-1">Response Style</Text>
+    <div className="pb-4">
+      <Text className="mb-1">Deterministic to creative</Text>
       <Slider
         min={0}
         max={1}
@@ -107,10 +102,9 @@ const Temperature = () => {
           setTemperature(value);
         }}
         label={(value) => value.toFixed(1)}
-        marks={marks}
+        // marks={marks}
         color="gray"
         size="md"
-        className="px-2"
       />
     </div>
   );
