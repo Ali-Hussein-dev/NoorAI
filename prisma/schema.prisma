@@ -61,9 +61,7 @@ model VerificationToken {
 }
 
 model Prompt {
-  id   String @id @default(cuid())
+  id   String   @id @default(cuid())
   text String
   tags String[]
-  up   Int
-  down Int
 }
