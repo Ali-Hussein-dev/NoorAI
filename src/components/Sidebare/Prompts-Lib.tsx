@@ -26,7 +26,7 @@ const useFetchPrompts = () => {
   const { mutate } = res;
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    mutate({ prompts: filterQuery });
+    mutate({ tags: filterQuery });
   };
   return { filterQuery, setFilterQuery, ...res, onSubmit, tags: tags.data };
 };
@@ -69,7 +69,7 @@ export const PromptsLib = () => {
             }: {
               id: string;
               text: string;
-              tags: { name: string }[];
+              tags: string[];
             }) => (
               <Card key={text} p="xl" shadow="sm">
                 <Card.Section className="mb-1 text-left">
@@ -82,16 +82,23 @@ export const PromptsLib = () => {
                   </Spoiler>
                 </Card.Section>
                 <Card.Section className="flex-wrap gap-2 pt-1 pb-2 flex-row-start">
-                  {tags.map((obj, i) => (
-                    <Badge key={i} variant="filled" color="gray">
-                      {obj.name}
+                  {tags.map((tag) => (
+                    <Badge key={tag} variant="filled" color="gray">
+                      {tag}
                     </Badge>
                   ))}
                 </Card.Section>
                 <Card.Section withBorder className="gap-2 pr-1 flex-row-end">
+                  {/* <Text size="sm" color="dimmed" className="w-full">
+                    Popularity {0}
+                  </Text> */}
                   <ActionIcon
                     onClick={() => {
-                      push({ text, tags, id });
+                      push({
+                        text,
+                        tags: tags.map((s) => ({ name: s })),
+                        id,
+                      });
                       notifications.show({
                         message: "Prompt Saved for later use",
                         withCloseButton: true,
