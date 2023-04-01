@@ -58,7 +58,7 @@ export const PromptsLib = () => {
           }
         />
       </form>
-      <ScrollArea h="70vh" scrollHideDelay={500} className="pt-2 pb-8">
+      <ScrollArea h="70vh" scrollHideDelay={500} className="py-1 ">
         <div className="h-full space-y-2">
           <Text italic>Prompts Found: {data?.length}</Text>
           {data?.map(
