@@ -4,12 +4,7 @@ import {
   publicProcedure,
   protectedProcedure,
 } from "~/server/api/trpc";
-import { Client } from "@notionhq/client";
-import { env } from "~/env.mjs";
 import { prisma } from "~/server/db";
-const notion = new Client({
-  auth: env.NOTION_API_KEY,
-});
 
 export const promptsRouter = createTRPCRouter({
   prompts: publicProcedure
@@ -21,18 +16,10 @@ export const promptsRouter = createTRPCRouter({
       return res;
     }),
   tags: publicProcedure.query(async () => {
-    const response = await notion.databases.query({
-      database_id: env.NOTION_TAGS_DB_ID,
-      filter: {
-        property: "Tags",
-        multi_select: { is_not_empty: true },
-      },
-    });
-    const tags = response.results.map((o) =>
-      // @ts-expect-error wrong
-      o.properties.Tags.multi_select.map((ob) => ob.name).flat()
-    );
-    return [...new Set(tags.flat())] as string[];
+    const res = await prisma.prompt.findMany({ select: { tags: true } });
+    const values = Object.values(res).map((o) => o.tags);
+    const tags = [...new Set(values.flat())].sort();
+    return tags;
   }),
 
   getSecretMessage: protectedProcedure.query(() => {
