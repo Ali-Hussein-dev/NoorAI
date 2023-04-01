@@ -12,7 +12,7 @@ export interface ChatGPTMessage {
   role: ChatGPTAgent | string;
   content: string;
 }
-
+//
 export interface OpenAIStreamPayload {
   model: OpenaiModelsT;
   messages: ChatGPTMessage[];
@@ -21,7 +21,7 @@ export interface OpenAIStreamPayload {
   top_p: number;
   frequency_penalty: number;
   presence_penalty: number;
-  //  max_tokens: number;
+  max_tokens: number;
   n: number;
 }
 

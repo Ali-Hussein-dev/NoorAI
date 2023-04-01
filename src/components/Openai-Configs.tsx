@@ -1,143 +1,158 @@
-import { Button, Paper, PasswordInput, Drawer, Anchor } from "@mantine/core";
-import { useStore } from "~/hooks";
+import {
+  Select,
+  SegmentedControl,
+  Divider,
+  Button,
+  Paper,
+  Drawer,
+  Text,
+  Slider,
+  NumberInput,
+} from "@mantine/core";
 import * as React from "react";
 import { RiSettings3Line } from "react-icons/ri";
+import { IoChevronDown } from "react-icons/io5";
 import { useDisclosure } from "@mantine/hooks";
+import languages from "../content/languages.json";
+import { useStore } from "~/hooks";
 
-// const openaiModels = [
-//   {
-//     label: "GPT-4",
-//     value: "gpt-4",
-//     description: "",
-//     // description: "API key required",
-//   },
-//   {
-//     label: "GPT-turbo-3.5",
-//     value: "gpt-turbo-3.5",
-//     description: "",
-//     // description: "API key required",
-//   },
-//   {
-//     label: "Text-davinci-003",
-//     value: "text-davinci-003",
-//     description: "",
-//     // description: "API key required",
-//   },
-//   {
-//     label: "Text-curie-001",
-//     value: "text-curie-001",
-//     description: "",
-//     // description: "Free to use",
-//   },
-//   {
-//     label: "Text-babbage-001",
-//     value: "text-babbage-001",
-//     description: "",
-//     // description: "Free to use",
-//   },
-//   {
-//     label: "Text-ada-001",
-//     value: "text-ada-001",
-//     description: "",
-//     // description: "Free to use",
-//   },
-// ];
+/**
+ * label: lang name
+ * whisper: lang code
+ * langauges object: label: code
+ */
+type langKeyT = keyof typeof languages;
 
-// interface ItemProps extends React.ComponentPropsWithoutRef<"div"> {
-//   label: string;
-//   description: string;
-// }
-
-// const SelectItem = React.forwardRef<HTMLDivElement, ItemProps>(
-//   ({ label, description, ...others }: ItemProps, ref) => (
-//     <div ref={ref} {...others}>
-//       <Group noWrap>
-//         {/* <Avatar src={image} /> */}
-
-//         <div>
-//           <Text size="sm">{label}</Text>
-//           <Text size="xs" opacity={0.65}>
-//             {description}
-//           </Text>
-//         </div>
-//       </Group>
-//     </div>
-//   )
-// );
-// SelectItem.displayName = "SelectItem";
+const getCode = (label: langKeyT) => {
+  for (const [key, code] of Object.entries(languages)) {
+    if (key === label) {
+      return code;
+    }
+  }
+  return null;
+};
+const getName = (code: string) => {
+  for (const [key, value] of Object.entries(languages)) {
+    if (value === code) {
+      return key;
+    }
+  }
+  return null;
+};
 //======================================
-// export const SelectModel = () => {
-//   const setModel = useStore((state) => state.setModel);
-//   const model = useStore((state) => state.model);
-//   const [value, setValue] = React.useState<string | null>(model);
-//   return (
-//     <div className="">
-//       <Select
-//         placeholder="Pick a model"
-//         label="Pick a model"
-//         data={openaiModels}
-//         itemComponent={SelectItem}
-//         rightSection={<IoChevronDown size="1rem" />}
-//         value={value}
-//         defaultValue={model}
-//         onChange={(value) => {
-//           setValue(value);
-//           setModel(value as OpenaiModelsT);
-//         }}
-//         dropdownPosition="bottom"
-//       />
-//     </div>
-//   );
-// };
+export const SelectModel = () => {
+  const whisperLang = useStore((state) => state.whisperLang);
+  const setWhisperLang = useStore((state) => state.setWhisperLang);
+  const [value, setValue] = React.useState<string | null>(getName(whisperLang));
+  return (
+    <Select
+      placeholder="Recording Language"
+      label="Recording Language"
+      searchable
+      data={Object.keys(languages)}
+      rightSection={<IoChevronDown size="1rem" />}
+      value={value}
+      onChange={(langName: langKeyT) => {
+        setValue(langName);
+        const code = getCode(langName);
+        code && setWhisperLang(code);
+      }}
+      dropdownPosition="bottom"
+      className="mb-1"
+    />
+  );
+};
 
+//======================================
+export const RecordingMode = () => {
+  const recordingMode = useStore((state) => state.recordingMode);
+  const setRecordingMode = useStore((state) => state.setRecordingMode);
+  const [value, setValue] = React.useState(recordingMode);
+  return (
+    <div className="space-y-1 pt-2">
+      <Text size="md">Choose Recording mode</Text>
+      <SegmentedControl
+        value={value}
+        onChange={(value: "transcriptions" | "translations") => {
+          setValue(value);
+          setRecordingMode(value);
+        }}
+        data={[
+          { label: "Transcripe", value: "transcriptions" },
+          { label: "Translate into English", value: "translations" },
+        ]}
+      />
+    </div>
+  );
+};
+const Temperature = () => {
+  const temperature = useStore((state) => state.temperature);
+  const setTemperature = useStore((state) => state.setTemperature);
+  const [value, setValue] = React.useState(temperature);
+  return (
+    <div className="pb-4">
+      <Text className="mb-1">Deterministic to creative</Text>
+      <Slider
+        min={0}
+        max={1}
+        step={0.1}
+        value={value}
+        onChange={(value: number) => {
+          setValue(value);
+          setTemperature(value);
+        }}
+        label={(value) => value.toFixed(1)}
+        // marks={marks}
+        color="gray"
+        size="md"
+      />
+    </div>
+  );
+};
+const ResponseLength = () => {
+  const maxLength = useStore((s) => s.maxLength);
+  const setMaxLength = useStore((s) => s.setMaxLength);
+  const [value, setValue] = React.useState(maxLength);
+  const handleChange = (value: number) => {
+    setValue(value);
+    setMaxLength(value);
+  };
+  return (
+    <div className="pb-4">
+      <div className="mb-2 w-full gap-x-2 flex-row-between ">
+        <Text className="">Response Length</Text>
+        <NumberInput
+          value={value}
+          onChange={handleChange}
+          size="xs"
+          className="max-w-[50px]"
+          hideControls
+        />
+      </div>
+      <Slider
+        min={10}
+        max={1500}
+        step={5}
+        value={value}
+        onChange={handleChange}
+        color="gray"
+        size="md"
+        label={null}
+      />
+    </div>
+  );
+};
 //======================================
 export const Content = () => {
-  const saveApiKey = useStore((s) => s.saveApiKey);
-  const apiKey = useStore((s) => s.apiKey);
-  const [form, setForm] = React.useState({
-    input: apiKey,
-    submitted: false,
-  });
   return (
-    <Paper className="h-full space-y-4 py-4  md:w-[200px] lg:w-[270px]">
-      <div className="w-full">
-        <Button
-          type="button"
-          variant="default"
-          onClick={() => {
-            if (form.submitted) return;
-            setForm((prv) => ({ ...prv, submitted: true }));
-            saveApiKey(form.input);
-          }}
-          className="w-full normal-case"
-        >
-          {form.submitted ? "Saved" : "Save"}
-        </Button>
-      </div>
-      <div className="min-h-[370px] space-y-3">
-        <div className="w-full gap-1 flex-col-start">
-          {/* // !bug clicking on show password doesn't work */}
-          <PasswordInput
-            type="password"
-            variant="filled"
-            value={form.input}
-            onChange={(e) => {
-              setForm({ submitted: false, input: e.target.value });
-            }}
-            placeholder="Your API key"
-            className="input w-full"
-            label="API key"
-          />
-          <Anchor
-            href="https://platform.openai.com/account/api-keys"
-            className="link px-1"
-            target="_blank"
-            size="xs"
-          >
-            Get API key from OpenAI
-          </Anchor>
-        </div>
-        {/* <SelectModel /> */}
+    <Paper className="h-full space-y-4 md:w-[200px] lg:w-[270px]">
+      <div className="min-h-[400px]">
+        <Divider label="Text Settings" labelPosition="center" />
+        <Temperature />
+        <ResponseLength />
+        {/* <Divider label="Recording Settings" labelPosition="center" />
+        <SelectModel />
+        <RecordingMode /> */}
       </div>
     </Paper>
   );

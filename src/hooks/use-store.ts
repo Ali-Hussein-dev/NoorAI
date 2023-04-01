@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist, devtools, createJSONStorage } from "zustand/middleware";
 import type { ChatCompletionResponseMessage } from "openai";
 import { type FetchStatus, type QueryStatus } from "@tanstack/react-query";
+import type languages from "../content/languages.json";
 
 /**
  **Request
@@ -40,12 +41,15 @@ export interface ConversationT {
 }
 
 export type ConversationsT = ConversationT[];
+// const langCodes= Object.values(languages) as const;
+type ValueOf<T> = T[keyof T];
+type LangCodeT = ValueOf<typeof languages>;
+// type LangCodeT = (typeof languages)[keyof typeof languages];
 
 export interface StoreStateT {
   id: number;
   filtered: ConversationsT | never[];
   conversations: ConversationsT;
-  apiKey: string;
   // model: OpenaiModelsT;
   // setModel: (model: OpenaiModelsT) => void;
   /**
@@ -53,11 +57,19 @@ export interface StoreStateT {
    */
   status: QueryStatus | FetchStatus;
   updateStatus: (s: QueryStatus | FetchStatus) => void;
-
-  saveApiKey: (apiKey: string) => void;
+  // Whisper configs
+  whisperLang: LangCodeT;
+  setWhisperLang: (lang: LangCodeT) => void;
+  recordingMode: "transcriptions" | "translations";
+  setRecordingMode: (mode: "transcriptions" | "translations") => void;
+  //------------------------------
+  // configs
+  temperature: number;
+  setTemperature: (temp: number) => void;
+  maxLength: number;
+  setMaxLength: (length: number) => void;
   /**
    * @required push
-   *
    * @params id: conversation id from router
    * @param chatPair { input: string, response: {text:string}[] }
    */
@@ -97,9 +109,6 @@ export const useStore = create<StoreStateT>()(
         return {
           id: new Date().getTime(),
           status: "idle",
-          apiKey: "",
-          // model: "gpt-turbo-3.5",
-          // setModel: (model) => set({ model }),
           filtered: [],
           conversations: [
             {
@@ -109,6 +118,22 @@ export const useStore = create<StoreStateT>()(
               createdAt: new Date().getTime(),
             },
           ],
+          whisperLang: "en",
+          setWhisperLang: (lang) =>
+            set(() => ({ whisperLang: lang }), false, "setWhisperLang"),
+          recordingMode: "transcriptions",
+          setRecordingMode: (mode) =>
+            set(() => ({ recordingMode: mode }), false, "setRecordingMode"),
+          temperature: 0.5,
+          setTemperature: (temp) =>
+            set(
+              () => ({ temperature: +temp.toFixed(1) }),
+              false,
+              "setTemperature"
+            ),
+          maxLength: 250,
+          setMaxLength: (length) =>
+            set(() => ({ maxLength: length }), false, "setMaxLength"),
           push: (id, chatPair, threadIndex) => {
             return set(
               (state) => {
@@ -212,7 +237,6 @@ export const useStore = create<StoreStateT>()(
               }
               return { filtered };
             }),
-          saveApiKey: (apiKey) => set({ apiKey }),
           updateStatus: (status) => set(() => ({ status: status })),
           delChatPair: (index, conversationId) =>
             set((s) => {
