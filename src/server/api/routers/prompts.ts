@@ -18,8 +18,8 @@ export const promptsRouter = createTRPCRouter({
   tags: publicProcedure.query(async () => {
     const res = await prisma.prompt.findMany({ select: { tags: true } });
     const values = Object.values(res).map((o) => o.tags);
-    const tags = [...new Set(values.flat())].sort();
-    return tags;
+    // return tags array
+    return [...new Set(values.flat())].sort();
   }),
 
   getSecretMessage: protectedProcedure.query(() => {
