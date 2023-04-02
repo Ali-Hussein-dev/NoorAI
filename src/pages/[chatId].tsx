@@ -69,7 +69,7 @@ const ChatPage = () => {
             p={0}
             radius={0}
             className={clsx(
-              "sticky bottom-0 z-10 flex h-14 w-full items-start justify-center backdrop-blur-sm md:h-20",
+              "sticky bottom-0 z-10 flex w-full items-start justify-center backdrop-blur-sm",
               theme.colorScheme === "dark"
                 ? "bg-[#101113]/40"
                 : `bg-[#E9ECEF]/30`

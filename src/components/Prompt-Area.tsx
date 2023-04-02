@@ -23,7 +23,7 @@ export const PromptArea = () => {
     updateStatus("idle");
   }, [updateStatus]);
   return (
-    <div className="mx-auto mb-2 w-full max-w-3xl">
+    <div className="mx-auto mb-2 w-full max-w-3xl md:mb-8">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="gap-2 rounded flex-row-between"
