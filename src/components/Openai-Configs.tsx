@@ -131,7 +131,7 @@ const ResponseLength = () => {
       </div>
       <Slider
         min={10}
-        max={1500}
+        max={3500}
         step={5}
         value={value}
         onChange={handleChange}
