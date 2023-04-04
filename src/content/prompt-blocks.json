@@ -1,0 +1,242 @@
+{
+  "actions": [
+    { "label": "Explain", "value": "Explain" },
+    { "label": "Clarify", "value": "Clarify" },
+    { "label": "Rephrase", "value": "Rephrase" },
+    { "label": "Generate", "value": "Generate" },
+    { "label": "Argue", "value": "Argue" },
+    { "label": "Give", "value": "Give" },
+    { "label": "Brainstorm", "value": "Brainstorm" },
+    { "label": "Illustrate", "value": "Illustrate" },
+    { "label": "Change", "value": "Change" },
+    { "label": "Include", "value": "Include" },
+    { "label": "Analyze", "value": "Analyze" },
+    { "label": "Infer", "value": "Infer" },
+    { "label": "Combine", "value": "Combine" },
+    { "label": "List", "value": "List" },
+    { "label": "Come", "value": "Come" },
+    { "label": "Make", "value": "Make" },
+    { "label": "Compare", "value": "Compare" },
+    { "label": "Create", "value": "Create" },
+    { "label": "Rewrite", "value": "Rewrite" },
+    { "label": "Narrow", "value": "Narrow" },
+    { "label": "Compile", "value": "Compile" },
+    { "label": "Summarize", "value": "Summarize" },
+    { "label": "Outline", "value": "Outline" },
+    { "label": "Conclude", "value": "Conclude" },
+    { "label": "Predict", "value": "Predict" },
+    { "label": "Craft", "value": "Craft" },
+    { "label": "Produce", "value": "Produce" },
+    { "label": "Propose", "value": "Propose" },
+    { "label": "Criticize", "value": "Criticize" },
+    { "label": "Provide", "value": "Provide" },
+    { "label": "Critique", "value": "Critique" },
+    { "label": "Recommend", "value": "Recommend" },
+    { "label": "Debug", "value": "Debug" },
+    { "label": "Defend", "value": "Defend" },
+    { "label": "Reword", "value": "Reword" },
+    { "label": "Define", "value": "Define" },
+    { "label": "Describe", "value": "Describe" },
+    { "label": "Suggest", "value": "Suggest" },
+    { "label": "Develop", "value": "Develop" },
+    { "label": "Sum", "value": "Sum" },
+    { "label": "Differentiate", "value": "Differentiate" },
+    { "label": "Discuss", "value": "Discuss" },
+    { "label": "Translate", "value": "Translate" },
+    { "label": "Expand", "value": "Expand" }
+  ],
+  "tones": [
+    { "label": "Excited", "value": "Excited" },
+    { "label": "Playful", "value": "Playful" },
+    { "label": "Helpful", "value": "Helpful" },
+    { "label": "Friendly", "value": "Friendly" },
+    { "label": "Poetic", "value": "Poetic" },
+    { "label": "Assertive", "value": "Assertive" },
+    { "label": "Scientific", "value": "Scientific" },
+    { "label": "Formal", "value": "Formal" },
+    { "label": "Bold", "value": "Bold" },
+    { "label": "Hopeful", "value": "Hopeful" },
+    { "label": "Positive", "value": "Positive" },
+    { "label": "Candid", "value": "Candid" },
+    { "label": "Funny", "value": "Funny" },
+    { "label": "Caring", "value": "Caring" },
+    { "label": "Powerful", "value": "Powerful" },
+    { "label": "Gentle", "value": "Gentle" },
+    { "label": "Professional", "value": "Professional" },
+    { "label": "Casual", "value": "Casual" },
+    { "label": "Cheerful", "value": "Cheerful" },
+    { "label": "Approachable", "value": "Approachable" },
+    { "label": "Reassuring", "value": "Reassuring" },
+    { "label": "Clear", "value": "Clear" },
+    { "label": "Humorous", "value": "Humorous" },
+    { "label": "Reflective", "value": "Reflective" },
+    { "label": "Commanding", "value": "Commanding" },
+    { "label": "Informal", "value": "Informal" },
+    { "label": "Respectful", "value": "Respectful" },
+    { "label": "Comprehensive", "value": "Comprehensive" },
+    { "label": "Informative", "value": "Informative" },
+    { "label": "Curious", "value": "Curious" },
+    { "label": "Romantic", "value": "Romantic" },
+    { "label": "Quirky", "value": "Quirky" },
+    { "label": "Confident", "value": "Confident" },
+    { "label": "Detailed", "value": "Detailed" },
+    { "label": "Inspirational", "value": "Inspirational" },
+    { "label": "Technical", "value": "Technical" },
+    { "label": "Sarcastic", "value": "Sarcastic" },
+    { "label": "Motivational", "value": "Motivational" },
+    { "label": "Conversational", "value": "Conversational" },
+    { "label": "Eloquent", "value": "Eloquent" },
+    { "label": "Inspiring", "value": "Inspiring" },
+    { "label": "Thoughtful", "value": "Thoughtful" },
+    { "label": "Lively", "value": "Lively" },
+    { "label": "Neutral", "value": "Neutral" },
+    { "label": "Serious", "value": "Serious" },
+    { "label": "Empathetic", "value": "Empathetic" },
+    { "label": "Melancholic", "value": "Melancholic" },
+    { "label": "Urgent", "value": "Urgent" },
+    { "label": "Educational", "value": "Educational" },
+    { "label": "Offbeat", "value": "Offbeat" },
+    { "label": "Thought", "value": "Thought" },
+    { "label": "Encouraging", "value": "Encouraging" },
+    { "label": "Negative", "value": "Negative" },
+    { "label": "Visionary", "value": "Visionary" },
+    { "label": "Emotional", "value": "Emotional" },
+    { "label": "Zealous", "value": "Zealous" },
+    { "label": "Uplifting", "value": "Uplifting" },
+    { "label": "Witty", "value": "Witty" },
+    { "label": "Nostalgic", "value": "Nostalgic" },
+    { "label": "Persuasive", "value": "Persuasive" },
+    { "label": "Empowering", "value": "Empowering" },
+    { "label": "Vibrant", "value": "Vibrant" },
+    { "label": "Passionate", "value": "Passionate" },
+    { "label": "Engaging", "value": "Engaging" },
+    { "label": "Personal", "value": "Personal" },
+    { "label": "Enthusiastic", "value": "Enthusiastic" }
+  ],
+  "context": [],
+  "roles": [
+    {
+      "label": "Job interviewer",
+      "value": "a job interviewer"
+    },
+    {
+      "label": "Friend",
+      "value": "a friend"
+    },
+    {
+      "label": "Career counselor",
+      "value": "a career counselor"
+    },
+    {
+      "label": "Personal trainer",
+      "value": "a personal trainer"
+    },
+    {
+      "label": "Product manager",
+      "value": "a product manager"
+    },
+    {
+      "label": "Life hacker",
+      "value": "a life hacker"
+    },
+    {
+      "label": "Travel advisor",
+      "value": "a travel advisor"
+    },
+    {
+      "label": "Mindfulness coach",
+      "value": "a mindfulness coach"
+    },
+    {
+      "label": "Financial advisor",
+      "value": "a financial advisor"
+    },
+    {
+      "label": "Language tutor",
+      "value": "a language tutor"
+    },
+    {
+      "label": "Translator",
+      "value": "a translator"
+    },
+    {
+      "label": "Travel guide",
+      "value": "a travel guide"
+    },
+    {
+      "label": "Marketing expert",
+      "value": "a marketing expert"
+    },
+    {
+      "label": "Software developer",
+      "value": "a software developer"
+    },
+    {
+      "label": "Frontend developer",
+      "value": "a frontend developer"
+    },
+    {
+      "label": "Backend developer",
+      "value": "a backend developer"
+    },
+    {
+      "label": "Full-stack developer",
+      "value": "a full-stack developer"
+    },
+    {
+      "label": "DIY expert",
+      "value": "A DIY expert"
+    },
+    {
+      "label": "Journalist",
+      "value": "a journalist"
+    },
+    {
+      "label": "Technical writer",
+      "value": "a technical writer"
+    },
+    {
+      "label": "Startup tech lawyer",
+      "value": "a startup tech lawyer"
+    },
+    {
+      "label": "Graphic designer",
+      "value": "a graphic designer"
+    },
+    {
+      "label": "Academic researcher",
+      "value": "a academic researcher"
+    },
+    {
+      "label": "Customer support agent",
+      "value": "a customer support agent"
+    },
+    {
+      "label": "Professional salesperson",
+      "value": "a professional salesperson"
+    },
+
+    {
+      "label": "HR consultant",
+      "value": "a HR consultant"
+    },
+    {
+      "label": "Storyteller",
+      "value": "a storyteller"
+    }
+  ],
+  "audience": [
+    { "label": "Students", "value": "students" },
+    { "label": "Developers", "value": "developers" },
+    { "label": "5 years old", "value": " 5 years old" }
+  ],
+  "outputs": [
+    { "value": "a blog", "label": "Blog" },
+    { "value": "an email", "label": "Email" },
+    { "value": "a feedback", "label": "Feedback" },
+    { "value": "a report", "label": "Report" },
+    { "value": "in a table format", "label": "Table format" },
+    { "value": "in bullet points format", "label": "Bullet points" },
+    { "value": "a code snippet", "label": "Code snippet" }
+  ]
+}
