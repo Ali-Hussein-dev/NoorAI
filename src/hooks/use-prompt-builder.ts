@@ -24,7 +24,7 @@ type StorePromptBuilderT = {
     audience?: string;
     roles?: string;
     outputs?: string;
-    maxWords?: string;
+    maxWords?: number;
   };
   prompt: string;
   setPrompt: (block: string | string[], type: blockstypeT) => void;
@@ -33,7 +33,7 @@ type StorePromptBuilderT = {
   roles: Item[];
   audience: Item[];
   outputs: Item[];
-  maxWords: Item[];
+  maxWords: number;
   // reset: () => void;
   //   addItem: (item: Item, type: blockstypeT) => void;
 };
@@ -53,6 +53,7 @@ export const usePromptBuilder = create<StorePromptBuilderT>()(
         tones: tones.sort(sort),
         audience: audience.sort(sort),
         outputs: outputs.sort(sort),
+        maxWords: 0,
         // reset: () =>
         //   set(
         //     () => {
