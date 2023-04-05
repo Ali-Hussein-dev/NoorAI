@@ -14,7 +14,7 @@ import { useDisclosure } from "@mantine/hooks";
 import * as React from "react";
 import { HiCursorClick } from "react-icons/hi";
 import { usePromptBuilder } from "~/hooks";
-import { useMediaQuery } from "@mantine/hooks";
+// import { useMediaQuery } from "@mantine/hooks";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import remarkGfm from "remark-gfm";
 import { ImInfo } from "react-icons/im";
@@ -198,78 +198,80 @@ export const PromptBuilder = <T,>({ setValue }: { setValue: T }) => {
   const [opened, { open, close }] = useDisclosure(false);
   const prompt = usePromptBuilder((s) => s.prompt);
   // const reset = usePromptBuilder((s) => s.reset);
-  const isMobile = useMediaQuery("(max-width: 640px)");
+  // const isMobile = useMediaQuery("(max-width: 640px)");
   return (
     <>
       <Modal
         opened={opened}
         onClose={close}
         title="Prompt Builder (beta)"
-        size={isMobile ? "full" : "xl"}
-        fullScreen={isMobile}
+        size="xl"
+        // fullScreen={isMobile}
         keepMounted={true}
       >
-        <Text color="dimmed" className="mb-1">
-          The prompt builder should assist you in crafting the prompt that will
-          produce the desired result with greater ease.
-        </Text>
-        <div className="grid max-w-3xl grid-cols-1 gap-y-8 gap-x-4 md:mb-8 md:grid-cols-2">
-          <div className=" col-span-2 space-y-4 md:col-span-1 md:pt-1">
-            <Action />
-            <Role />
-            <Tone />
-            <Output />
-            <TargetAudience />
-            <MaxWords />
-          </div>
-          <div>
-            <div className="mb-[1px] flex-row-between">
-              <Text className="font-medium">Preview</Text>
-              <Tooltip
-                label="Complete editing the prompt in the text field."
-                withArrow
-                multiline
-              >
-                <ActionIcon color="dark">
-                  <ImInfo size="17" />
-                </ActionIcon>
-              </Tooltip>
+        <div>
+          <Text color="dimmed" className="mb-1">
+            The prompt builder should assist you in crafting the prompt that
+            will produce the desired result with greater ease.
+          </Text>
+          <div className="grid max-w-3xl grid-cols-1 gap-y-8 gap-x-4 md:mb-8 md:grid-cols-2">
+            <div className="col-span-2 space-y-4 md:col-span-1 md:pt-1">
+              <Action />
+              <Role />
+              <Tone />
+              <Output />
+              <TargetAudience />
+              <MaxWords />
             </div>
-            <Paper withBorder p="sm" className="h-full">
-              <ReactMarkdown
-                // eslint-disable-next-line react/no-children-prop
-                children={prompt}
-                remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
-                className="prose"
-              />
-            </Paper>
-          </div>
-          <div className="col-span-2 h-full w-full flex-wrap pt-2 flex-row-between">
-            <Anchor
-              href="https://twitter.com/AliHussein_20"
-              color="blue"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mx-auto pb-3 md:mx-0 md:pb-0"
-            >
-              Share your feedback
-            </Anchor>
-            <div className="flex w-full gap-2 md:max-w-sm ">
-              <Button w="100%" color="gray" onClick={close}>
-                Cancel
-              </Button>
-              <Button
-                w="100%"
-                variant="default"
-                bg="orange"
-                onClick={() => {
-                  // @ts-expect-error type is correct
-                  setValue("promptText", prompt.trim());
-                  close();
-                }}
+            <div>
+              <div className="mb-[1px] flex-row-between">
+                <Text className="font-medium">Preview</Text>
+                <Tooltip
+                  label="Complete editing the prompt in the text field."
+                  withArrow
+                  multiline
+                >
+                  <ActionIcon color="dark">
+                    <ImInfo size="17" />
+                  </ActionIcon>
+                </Tooltip>
+              </div>
+              <Paper withBorder p="sm" className="h-full">
+                <ReactMarkdown
+                  // eslint-disable-next-line react/no-children-prop
+                  children={prompt}
+                  remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
+                  className="prose"
+                />
+              </Paper>
+            </div>
+            <div className="col-span-2 h-full w-full flex-wrap pt-2 flex-row-between">
+              <Anchor
+                href="https://twitter.com/AliHussein_20"
+                color="blue"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mx-auto pb-3 md:mx-0 md:pb-0"
               >
-                Use draft
-              </Button>
+                Share your feedback
+              </Anchor>
+              <div className="flex w-full gap-2 md:max-w-sm ">
+                <Button w="100%" color="gray" onClick={close}>
+                  Cancel
+                </Button>
+                <Button
+                  w="100%"
+                  variant="default"
+                  bg="orange"
+                  onClick={() => {
+                    // @ts-expect-error type is correct
+                    setValue("promptText", prompt.trim());
+                    close();
+                  }}
+                >
+                  Use draft
+                </Button>
+              </div>
             </div>
           </div>
         </div>
