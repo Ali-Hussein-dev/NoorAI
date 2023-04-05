@@ -42,7 +42,7 @@ export const usePromptBuilder = create<StorePromptBuilderT>()(
     // persist(
     (set) => {
       const initialPromptBlocks = {
-        start: "Follow the guidelines strictly:\n",
+        start: "Follow ALL the following rules & guidelines strictly:\n",
       };
       const { actions, tones, roles, audience, outputs } = promptBlocks;
       return {
