@@ -14,7 +14,7 @@ import { useDisclosure } from "@mantine/hooks";
 import * as React from "react";
 import { HiCursorClick } from "react-icons/hi";
 import { usePromptBuilder } from "~/hooks";
-import { useMediaQuery } from "@mantine/hooks";
+// import { useMediaQuery } from "@mantine/hooks";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import remarkGfm from "remark-gfm";
 import { ImInfo } from "react-icons/im";
@@ -198,15 +198,15 @@ export const PromptBuilder = <T,>({ setValue }: { setValue: T }) => {
   const [opened, { open, close }] = useDisclosure(false);
   const prompt = usePromptBuilder((s) => s.prompt);
   // const reset = usePromptBuilder((s) => s.reset);
-  const isMobile = useMediaQuery("(max-width: 640px)");
+  // const isMobile = useMediaQuery("(max-width: 640px)");
   return (
     <>
       <Modal
         opened={opened}
         onClose={close}
         title="Prompt Builder (beta)"
-        size={isMobile ? "full" : "xl"}
-        fullScreen={isMobile}
+        size="xl"
+        // fullScreen={isMobile}
         keepMounted={true}
       >
         <Text color="dimmed" className="mb-1">
