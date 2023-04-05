@@ -205,7 +205,7 @@ export const PromptBuilder = <T,>({ setValue }: { setValue: T }) => {
         opened={opened}
         onClose={close}
         title="Prompt Builder (beta)"
-        size="xl"
+        size={isMobile ? "full" : "xl"}
         fullScreen={isMobile}
         keepMounted={true}
       >
@@ -213,8 +213,8 @@ export const PromptBuilder = <T,>({ setValue }: { setValue: T }) => {
           The prompt builder should assist you in crafting the prompt that will
           produce the desired result with greater ease.
         </Text>
-        <div className="grid max-w-3xl grid-cols-1 gap-4 lg:mb-8 lg:grid-cols-2">
-          <div className="space-y-4 pt-1">
+        <div className="grid max-w-3xl grid-cols-1 gap-y-8 gap-x-4 md:mb-8 md:grid-cols-2">
+          <div className=" col-span-2 space-y-4 md:col-span-1 md:pt-1">
             <Action />
             <Role />
             <Tone />
@@ -222,9 +222,9 @@ export const PromptBuilder = <T,>({ setValue }: { setValue: T }) => {
             <TargetAudience />
             <MaxWords />
           </div>
-          <div className="">
+          <div>
             <div className="mb-[1px] flex-row-between">
-              <Text className="font-medium">Result</Text>
+              <Text className="font-medium">Preview</Text>
               <Tooltip
                 label="Complete editing the prompt in the text field."
                 withArrow
@@ -244,32 +244,33 @@ export const PromptBuilder = <T,>({ setValue }: { setValue: T }) => {
               />
             </Paper>
           </div>
-        </div>
-        <div className="w-full pt-4 flex-row-between">
-          <Anchor
-            href="https://twitter.com/AliHussein_20"
-            color="blue"
-            target="_blank"
-          >
-            Share your feedback
-          </Anchor>
-          <div className="flex w-full max-w-sm gap-2">
-            <Button w="100%" color="gray" onClick={close}>
-              Cancel
-            </Button>
-            <Button
-              w="100%"
-              variant="default"
-              bg="orange"
-              onClick={() => {
-                // @ts-expect-error type is correct
-                setValue("promptText", prompt.trim());
-                // reset();
-                close();
-              }}
+          <div className="col-span-2 h-full w-full flex-wrap pt-2 flex-row-between">
+            <Anchor
+              href="https://twitter.com/AliHussein_20"
+              color="blue"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mx-auto pb-3 md:mx-0 md:pb-0"
             >
-              Use
-            </Button>
+              Share your feedback
+            </Anchor>
+            <div className="flex w-full gap-2 md:max-w-sm ">
+              <Button w="100%" color="gray" onClick={close}>
+                Cancel
+              </Button>
+              <Button
+                w="100%"
+                variant="default"
+                bg="orange"
+                onClick={() => {
+                  // @ts-expect-error type is correct
+                  setValue("promptText", prompt.trim());
+                  close();
+                }}
+              >
+                Use draft
+              </Button>
+            </div>
           </div>
         </div>
       </Modal>

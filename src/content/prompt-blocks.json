@@ -26,6 +26,7 @@
     { "label": "Conclude", "value": "Conclude" },
     { "label": "Predict", "value": "Predict" },
     { "label": "Craft", "value": "Craft" },
+    { "label": "Convince", "value": "Convince" },
     { "label": "Produce", "value": "Produce" },
     { "label": "Propose", "value": "Propose" },
     { "label": "Criticize", "value": "Criticize" },
@@ -43,7 +44,7 @@
     { "label": "Differentiate", "value": "Differentiate" },
     { "label": "Discuss", "value": "Discuss" },
     { "label": "Translate", "value": "Translate" },
-    { "label": "Expand", "value": "Expand" }
+    { "label": "Expand on", "value": "Expand on" }
   ],
   "tones": [
     { "label": "Excited", "value": "Excited" },
@@ -205,7 +206,7 @@
     },
     {
       "label": "Academic researcher",
-      "value": "a academic researcher"
+      "value": "an academic researcher"
     },
     {
       "label": "Customer support agent",
@@ -233,6 +234,7 @@
   "outputs": [
     { "value": "a blog", "label": "Blog" },
     { "value": "an email", "label": "Email" },
+    { "value": "ideas", "label": "Ideas" },
     { "value": "a feedback", "label": "Feedback" },
     { "value": "a report", "label": "Report" },
     { "value": "in a table format", "label": "Table format" },
