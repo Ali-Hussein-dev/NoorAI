@@ -4,15 +4,15 @@ import {
   Modal,
   Accordion,
   Paper,
-  Badge,
+  Divider,
   Title,
   Anchor,
   Text,
 } from "@mantine/core";
 import * as React from "react";
-import { HiBadgeCheck } from "react-icons/hi";
 import { BsInfoCircle } from "react-icons/bs";
-
+import whatsnewContent from "../content/whatsnew.json";
+import { HiBadgeCheck } from "react-icons/hi";
 const list = [
   {
     q: "How it works?",
@@ -47,35 +47,65 @@ export const Faqs = () => {
 };
 
 const features = [
-  "Model GPT 3.5 turbo",
-  "Prompts History Search",
-  "Prompt Library",
-  "Dark/Light Mode",
+  "Prompts history search",
+  "Prompt library",
+  "Favorite prompts",
+  "create your own prompts for later use",
   "Store data on browser",
   "... and more soon",
 ];
+interface WhatsnewProps {
+  date: string;
+  list: {
+    title: string;
+    description: string;
+  }[];
+}
+//======================================
+export const Whatsnew = ({ content }: { content: WhatsnewProps }) => {
+  return (
+    <div className="w-full">
+      <Title order={3} className="mb-2">
+        What{"'"}s new{" "}
+      </Title>
+      <Text color="dimmed" className="italic">
+        Date: {content.date}
+      </Text>
+      <ul>
+        {content.list.map((o, i) => (
+          <li key={i} className="">
+            <Text color="dimmed">
+              <b>{o.title}:</b> {o.description}
+            </Text>
+          </li>
+        ))}
+      </ul>
+      <Divider mt="sm" />
+    </div>
+  );
+};
+
 //======================================
 export const InfoModal = () => {
   const [opened, { open, close }] = useDisclosure(false);
-
   return (
     <>
       <Modal.Root opened={opened} onClose={close} size="auto">
         <Modal.Overlay />
         <Modal.Content radius="lg">
           <Modal.Body>
-            <Paper className="grid w-full max-w-xl place-items-center space-y-4 pb-4 pt-10">
-              <Title order={1}>
-                Your ChatGPT <Badge color="gray">beta</Badge>
-              </Title>
-              <ul className="mb-4 grid grid-cols-1 gap-y-3 md:grid-cols-2 md:gap-x-8">
+            <Paper className="grid w-full max-w-xl place-items-start space-y-4 pb-4 pt-10">
+              <Whatsnew content={whatsnewContent[0] as WhatsnewProps} />
+              <Title order={3}>What you should expect</Title>
+              <ul className="mb-4 grid grid-cols-1 gap-y-3 md:grid-cols-2">
                 {features.map((st) => (
-                  <li key={st} className="gap-x-2 text-xl flex-row-start">
-                    <HiBadgeCheck size="24" />
+                  <li key={st} className="gap-x-2 flex-row-start">
+                    <HiBadgeCheck size="20" />
                     {st}
                   </li>
                 ))}
               </ul>
+              <Divider mt="sm" />
               <Faqs />
               <div>
                 <Text className="pt-3 text-center">

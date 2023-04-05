@@ -1,0 +1,15 @@
+[
+  {
+    "date": "5.5.2023",
+    "list": [
+      {
+        "title": "Prompt builder",
+        "description": "A prompt builder should assist you in crafting an effective prompt"
+      },
+      {
+        "title": "Settings for generated outputs",
+        "description": "Now you can change the length and the temperature of the response"
+      }
+    ]
+  }
+]
