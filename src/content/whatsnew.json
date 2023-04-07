@@ -1,10 +1,14 @@
 [
   {
-    "date": "5.5.2023",
+    "date": "6.5.2023",
     "list": [
       {
         "title": "Prompt builder",
         "description": "A prompt builder should assist you in crafting an effective prompt"
+      },
+      {
+        "title": "Focus elememt with shortcut",
+        "description": "You can now focus the prompt field with the shortcut 'ctrl + k'"
       },
       {
         "title": "Settings for generated outputs",
