@@ -19,14 +19,14 @@ const server = z.object({
   ),
   // Add `.min(1) on ID and SECRET if you want to make sure they're not empty
   OPENAI_API_KEY: z.string().min(1),
-  OPENAI_API_ORG: z.string().min(1),
+  // OPENAI_API_ORG: z.string().min(1),
 
   GOOGLE_CLIENT_ID: z.string().min(1),
   GOOGLE_CLIENT_SECRET: z.string().min(1),
   GITHUB_ID: z.string().min(1),
   GITHUB_SECRET: z.string().min(1),
-  NOTION_API_KEY: z.string().min(1),
-  NOTION_TAGS_DB_ID: z.string().min(1),
+  // NOTION_API_KEY: z.string().min(1),
+  // NOTION_TAGS_DB_ID: z.string().min(1),
   // UPSTASH_REDIS_URL: z.string().min(1),
   // UPSTASH_REDIS_TOKEN: z.string().min(1),
 
@@ -53,16 +53,17 @@ const processEnv = {
   NEXTAUTH_URL: process.env.NEXTAUTH_URL,
   // openai
   OPENAI_API_KEY: process.env.OPENAI_API_KEY,
-  OPENAI_API_ORG: process.env.OPENAI_API_ORG,
+  // OPENAI_API_ORG: process.env.OPENAI_API_ORG,
   // google
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
   // github
   GITHUB_ID: process.env.GITHUB_ID,
   GITHUB_SECRET: process.env.GITHUB_SECRET,
-  // github
-  NOTION_API_KEY: process.env.NOTION_API_KEY,
-  NOTION_TAGS_DB_ID: process.env.NOTION_TAGS_DB_ID,
+  // notion
+  // NOTION_API_KEY: process.env.NOTION_API_KEY,
+  // NOTION_TAGS_DB_ID: process.env.NOTION_TAGS_DB_ID,
+
   // UPSTASH_REDIS_URL: process.env.UPSTASH_REDIS_URL,
   // UPSTASH_REDIS_TOKEN: process.env.UPSTASH_REDIS_TOKEN,
 
