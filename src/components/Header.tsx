@@ -1,4 +1,4 @@
-import { FaSun } from "react-icons/fa";
+import { FaGithub, FaSun } from "react-icons/fa";
 import { BsMoonStarsFill } from "react-icons/bs";
 import {
   ActionIcon,
@@ -9,6 +9,7 @@ import {
   Button,
   Avatar,
   Tooltip,
+  Anchor,
 } from "@mantine/core";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
@@ -24,7 +25,7 @@ export function ToggleTheme() {
       onClick={() => toggleColorScheme()}
       title="Toggle color scheme"
     >
-      {dark ? <FaSun size="1.1rem" /> : <BsMoonStarsFill size="1.1rem" />}
+      {dark ? <FaSun size="22" /> : <BsMoonStarsFill size="22" />}
     </ActionIcon>
   );
 }
@@ -58,6 +59,7 @@ export const Header = ({
       className="flex w-full items-center"
     >
       <div className="w-full flex-row-start">
+        <div className="text-xl font-bold">NoorAI</div>
         <MediaQuery largerThan="sm" styles={{ display: "none" }}>
           <Burger
             opened={opened}
@@ -68,7 +70,14 @@ export const Header = ({
         </MediaQuery>
         <div className=" sm:w-[180px] lg:w-[280px]"></div>
         <div className="mx-auto w-full max-w-3xl flex-row-center"></div>
-        <div className="gap-x-2 flex-row-center">
+        <div className="gap-x-3 flex-row-center">
+          <Anchor
+            href="https://github.com/Ali-Hussein-dev/NoorAI"
+            target="_blank"
+            rel="noopener"
+          >
+            <FaGithub size="22" className="text-gray-200" />
+          </Anchor>
           <ToggleTheme />
           {sessionData ? (
             <UserDropdown />
