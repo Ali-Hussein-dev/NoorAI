@@ -4,11 +4,30 @@ import { MdSend } from "react-icons/md";
 import { useFetchForm, useStore } from "../hooks";
 import { BsStopFill } from "react-icons/bs";
 import { PromptBuilder } from ".";
+import { type UseFormSetFocus } from "react-hook-form";
 
+const useFocus = (setFocus: UseFormSetFocus<{ promptText: string }>) => {
+  React.useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const handleKeyDown = (e: any) => {
+      if (e.ctrlKey && e.key === "k") {
+        e.preventDefault();
+
+        setFocus("promptText", { shouldSelect: true });
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [setFocus]);
+};
 //======================================prompt-area
 export const PromptArea = () => {
   const {
-    methods: { watch, handleSubmit, register, setValue },
+    methods: { watch, handleSubmit, register, setValue, setFocus },
     onSubmit,
     stopStreaming,
   } = useFetchForm();
@@ -19,7 +38,7 @@ export const PromptArea = () => {
     }
   };
   const { status: queryStatus, updateStatus } = useStore();
-
+  useFocus(setFocus);
   React.useEffect(() => {
     updateStatus("idle");
   }, [updateStatus]);
