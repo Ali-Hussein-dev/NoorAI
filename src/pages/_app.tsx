@@ -34,7 +34,19 @@ const MyApp: AppType<{ session: Session | null }> = ({
           theme={{
             colorScheme,
             primaryColor: "orange",
-            /** Put your mantine theme override here */
+            globalStyles: ({ colors, colorScheme }) => ({
+              "::-webkit-scrollbar": {
+                width: 8,
+              },
+              "::-webkit-scrollbar-track": {
+                background: "transparent",
+              },
+              "::-webkit-scrollbar-thumb": {
+                background:
+                  colorScheme === "dark" ? colors.dark[3] : colors.gray[5],
+                borderRadius: 4,
+              },
+            }),
           }}
         >
           <Notifications position="top-center" />
