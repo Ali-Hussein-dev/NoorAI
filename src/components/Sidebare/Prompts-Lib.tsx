@@ -30,11 +30,22 @@ const useFetchPrompts = () => {
   };
   return { filterQuery, setFilterQuery, ...res, onSubmit, tags: tags.data };
 };
+const usePromptsUpvote = () => {
+  const res = api.prompts.popularity.useMutation();
+  return res;
+};
+type PromptT = {
+  id: string;
+  text: string;
+  popularity: number;
+  tags: string[];
+};
 //======================================
 export const PromptsLib = () => {
   const { filterQuery, setFilterQuery, data, onSubmit, status, tags } =
     useFetchPrompts();
   const { push } = useMarkedPrompts();
+  const { mutate } = usePromptsUpvote();
   return (
     <div className="h-full">
       <form onSubmit={onSubmit} className="gap-2 flex-row-start">
@@ -61,71 +72,61 @@ export const PromptsLib = () => {
       <ScrollArea h="70vh" scrollHideDelay={500} className="py-1 ">
         <div className="h-full space-y-2">
           <Text italic>Prompts Found: {data?.length}</Text>
-          {data?.map(
-            ({
-              text,
-              tags,
-              id,
-            }: {
-              id: string;
-              text: string;
-              tags: string[];
-            }) => (
-              <Card key={text} p="xl" shadow="sm">
-                <Card.Section className="mb-1 text-left">
-                  <Spoiler
-                    maxHeight={52}
-                    showLabel="Show more"
-                    hideLabel="Hide"
-                  >
-                    <Text color="dimmed">{text}</Text>
-                  </Spoiler>
-                </Card.Section>
-                <Card.Section className="flex-wrap gap-2 pt-1 pb-2 flex-row-start">
-                  {tags.map((tag) => (
-                    <Badge key={tag} variant="filled" color="gray">
-                      {tag}
-                    </Badge>
-                  ))}
-                </Card.Section>
-                <Card.Section withBorder className="gap-2 pr-1 flex-row-end">
-                  {/* <Text size="sm" color="dimmed" className="w-full">
-                    Popularity {0}
-                  </Text> */}
-                  <ActionIcon
-                    onClick={() => {
-                      push({
-                        text,
-                        tags: tags.map((s) => ({ name: s })),
-                        id,
-                      });
-                      notifications.show({
-                        message: "Prompt Saved for later use",
-                        withCloseButton: true,
-                        color: "lime",
-                      });
-                    }}
-                  >
-                    <TiStarOutline />
-                  </ActionIcon>
-                  <ActionIcon
-                    onClick={() => {
-                      if ("clipboard" in navigator) {
-                        navigator.clipboard.writeText(text);
-                      }
-                      notifications.show({
-                        message: "Prompt Copied",
-                        withCloseButton: true,
-                        color: "lime",
-                      });
-                    }}
-                  >
-                    <MdContentCopy />
-                  </ActionIcon>
-                </Card.Section>
-              </Card>
-            )
-          )}
+          {data?.map(({ text, tags, id, popularity }: PromptT) => (
+            <Card key={text} p="xl" shadow="sm">
+              <Card.Section className="mb-1 text-left">
+                <Spoiler maxHeight={52} showLabel="Show more" hideLabel="Hide">
+                  <Text color="dimmed">{text}</Text>
+                </Spoiler>
+              </Card.Section>
+              <Card.Section className="flex-wrap gap-2 pt-1 pb-2 flex-row-start">
+                {tags.map((tag) => (
+                  <Badge key={tag} variant="filled" color="gray">
+                    {tag}
+                  </Badge>
+                ))}
+              </Card.Section>
+              <Card.Section withBorder className="gap-2 pr-1 flex-row-end">
+                <Text size="sm" color="dimmed" className="w-full">
+                  {popularity > 0
+                    ? `Used ${popularity} ${popularity > 1 ? "times" : "time"}`
+                    : ""}
+                </Text>
+                <ActionIcon
+                  onClick={() => {
+                    push({
+                      text,
+                      tags: tags.map((s) => ({ name: s })),
+                      id,
+                    });
+                    notifications.show({
+                      message: "Prompt Saved for later use",
+                      withCloseButton: true,
+                      color: "lime",
+                    });
+                    mutate({ id });
+                  }}
+                >
+                  <TiStarOutline />
+                </ActionIcon>
+                <ActionIcon
+                  onClick={() => {
+                    if ("clipboard" in navigator) {
+                      navigator.clipboard.writeText(text);
+                    }
+                    notifications.show({
+                      message: "Prompt Copied",
+                      withCloseButton: true,
+                      color: "lime",
+                    });
+                    mutate({ id });
+                  }}
+                >
+                  <MdContentCopy />
+                </ActionIcon>
+              </Card.Section>
+            </Card>
+          ))}
         </div>
       </ScrollArea>
     </div>

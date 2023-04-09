@@ -21,6 +21,18 @@ export const promptsRouter = createTRPCRouter({
     // return tags array
     return [...new Set(values.flat())].sort();
   }),
+  popularity: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ input }) => {
+      const res = await prisma.prompt.updateMany({
+        where: { id: input.id },
+        data: {
+          popularity: { increment: 1 },
+        },
+      });
+
+      return res.count > 0 ? { ok: true } : { ok: false };
+    }),
 
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
