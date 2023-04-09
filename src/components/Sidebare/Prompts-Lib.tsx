@@ -13,6 +13,7 @@ import {
   Card,
   MultiSelect,
   Loader,
+  Title,
 } from "@mantine/core";
 
 const useFetchPrompts = () => {
@@ -30,9 +31,27 @@ const useFetchPrompts = () => {
   };
   return { filterQuery, setFilterQuery, ...res, onSubmit, tags: tags.data };
 };
-const usePromptsUpvote = () => {
-  const res = api.prompts.popularity.useMutation();
-  return res;
+
+//======================================
+const InitialView = () => {
+  return (
+    <div className="w-full pt-3 flex-col-start">
+      <Text weight="bold" mb="xs">
+        Prompts Library
+      </Text>
+      <div>
+        <Text color="dimmed" size="lg">
+          Get inspired
+        </Text>
+        <Text color="dimmed" size="lg">
+          Learn from others
+        </Text>
+        <Text color="dimmed" size="lg">
+          Get new prompts continuously
+        </Text>
+      </div>
+    </div>
+  );
 };
 type PromptT = {
   id: string;
@@ -45,7 +64,7 @@ export const PromptsLib = () => {
   const { filterQuery, setFilterQuery, data, onSubmit, status, tags } =
     useFetchPrompts();
   const { push } = useMarkedPrompts();
-  const { mutate } = usePromptsUpvote();
+  const { mutate } = api.prompts.popularity.useMutation();
   return (
     <div className="h-full">
       <form onSubmit={onSubmit} className="gap-2 flex-row-start">
@@ -71,7 +90,10 @@ export const PromptsLib = () => {
       </form>
       <ScrollArea h="70vh" scrollHideDelay={500} className="py-1 ">
         <div className="h-full space-y-2">
-          <Text italic>Prompts Found: {data?.length}</Text>
+          {!data && <InitialView />}
+          <Text hidden={!data} color="dimmed">
+            Result: {data?.length}
+          </Text>
           {data?.map(({ text, tags, id, popularity }: PromptT) => (
             <Card key={text} p="xl" shadow="sm">
               <Card.Section className="mb-1 text-left">
