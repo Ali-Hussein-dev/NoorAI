@@ -64,4 +64,5 @@ model Prompt {
   id   String   @id @default(cuid())
   text String
   tags String[]
+  popularity Int
 }
