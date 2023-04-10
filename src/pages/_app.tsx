@@ -1,4 +1,4 @@
-import { api } from "~/utils/api";
+import { api, themeOverride } from "~/utils";
 import "~/styles/globals.css";
 import { type AppType } from "next/app";
 import { type Session } from "next-auth";
@@ -33,20 +33,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
           withNormalizeCSS
           theme={{
             colorScheme,
-            primaryColor: "orange",
-            globalStyles: ({ colors, colorScheme }) => ({
-              "::-webkit-scrollbar": {
-                width: 8,
-              },
-              "::-webkit-scrollbar-track": {
-                background: "transparent",
-              },
-              "::-webkit-scrollbar-thumb": {
-                background:
-                  colorScheme === "dark" ? colors.dark[3] : colors.gray[5],
-                borderRadius: 4,
-              },
-            }),
+            ...themeOverride,
           }}
         >
           <Notifications position="top-center" />
