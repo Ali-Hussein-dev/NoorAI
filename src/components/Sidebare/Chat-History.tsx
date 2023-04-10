@@ -27,10 +27,13 @@ const ConversationLink = ({ id, name }: { id: string; name: string }) => {
   const { renameConversation, deleteConversation, conversations } = useStore();
   const theme = useColorScheme();
   const { colors } = useMantineTheme();
+  const threadLength =
+    conversations[conversations.findIndex((c) => c.id === id)]?.thread.length ||
+    0;
   return (
     <div
       className={clsx(
-        "mx-w-fit group relative w-full cursor-pointer gap-2 rounded-sm py-2 flex-row-between ",
+        "mx-w-fit group relative h-10 w-full cursor-pointer gap-2 rounded-sm flex-row-between",
         query.chatId === id && "bg-zinc-700/20"
       )}
     >
@@ -65,11 +68,19 @@ const ConversationLink = ({ id, name }: { id: string; name: string }) => {
         </>
       ) : (
         <>
-          <Link href={`/${id}`} className="w-full pl-1 text-sm capitalize">
+          <Link
+            href={`/${id}`}
+            className="w-full gap-1 px-1 text-sm capitalize no-underline flex-row-between"
+          >
             <Text c={theme === "dark" ? colors.gray[6] : colors.gray[7]}>
-              {input.split(" ").splice(0, 4).join(" ")}{" "}
-              {input.split(" ").length > 4 ? "..." : ""}
+              {input.split(" ").splice(0, 5).join(" ")}{" "}
+              {input.split(" ").length > 5 ? "..." : ""}
             </Text>
+            {threadLength > 0 && (
+              <Text className="block group-hover:hidden" color="dimmed">
+                {threadLength}
+              </Text>
+            )}
           </Link>
           <div className="flex gap-x-3">
             {/* //------------------------------RENAME BUTTON */}
