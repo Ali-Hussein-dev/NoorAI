@@ -40,15 +40,15 @@ const InitialView = () => {
         Prompts Library
       </Text>
       <div>
-        <Text color="dimmed" size="lg">
-          Get inspired
-        </Text>
-        <Text color="dimmed" size="lg">
-          Learn from others
-        </Text>
-        <Text color="dimmed" size="lg">
-          Get new prompts continuously
-        </Text>
+        {[
+          "Get inspired",
+          "Learn from others",
+          "Prompts library is updated regularly",
+        ].map((s) => (
+          <Text key={s} color="dimmed" size="lg">
+            {s}
+          </Text>
+        ))}
       </div>
     </div>
   );
