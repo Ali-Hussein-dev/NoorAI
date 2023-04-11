@@ -1,4 +1,9 @@
-import { useStore, type ConversationT, useRegenerate } from "~/hooks";
+import {
+  useStore,
+  type ConversationT,
+  useRegenerate,
+  useFetchForm,
+} from "~/hooks";
 import { useRouter } from "next/router";
 import {
   BsFillEmojiFrownFill,
@@ -24,6 +29,7 @@ import {
   Badge,
   Spoiler,
   Button,
+  Textarea,
 } from "@mantine/core";
 import remarkGfm from "remark-gfm";
 import { useDisclosure } from "@mantine/hooks";
@@ -34,6 +40,7 @@ import dynamic from "next/dynamic";
 import promptTips from "~/content/prompt-tips.json";
 import verbs from "~/content/verbs.json";
 import tones from "~/content/tones.json";
+import { FiEdit3 } from "react-icons/fi";
 
 const Prism = dynamic(() => import("@mantine/prism").then((c) => c.Prism), {
   ssr: false,
@@ -180,8 +187,6 @@ export const Markdown = ({ content }: { content: string }) => {
       className="prose w-full max-w-full overflow-hidden pr-2 md:pr-12"
     >
       <ReactMarkdown
-        // eslint-disable-next-line react/no-children-prop
-        children={content}
         remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
         components={{
           code({ inline, className, children, ...props }) {
@@ -198,7 +203,79 @@ export const Markdown = ({ content }: { content: string }) => {
             );
           },
         }}
-      />
+      >
+        {content}
+      </ReactMarkdown>
+    </div>
+  );
+};
+export const UserMsgEdit = ({ input = "", i = 0 }) => {
+  const {
+    methods: { register, getValues },
+    onSubmit,
+  } = useFetchForm({ promptText: input });
+  const sliceThread = useStore((s) => s.sliceThread);
+  const { query } = useRouter();
+  const [editing, setEditing] = React.useState(false);
+  return (
+    <div className="grow">
+      {editing ? (
+        <div className="">
+          <Textarea
+            {...register("promptText")}
+            className="w-full"
+            styles={{ input: { background: "transparent" } }}
+          />
+          <div className="w-full gap-4 pt-2 flex-row-end">
+            <Button
+              onClick={() => {
+                setEditing(false);
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="default"
+              onClick={() => {
+                setEditing(false);
+                const promptText = getValues("promptText");
+                // update state: drop everything after index
+                sliceThread(i, query.chatId as string);
+                useStore.persist.rehydrate();
+                onSubmit({ promptText });
+              }}
+            >
+              Submit
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <div className="grow gap-2 flex-row-between">
+          <Text
+            onClick={() => setEditing(true)}
+            color="dimmed"
+            className="mt-1 grow hover:cursor-pointer"
+          >
+            {input}
+          </Text>
+          {/* <ReactMarkdown remarkPlugins={[[remarkGfm, { singleTilde: false }]]}>
+            {input}
+          </ReactMarkdown> */}
+          <Tooltip
+            label="click to on the text to edit"
+            withArrow
+            position="left"
+          >
+            <ActionIcon
+              size="lg"
+              onClick={() => setEditing(true)}
+              className="opacity-0 group-hover:opacity-100"
+            >
+              <FiEdit3 size="17" />
+            </ActionIcon>
+          </Tooltip>
+        </div>
+      )}
     </div>
   );
 };
@@ -217,22 +294,16 @@ export const Chats = () => {
   if (thread.length < 1 && status !== "loading") return <PromptTips />;
 
   return (
-    <section className="w-full pb-5">
-      <Title order={4} className="mb-3 text-center">
-        Total messages: {thread.length}
-      </Title>
+    <section className="w-full pb-5 pt-4">
       <div className="gap-4 flex-col-center">
         {thread.map((o, i) => (
-          <div key={i} className=" w-full">
-            <div className="group flex w-full items-start gap-x-2 px-2 py-3">
+          <div key={i} className="w-full">
+            <div className="group flex w-full items-start gap-x-2 px-2 py-4">
               <Avatar radius="xl">{i + 1}</Avatar>
-              <Text color="dimmed" className="mt-1 grow">
-                {o?.input}
-              </Text>
+              <UserMsgEdit input={o.input} i={i} />
               <Tooltip label="Remove unrelated chat" withArrow position="left">
                 <ActionIcon
                   color="red"
-                  radius="xl"
                   size="lg"
                   disabled={status == "loading"}
                   onClick={() => delChatPair(i, conversation.id)}

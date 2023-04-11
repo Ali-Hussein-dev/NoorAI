@@ -23,8 +23,10 @@ export const useRegenerate = () => {
   };
   return { regenerate, stopStreaming };
 };
-export const useFetchForm = () => {
-  const methods = useForm<FormData>();
+export const useFetchForm = (param?: { promptText: string }) => {
+  const methods = useForm<FormData>({
+    defaultValues: { promptText: param?.promptText },
+  });
 
   const { query } = useRouter();
   const { reset } = methods;
