@@ -102,6 +102,10 @@ export interface StoreStateT {
    * used for regenerating last response
    */
   dropLastTheardElement: (conversationsId: string) => void;
+  /**
+   * used for editing prompts
+   */
+  sliceThread: (index: number, conversationId: string) => void;
 }
 
 const localStorageKey = "yourchatgpt";
@@ -263,6 +267,22 @@ export const useStore = create<StoreStateT>()(
               },
               false,
               "regenerate"
+            ),
+          sliceThread: (index, conversationId) =>
+            set(
+              (s) => {
+                const { conversations } = s;
+                const conversation = conversations.find(
+                  (o) => o.id === conversationId
+                );
+                if (conversation) {
+                  const thread = conversation.thread;
+                  conversation.thread = thread.slice(0, index);
+                }
+                return s;
+              },
+              false,
+              "spliceThread"
             ),
         };
       },
