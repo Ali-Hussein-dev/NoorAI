@@ -13,7 +13,6 @@ import {
   Card,
   MultiSelect,
   Loader,
-  Title,
 } from "@mantine/core";
 
 const useFetchPrompts = () => {
