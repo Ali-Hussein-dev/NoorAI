@@ -8,7 +8,21 @@ import { useSession } from "next-auth/react";
 interface FormData {
   promptText: string;
 }
-
+export const useRegenerate = () => {
+  const drop = useStore((s) => s.dropLastTheardElement);
+  const conversations = useStore((s) => s.conversations);
+  const { query } = useRouter();
+  const { onSubmit, stopStreaming } = useFetchForm();
+  const regenerate = () => {
+    const prompt =
+      conversations.find((o) => o.id === query.chatId)?.thread.at(-1)?.input ||
+      "";
+    drop(query.chatId as string);
+    useStore.persist.rehydrate();
+    onSubmit({ promptText: prompt });
+  };
+  return { regenerate, stopStreaming };
+};
 export const useFetchForm = () => {
   const methods = useForm<FormData>();
 

@@ -1,12 +1,14 @@
-import { useStore, type ConversationT } from "~/hooks";
+import { useStore, type ConversationT, useRegenerate } from "~/hooks";
 import { useRouter } from "next/router";
 import {
   BsFillEmojiFrownFill,
   BsFillEmojiSmileFill,
   BsRobot,
+  BsStopFill,
 } from "react-icons/bs";
-import { MdDelete, MdInfo } from "react-icons/md";
 import ReactMarkdown from "react-markdown";
+import { MdDelete, MdInfo } from "react-icons/md";
+import { TbReload } from "react-icons/tb";
 import { type Language } from "prism-react-renderer";
 import {
   Title,
@@ -21,6 +23,7 @@ import {
   useMantineTheme,
   Badge,
   Spoiler,
+  Button,
 } from "@mantine/core";
 import remarkGfm from "remark-gfm";
 import { useDisclosure } from "@mantine/hooks";
@@ -202,6 +205,7 @@ export const Markdown = ({ content }: { content: string }) => {
 //======================================
 export const Chats = () => {
   const { conversations, delChatPair, status } = useStore();
+  const { regenerate } = useRegenerate();
   const { query } = useRouter();
   const conversation = conversations.find(
     (o) => o.id === query.chatId
@@ -257,6 +261,18 @@ export const Chats = () => {
             </Paper>
           </div>
         ))}
+        {thread.length > 0 && (
+          <Button
+            leftIcon={status == "loading" ? <BsStopFill /> : <TbReload />}
+            variant="default"
+            type="button"
+            onClick={() => {
+              regenerate();
+            }}
+          >
+            {status === "loading" ? "Stop" : "Regenerate"}
+          </Button>
+        )}
       </div>
     </section>
   );

@@ -98,6 +98,10 @@ export interface StoreStateT {
    *
    */
   delChatPair: (index: number, conversationId: string) => void;
+  /**
+   * used for regenerating last response
+   */
+  dropLastTheardElement: (conversationsId: string) => void;
 }
 
 const localStorageKey = "yourchatgpt";
@@ -249,6 +253,17 @@ export const useStore = create<StoreStateT>()(
                 ...s,
               };
             }),
+          dropLastTheardElement: (id) =>
+            set(
+              (s) => {
+                const { conversations } = s;
+                const con = conversations.find((o) => o.id == id);
+                con?.thread.pop();
+                return s;
+              },
+              false,
+              "regenerate"
+            ),
         };
       },
       { name: localStorageKey, storage: createJSONStorage(() => localStorage) }
