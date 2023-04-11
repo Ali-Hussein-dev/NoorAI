@@ -214,7 +214,7 @@ export const Chats = () => {
 
   const theme = useMantineTheme();
 
-  if (thread.length < 1) return <PromptTips />;
+  if (thread.length < 1 && status !== "loading") return <PromptTips />;
 
   return (
     <section className="w-full pb-5">
