@@ -39,32 +39,39 @@ const ConversationLink = ({ id, name }: { id: string; name: string }) => {
     >
       {editing ? (
         <>
-          <input
+          <TextInput
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            className="w-10/12 border-b bg-transparent focus:outline-none"
+            className="w-full"
+            rightSectionWidth="auto"
+            size="md"
+            rightSection={
+              <div className="flex items-center gap-x-2 pr-2">
+                {/* //------------------------------CONVERIM RENAMING BUTTON */}
+                <ActionIcon
+                  onClick={() => {
+                    renameConversation(id, input);
+                    setEditing(false);
+                  }}
+                  size="md"
+                  variant="default"
+                >
+                  {/* // save new name */}
+                  <HiCheck size="17" />
+                </ActionIcon>
+                {/* //------------------------------CANCEL RENAMING BUTTON */}
+                <ActionIcon
+                  onClick={() => {
+                    setInput(name);
+                    setEditing(false);
+                  }}
+                  size="sm"
+                >
+                  <MdClear size="17" />
+                </ActionIcon>
+              </div>
+            }
           />
-          <div className="flex items-center gap-x-3">
-            {/* //------------------------------CONVERIM RENAMING BUTTON */}
-            <ActionIcon
-              onClick={() => {
-                renameConversation(id, input);
-                setEditing(false);
-              }}
-            >
-              {/* // save new name */}
-              <HiCheck size="20" />
-            </ActionIcon>
-            {/* //------------------------------CANCEL RENAMING BUTTON */}
-            <ActionIcon
-              onClick={() => {
-                setInput(name);
-                setEditing(false);
-              }}
-            >
-              <MdClear size="20" />
-            </ActionIcon>
-          </div>
         </>
       ) : (
         <>
@@ -82,7 +89,7 @@ const ConversationLink = ({ id, name }: { id: string; name: string }) => {
               </Text>
             )}
           </Link>
-          <div className="flex gap-x-3">
+          <div className="flex gap-x-3 pr-1">
             {/* //------------------------------RENAME BUTTON */}
             <ActionIcon
               className="hidden group-hover:block"
