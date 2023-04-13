@@ -121,7 +121,7 @@ export const useStore = create<StoreStateT>()(
           conversations: [
             {
               id: "chat",
-              name: "First Chat",
+              name: "First Topic",
               thread: [],
               createdAt: new Date().getTime(),
             },

@@ -140,7 +140,7 @@ export const ChatHistory = () => {
             ) : undefined
           }
         />
-        <Tooltip label="New Chat">
+        <Tooltip label="New Topic">
           <ActionIcon
             variant="default"
             color="gray"
@@ -161,7 +161,7 @@ export const ChatHistory = () => {
           <ConversationLink
             key={id}
             id={id}
-            name={name || thread?.[0]?.input || "new chat"}
+            name={name || thread?.[0]?.input || "Topic title"}
           />
         ))}
       </div>
