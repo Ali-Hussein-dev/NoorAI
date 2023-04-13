@@ -8,8 +8,8 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Your ChatGPT</title>
-        <meta name="description" content="Your ChatGPT" />
+        <title>NoorAI</title>
+        <meta name="description" content="NoorAI" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="grid min-h-screen place-items-center">

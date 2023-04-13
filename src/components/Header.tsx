@@ -59,7 +59,6 @@ export const Header = ({
       className="flex w-full items-center"
     >
       <div className="w-full flex-row-start">
-        <div className="text-xl font-bold">NoorAI</div>
         <MediaQuery largerThan="sm" styles={{ display: "none" }}>
           <Burger
             opened={opened}
@@ -68,6 +67,9 @@ export const Header = ({
             mr="xl"
           />
         </MediaQuery>
+        <div className="cursor-default px-1 text-xl font-extrabold tracking-wide">
+          NoorAI
+        </div>
         <div className=" sm:w-[180px] lg:w-[280px]"></div>
         <div className="mx-auto w-full max-w-3xl flex-row-center"></div>
         <div className="gap-x-3 flex-row-center">
