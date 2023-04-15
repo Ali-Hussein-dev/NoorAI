@@ -288,7 +288,6 @@ const ChatPair = ({
 }: {
   content: string;
   input: string;
-  dir: "rtl" | "ltr";
   i: number;
   conversationId: string;
 }) => {
@@ -297,7 +296,7 @@ const ChatPair = ({
   const [dir, setDir] = React.useState("ltr");
   React.useEffect(() => {
     const lang = franc(input);
-    const dir = ["arb", "heb", "pes","prs"].includes(lang) ? "rtl" : "ltr";
+    const dir = ["arb", "heb", "pes", "prs"].includes(lang) ? "rtl" : "ltr";
     setDir(dir);
   }, [input]);
   return (
@@ -356,7 +355,6 @@ export const Chats = () => {
             key={o.input + i}
             i={i}
             content={o?.message?.content || ""}
-            dir={o.dir || "ltr"}
             input={o.input}
             conversationId={conversation.id}
           />
