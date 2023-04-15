@@ -12,7 +12,7 @@ import {
 import { Notifications } from "@mantine/notifications";
 import * as React from "react";
 import { Analytics } from "@vercel/analytics/react";
-import { RouterTransition } from "../components";
+import { RouterTransition } from "~/components";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
