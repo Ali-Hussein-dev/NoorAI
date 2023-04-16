@@ -8,6 +8,7 @@
     "lint": "next lint",
     "start": "next start",
     "tc": "tsc --project ./tsconfig.json",
+    "prepare": "husky install",
     "pre-commit": "npm run tc & npm run lint"
   },
   "dependencies": {
@@ -58,6 +59,8 @@
     "autoprefixer": "^10.4.7",
     "eslint": "^8.34.0",
     "eslint-config-next": "^13.2.4",
+    "husky": "^7.0.0",
+    "lint-staged": "^13.2.1",
     "postcss": "^8.4.14",
     "prettier": "^2.8.1",
     "prettier-plugin-tailwindcss": "^0.2.1",
@@ -67,5 +70,14 @@
   },
   "ct3aMetadata": {
     "initVersion": "7.7.0"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": "eslint --cache --fix",
+    "*.{js,css,ts,tsx}": "prettier --write"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
