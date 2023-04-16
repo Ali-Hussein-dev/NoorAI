@@ -2,14 +2,14 @@ import {
   useStore,
   type ConversationT,
   useRegenerate,
-  useFetchForm
+  useFetchForm,
 } from "~/hooks";
 import { useRouter } from "next/router";
 import {
   BsFillEmojiFrownFill,
   BsFillEmojiSmileFill,
   BsRobot,
-  BsStopFill
+  BsStopFill,
 } from "react-icons/bs";
 import ReactMarkdown from "react-markdown";
 import { MdDelete, MdInfo } from "react-icons/md";
@@ -29,7 +29,7 @@ import {
   Badge,
   Spoiler,
   Button,
-  Textarea
+  Textarea,
 } from "@mantine/core";
 import remarkGfm from "remark-gfm";
 import { useDisclosure } from "@mantine/hooks";
@@ -296,7 +296,10 @@ const ChatPair = ({
   const [dir, setDir] = React.useState("ltr");
   React.useEffect(() => {
     const lang = franc(input);
-    const dir = ["arb", "heb", "pes", "prs"].includes(lang) ? "rtl" : "ltr";
+    console.log("LANG:", lang);
+    const dir = ["arb", "heb", "pes", "prs", "zlm"].includes(lang)
+      ? "rtl"
+      : "ltr";
     setDir(dir);
   }, [input]);
   return (
