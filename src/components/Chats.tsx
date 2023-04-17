@@ -8,11 +8,10 @@ import { useRouter } from "next/router";
 import {
   BsFillEmojiFrownFill,
   BsFillEmojiSmileFill,
-  BsRobot,
   BsStopFill,
 } from "react-icons/bs";
 import ReactMarkdown from "react-markdown";
-import { MdDelete, MdInfo } from "react-icons/md";
+import { MdDelete, MdInfo, MdOutlineContentCopy } from "react-icons/md";
 import { TbReload } from "react-icons/tb";
 import { type Language } from "prism-react-renderer";
 import {
@@ -32,7 +31,7 @@ import {
   Textarea,
 } from "@mantine/core";
 import remarkGfm from "remark-gfm";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useClipboard } from "@mantine/hooks";
 import * as React from "react";
 import clsx from "clsx";
 import { HiArrowSmRight } from "react-icons/hi";
@@ -302,10 +301,13 @@ const ChatPair = ({
       : "ltr";
     setDir(dir);
   }, [input]);
+  const clipboard = useClipboard();
   return (
     <div key={i} className="w-full" dir={dir}>
       <div className="group flex w-full items-start gap-x-2 px-2 py-4">
-        <Avatar radius="xl">{i + 1}</Avatar>
+        <Avatar radius="xl">
+          <Text color="dimmed">{i + 1}</Text>
+        </Avatar>
         <UserMsgEdit input={input} i={i} />
         <Tooltip label="Remove unrelated chat" withArrow position="left">
           <ActionIcon
@@ -327,13 +329,26 @@ const ChatPair = ({
               : theme.colors.gray[1],
         })}
         radius="sm"
-        className="flex items-start gap-x-2 px-2 pt-5"
+        className="group flex items-start gap-x-2 px-3 pb-2 pt-5 md:pr-4"
         dir={dir}
       >
         <Avatar radius="xl">
-          <BsRobot />
+          <Text color="dimmed">N</Text>
         </Avatar>
-        <Markdown content={content} />
+        <div
+          onClick={() => clipboard.copy(content)}
+          className="grow cursor-default"
+        >
+          <Markdown content={content} />
+        </div>
+        <ActionIcon
+          variant="default"
+          size="lg"
+          onClick={() => clipboard.copy(content)}
+          className="opacity-0 group-hover:opacity-100"
+        >
+          <MdOutlineContentCopy size="17" />
+        </ActionIcon>
       </Paper>
     </div>
   );
