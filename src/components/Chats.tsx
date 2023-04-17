@@ -8,7 +8,6 @@ import { useRouter } from "next/router";
 import {
   BsFillEmojiFrownFill,
   BsFillEmojiSmileFill,
-  BsRobot,
   BsStopFill,
 } from "react-icons/bs";
 import ReactMarkdown from "react-markdown";
