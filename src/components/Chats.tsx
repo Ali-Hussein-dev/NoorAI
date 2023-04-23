@@ -209,7 +209,7 @@ export const Markdown = ({ content }: { content: string }) => {
     </div>
   );
 };
-export const UserMsgEdit = ({ input = "", i = 0 }) => {
+export const UserMsgEdit = ({ input = "", i = 0, conversationId = "" }) => {
   const {
     methods: { register, getValues },
     onSubmit,
@@ -217,6 +217,9 @@ export const UserMsgEdit = ({ input = "", i = 0 }) => {
   const sliceThread = useStore((s) => s.sliceThread);
   const { query } = useRouter();
   const [editing, setEditing] = React.useState(false);
+  const status = useStore((s) => s.status);
+  const delChatPair = useStore((s) => s.delChatPair);
+  const theme = useMantineTheme();
   return (
     <div className="grow">
       {editing ? (
@@ -224,6 +227,8 @@ export const UserMsgEdit = ({ input = "", i = 0 }) => {
           <Textarea
             {...register("promptText")}
             className="w-full"
+            minRows={6}
+            maxRows={8}
             styles={{ input: { background: "transparent" } }}
           />
           <div className="w-full gap-4 pt-2 flex-row-end">
@@ -250,30 +255,50 @@ export const UserMsgEdit = ({ input = "", i = 0 }) => {
           </div>
         </div>
       ) : (
-        <div className="grow gap-2 flex-row-between">
-          <Text
-            onClick={() => setEditing(true)}
-            color="dimmed"
-            className="mt-1 grow hover:cursor-pointer"
+        <div className="flex grow items-start justify-between gap-2">
+          <Spoiler
+            style={{
+              color: theme.colors.gray[theme.colorScheme === "dark" ? 7 : 6],
+            }}
+            className="prose w-full max-w-full grow overflow-hidden"
+            maxHeight={155}
+            showLabel="Show more"
+            hideLabel="Hide"
+            styles={{
+              control: {
+                color: theme.colors.gray[theme.colorScheme === "dark" ? 6 : 7],
+                fontWeight: 600,
+              },
+            }}
           >
-            {input}
-          </Text>
-          {/* <ReactMarkdown remarkPlugins={[[remarkGfm, { singleTilde: false }]]}>
-            {input}
-          </ReactMarkdown> */}
-          <Tooltip
-            label="click to on the text to edit"
-            withArrow
-            position="left"
-          >
-            <ActionIcon
-              size="lg"
-              onClick={() => setEditing(true)}
-              className="opacity-0 group-hover:opacity-100"
+            <ReactMarkdown>{input}</ReactMarkdown>
+          </Spoiler>
+          <div className="gap-1 flex-row-start">
+            <Tooltip
+              label="click to on the text to edit"
+              withArrow
+              position="left"
             >
-              <FiEdit3 size="17" />
-            </ActionIcon>
-          </Tooltip>
+              <ActionIcon
+                size="lg"
+                onClick={() => setEditing(true)}
+                className="opacity-0 group-hover:opacity-100"
+              >
+                <FiEdit3 size="17" />
+              </ActionIcon>
+            </Tooltip>
+            <Tooltip label="Remove unrelated chat" withArrow position="left">
+              <ActionIcon
+                color="red"
+                size="lg"
+                disabled={status == "loading"}
+                onClick={() => delChatPair(i, conversationId)}
+                className="ml-0 opacity-0 group-hover:opacity-100"
+              >
+                <MdDelete size="20" />
+              </ActionIcon>
+            </Tooltip>
+          </div>
         </div>
       )}
     </div>
@@ -290,8 +315,6 @@ const ChatPair = ({
   i: number;
   conversationId: string;
 }) => {
-  const status = useStore((s) => s.status);
-  const delChatPair = useStore((s) => s.delChatPair);
   const [dir, setDir] = React.useState("ltr");
   React.useEffect(() => {
     const lang = franc(input);
@@ -308,18 +331,7 @@ const ChatPair = ({
         <Avatar radius="xl">
           <Text color="dimmed">{i + 1}</Text>
         </Avatar>
-        <UserMsgEdit input={input} i={i} />
-        <Tooltip label="Remove unrelated chat" withArrow position="left">
-          <ActionIcon
-            color="red"
-            size="lg"
-            disabled={status == "loading"}
-            onClick={() => delChatPair(i, conversationId)}
-            className="ml-0 opacity-0 group-hover:opacity-100"
-          >
-            <MdDelete size="20" />
-          </ActionIcon>
-        </Tooltip>
+        <UserMsgEdit input={input} i={i} conversationId={conversationId} />
       </div>
       <Paper
         sx={(theme) => ({
