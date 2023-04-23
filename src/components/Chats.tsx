@@ -256,14 +256,23 @@ export const UserMsgEdit = ({ input = "", i = 0, conversationId = "" }) => {
         </div>
       ) : (
         <div className="flex grow items-start justify-between gap-2">
-          <div
+          <Spoiler
             style={{
               color: theme.colors.gray[theme.colorScheme === "dark" ? 7 : 6],
             }}
             className="prose w-full max-w-full grow overflow-hidden"
+            maxHeight={155}
+            showLabel="Show more"
+            hideLabel="Hide"
+            styles={{
+              control: {
+                color: theme.colors.gray[theme.colorScheme === "dark" ? 6 : 7],
+                fontWeight: 600,
+              },
+            }}
           >
             <ReactMarkdown>{input}</ReactMarkdown>
-          </div>
+          </Spoiler>
           <div className="gap-1 flex-row-start">
             <Tooltip
               label="click to on the text to edit"
