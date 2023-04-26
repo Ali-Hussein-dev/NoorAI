@@ -1,11 +1,11 @@
 import { Tabs, AppShell, Text, ActionIcon, Button } from "@mantine/core";
-import { Footer, Header } from "~/components";
+import { Footer, Header } from "@/components";
 import { signOut, useSession } from "next-auth/react";
 import { FaArrowLeft } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import { useRouter } from "next/router";
 import * as React from "react";
-import { api } from "~/utils";
+import { api } from "@/utils";
 import Head from "next/head";
 
 //======================================

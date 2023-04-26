@@ -4,7 +4,7 @@ import { AppShell, Navbar, useMantineTheme, Paper } from "@mantine/core";
 import * as React from "react";
 import { useRouter } from "next/router";
 import { useStore } from "../hooks";
-import { Header, PromptArea, Sidebar } from "~/components";
+import { Header, PromptArea, Sidebar } from "@/components";
 import { useDidUpdate } from "@mantine/hooks";
 import dynamic from "next/dynamic";
 

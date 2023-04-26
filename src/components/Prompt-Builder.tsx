@@ -13,7 +13,7 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import * as React from "react";
 import { HiCursorClick } from "react-icons/hi";
-import { usePromptBuilder } from "~/hooks";
+import { usePromptBuilder } from "@/hooks";
 // import { useMediaQuery } from "@mantine/hooks";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import remarkGfm from "remark-gfm";
@@ -214,7 +214,7 @@ export const PromptBuilder = <T,>({ setValue }: { setValue: T }) => {
             The prompt builder should assist you in crafting the prompt that
             will produce the desired result with greater ease.
           </Text>
-          <div className="grid max-w-3xl grid-cols-1 gap-y-8 gap-x-4 md:mb-8 md:grid-cols-2">
+          <div className="grid max-w-3xl grid-cols-1 gap-x-4 gap-y-8 md:mb-8 md:grid-cols-2">
             <div className="col-span-2 space-y-4 md:col-span-1 md:pt-1">
               <Action />
               <Role />

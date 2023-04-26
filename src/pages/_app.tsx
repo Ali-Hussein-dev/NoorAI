@@ -1,5 +1,5 @@
-import { api, themeOverride } from "~/utils";
-import "~/styles/globals.css";
+import { api, themeOverride } from "@/utils";
+import "@/styles/globals.css";
 import { type AppType } from "next/app";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
@@ -12,7 +12,7 @@ import {
 import { Notifications } from "@mantine/notifications";
 import * as React from "react";
 import { Analytics } from "@vercel/analytics/react";
-import { RouterTransition } from "~/components";
+import { RouterTransition } from "@/components";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,

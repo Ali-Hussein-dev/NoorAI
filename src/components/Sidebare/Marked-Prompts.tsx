@@ -13,7 +13,7 @@ import {
 import { MdContentCopy, MdOutlineDelete, MdOutlineEdit } from "react-icons/md";
 import * as React from "react";
 import { notifications } from "@mantine/notifications";
-import { useMarkedPrompts } from "~/hooks";
+import { useMarkedPrompts } from "@/hooks";
 import { useDisclosure } from "@mantine/hooks";
 
 const EditPromptForm = (props: {
@@ -33,7 +33,7 @@ const EditPromptForm = (props: {
   );
 
   return (
-    <Paper className="w-full space-y-2 px-2 pt-3 pb-1" withBorder>
+    <Paper className="w-full space-y-2 px-2 pb-1 pt-3" withBorder>
       <Textarea
         required
         autosize
@@ -113,7 +113,7 @@ const CreatePromptForm = () => {
       </Button>
 
       <Collapse in={opened} className="">
-        <Paper className="space-y-2 px-2 pt-3 pb-1" withBorder>
+        <Paper className="space-y-2 px-2 pb-1 pt-3" withBorder>
           <Textarea
             required
             autosize
@@ -204,7 +204,7 @@ const PromptCard = ({
               <Text color="dimmed">{text}</Text>
             </Spoiler>
           </Card.Section>
-          <Card.Section className="gap-x-2 pt-1 pb-2 flex-row-start">
+          <Card.Section className="gap-x-2 pb-2 pt-1 flex-row-start">
             {tags.map((obj, i) => (
               <Badge key={i} variant="filled" color="gray">
                 {obj.name}

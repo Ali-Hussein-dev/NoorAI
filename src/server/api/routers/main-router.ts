@@ -1,5 +1,5 @@
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { prisma } from "~/server/db";
+import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
+import { prisma } from "@/server/db";
 
 export const mainRouter = createTRPCRouter({
   whatsnew: publicProcedure.query(async () => {

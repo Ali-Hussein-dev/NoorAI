@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
-import { prisma } from "~/server/db";
+import { prisma } from "@/server/db";
 
 export const profileRouter = createTRPCRouter({
   get: protectedProcedure

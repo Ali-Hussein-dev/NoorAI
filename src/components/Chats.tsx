@@ -3,7 +3,7 @@ import {
   type ConversationT,
   useRegenerate,
   useFetchForm,
-} from "~/hooks";
+} from "@/hooks";
 import { useRouter } from "next/router";
 import { BsStopFill } from "react-icons/bs";
 import ReactMarkdown from "react-markdown";
@@ -27,7 +27,7 @@ import * as React from "react";
 import dynamic from "next/dynamic";
 import { FiEdit3 } from "react-icons/fi";
 import { franc } from "franc";
-import { InitialChatsView } from "~/components";
+import { InitialChatsView } from "@/components";
 
 const Prism = dynamic(() => import("@mantine/prism").then((c) => c.Prism), {
   ssr: false,

@@ -3,8 +3,8 @@ import {
   type ParsedEvent,
   type ReconnectInterval,
 } from "eventsource-parser";
-import { env } from "~/env.mjs";
-import { type OpenaiModelsT } from "~/types/global";
+import { env } from "@/env.mjs";
+import { type OpenaiModelsT } from "@/types/global";
 
 export type ChatGPTAgent = "user" | "system";
 

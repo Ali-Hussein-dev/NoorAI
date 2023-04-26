@@ -1,7 +1,7 @@
 import { Divider, Text, Paper, Button } from "@mantine/core";
 import * as React from "react";
 import { BsGithub, BsTwitter } from "react-icons/bs";
-import { api } from "~/utils";
+import { api } from "@/utils";
 
 const cta = [
   {

@@ -2,8 +2,8 @@ import { MdContentCopy, MdSend } from "react-icons/md";
 import { TiStarOutline } from "react-icons/ti";
 import * as React from "react";
 import { notifications } from "@mantine/notifications";
-import { api } from "~/utils/api";
-import { useMarkedPrompts } from "~/hooks";
+import { api } from "@/utils/api";
+import { useMarkedPrompts } from "@/hooks";
 import {
   ScrollArea,
   ActionIcon,
@@ -100,7 +100,7 @@ export const PromptsLib = () => {
                   <Text color="dimmed">{text}</Text>
                 </Spoiler>
               </Card.Section>
-              <Card.Section className="flex-wrap gap-2 pt-1 pb-2 flex-row-start">
+              <Card.Section className="flex-wrap gap-2 pb-2 pt-1 flex-row-start">
                 {tags.map((tag) => (
                   <Badge key={tag} variant="filled" color="gray">
                     {tag}
