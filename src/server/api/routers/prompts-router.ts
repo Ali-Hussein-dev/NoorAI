@@ -33,8 +33,4 @@ export const promptsRouter = createTRPCRouter({
 
       return res.count > 0 ? { ok: true } : { ok: false };
     }),
-
-  getSecretMessage: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
-  }),
 });
