@@ -1,4 +1,4 @@
-import { FaGithub, FaSun } from "react-icons/fa";
+import { FaSun } from "react-icons/fa";
 import { BsMoonStarsFill } from "react-icons/bs";
 import {
   ActionIcon,
@@ -8,10 +8,9 @@ import {
   Burger,
   Button,
   Avatar,
-  Tooltip,
   Anchor,
 } from "@mantine/core";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 export function ToggleTheme() {
@@ -20,7 +19,6 @@ export function ToggleTheme() {
 
   return (
     <ActionIcon
-      c={dark ? "yellow" : "blue"}
       size="lg"
       onClick={() => toggleColorScheme()}
       title="Toggle color scheme"
@@ -35,11 +33,16 @@ export const UserDropdown = () => {
   const { data: sessionData } = useSession();
   // const [opened, { toggle }] = useDisclosure(false);
   return (
-    <ActionIcon onClick={() => void signOut()}>
-      <Tooltip label="Logout">
-        <Avatar radius="xl" size="md" src={sessionData?.user.image} />
-      </Tooltip>
-    </ActionIcon>
+    <Link
+      href={{
+        pathname: "/profile/[profileId]",
+        query: {
+          profileId: sessionData?.user.id,
+        },
+      }}
+    >
+      <Avatar radius="xl" size="md" src={sessionData?.user.image} />
+    </Link>
   );
 };
 //======================================
@@ -67,19 +70,15 @@ export const Header = ({
             mr="xl"
           />
         </MediaQuery>
-        <div className="cursor-default px-1 text-xl font-extrabold tracking-wide">
+        <Anchor
+          className="!cursor-default px-1 text-xl font-extrabold tracking-wide !text-zinc-100 "
+          href="/"
+        >
           NoorAI
-        </div>
+        </Anchor>
         <div className=" sm:w-[180px] lg:w-[280px]"></div>
         <div className="mx-auto w-full max-w-3xl flex-row-center"></div>
         <div className="gap-x-3 flex-row-center">
-          <Anchor
-            href="https://github.com/Ali-Hussein-dev/NoorAI"
-            target="_blank"
-            rel="noopener"
-          >
-            <FaGithub size="22" className="text-gray-200" />
-          </Anchor>
           <ToggleTheme />
           {sessionData ? (
             <UserDropdown />

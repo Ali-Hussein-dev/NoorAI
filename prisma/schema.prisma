@@ -50,6 +50,14 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  profile       Profile?
+}
+
+model Profile {
+  id     String @id @default(cuid())
+  tier   String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique
 }
 
 model VerificationToken {
@@ -61,8 +69,8 @@ model VerificationToken {
 }
 
 model Prompt {
-  id   String   @id @default(cuid())
-  text String
-  tags String[]
+  id         String   @id @default(cuid())
+  text       String
+  tags       String[]
   popularity Int
 }
