@@ -1,5 +1,5 @@
 import { createTRPCRouter } from "~/server/api/trpc";
-import { promptsRouter } from "~/server/api/routers/prompts";
+import { promptsRouter } from "~/server/api/routers/prompts-router";
 import { profileRouter } from "./routers/profile-router";
 
 /**
