@@ -1,15 +1,8 @@
 import { Divider, Text, Paper, Button } from "@mantine/core";
 import * as React from "react";
-import whatsnewContent from "../content/whatsnew.json";
 import { BsGithub, BsTwitter } from "react-icons/bs";
+import { api } from "@/utils";
 
-interface WhatsnewProps {
-  date: string;
-  list: {
-    title: string;
-    description: string;
-  }[];
-}
 const cta = [
   {
     label: "Follow on Twitter",
@@ -42,24 +35,32 @@ export const CallToActions = () => {
   );
 };
 //======================================
-export const Whatsnew = ({ content }: { content: WhatsnewProps }) => {
-  return (
+export const Whatsnew = () => {
+  const { data } = api.main.whatsnew.useQuery(undefined, {});
+  return data ? (
     <Paper p="md" className="w-full">
       <div className="mb-3">
         <h2 className="m-0 font-bold ">What{"'"}s new</h2>
-        <Text color="dimmed">Date: {content.date}</Text>
       </div>
       <div className="space-y-3">
-        {content.list.map((o, i) => (
-          <div key={i} className="">
-            <Text size="lg">
-              <b>{o.title}</b>
-            </Text>
-            <Text color="dimmed" size="lg">
-              {o.description}
-            </Text>
-          </div>
-        ))}
+        {data.map((o, i) => {
+          const date = new Date(o.date);
+          return (
+            <div key={i} className="">
+              <div className="flex-row-between">
+                <Text size="lg">
+                  <b>{o.title}</b>
+                </Text>
+                <Text color="dimmed" className="italic">
+                  {date.getDate()}.{date.getMonth() + 1}.{date.getFullYear()}
+                </Text>
+              </div>
+              <Text color="dimmed" size="lg">
+                {o.description}
+              </Text>
+            </div>
+          );
+        })}
       </div>
       {/* <Divider my="sm" />
       <div>
@@ -70,13 +71,13 @@ export const Whatsnew = ({ content }: { content: WhatsnewProps }) => {
       <Divider my="sm" />
       <CallToActions />
     </Paper>
-  );
+  ) : null;
 };
 //======================================
 export const InitialChatsView = () => {
   return (
     <div className="pb-12 pt-8">
-      <Whatsnew content={whatsnewContent[0] as WhatsnewProps} />
+      <Whatsnew />
     </div>
   );
 };

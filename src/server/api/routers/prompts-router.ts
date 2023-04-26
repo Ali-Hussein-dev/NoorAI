@@ -1,10 +1,6 @@
 import { z } from "zod";
-import {
-  createTRPCRouter,
-  publicProcedure,
-  protectedProcedure,
-} from "~/server/api/trpc";
-import { prisma } from "~/server/db";
+import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
+import { prisma } from "@/server/db";
 
 export const promptsRouter = createTRPCRouter({
   prompts: publicProcedure
@@ -33,8 +29,4 @@ export const promptsRouter = createTRPCRouter({
 
       return res.count > 0 ? { ok: true } : { ok: false };
     }),
-
-  getSecretMessage: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
-  }),
 });

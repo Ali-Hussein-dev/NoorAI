@@ -14,7 +14,7 @@ import { RiSettings3Line } from "react-icons/ri";
 import { IoChevronDown } from "react-icons/io5";
 import { useDisclosure } from "@mantine/hooks";
 import languages from "../content/languages.json";
-import { useStore } from "~/hooks";
+import { useStore } from "@/hooks";
 
 /**
  * label: lang name
