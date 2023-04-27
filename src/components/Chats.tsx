@@ -28,6 +28,7 @@ import dynamic from "next/dynamic";
 import { FiEdit3 } from "react-icons/fi";
 import { franc } from "franc";
 import { InitialChatsView } from "@/components";
+import { useSession } from "next-auth/react";
 
 const Prism = dynamic(() => import("@mantine/prism").then((c) => c.Prism), {
   ssr: false,
@@ -87,8 +88,6 @@ export const UserMsgEdit = ({ input = "", i = 0, conversationId = "" }) => {
           <Textarea
             {...register("promptText")}
             className="w-full"
-            minRows={6}
-            maxRows={8}
             styles={{ input: { background: "transparent" } }}
           />
           <div className="w-full gap-4 pt-2 flex-row-end">
@@ -185,10 +184,11 @@ const ChatPair = ({
     setDir(dir);
   }, [input]);
   const clipboard = useClipboard();
+  const { data: sessionData } = useSession();
   return (
     <div key={i} className="w-full" dir={dir}>
       <div className="group flex w-full items-start gap-x-2 px-2 py-4">
-        <Avatar radius="xl">
+        <Avatar radius="xl" src={sessionData?.user.image}>
           <Text color="dimmed">{i + 1}</Text>
         </Avatar>
         <UserMsgEdit input={input} i={i} conversationId={conversationId} />
