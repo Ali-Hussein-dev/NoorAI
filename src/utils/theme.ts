@@ -18,8 +18,11 @@ export const themeOverride: MantineThemeOverride = {
   primaryColor: "amber",
   //   primaryShade: 9,
   globalStyles: ({ colors, colorScheme }) => ({
-    "a:hover": {
-      color: "inherit",
+    a: {
+      color: colors.blue[7],
+      "&:hover": {
+        color: "inherit",
+      },
       //   textDecorationColor: "inherit",
       // textDecoration: "inherit",
     },
@@ -33,6 +36,18 @@ export const themeOverride: MantineThemeOverride = {
     "::-webkit-scrollbar-thumb": {
       background: colorScheme === "dark" ? colors.dark[3] : colors.gray[5],
       borderRadius: 4,
+    },
+    ".mantine-Textarea-input, .mantine-Input-input, .mantine-Select-input": {
+      "&:focus": {
+        borderColor: colors.gray[7],
+      },
+      borderColor: "transparent",
+    },
+    ".mantine-MultiSelect-input": {
+      "&:focus-within": {
+        borderColor: colors.gray[7],
+      },
+      borderColor: "transparent",
     },
   }),
 };

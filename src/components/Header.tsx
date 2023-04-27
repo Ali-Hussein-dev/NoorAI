@@ -71,7 +71,7 @@ export const Header = ({
             mr="xl"
           />
         </MediaQuery>
-        <Anchor className="h-16 w-16 !cursor-pointer overflow-hidden" href="/">
+        <Anchor className="h-16 w-24 !cursor-pointer overflow-hidden" href="/">
           <Logo />
         </Anchor>
         <div className=" sm:w-[180px] lg:w-[280px]"></div>
