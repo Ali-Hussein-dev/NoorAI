@@ -12,6 +12,7 @@ import {
 } from "@mantine/core";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { Logo } from "@/components";
 
 export function ToggleTheme() {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
@@ -70,11 +71,8 @@ export const Header = ({
             mr="xl"
           />
         </MediaQuery>
-        <Anchor
-          className="!cursor-default px-1 text-xl font-extrabold tracking-wide !text-zinc-100 "
-          href="/"
-        >
-          NoorAI
+        <Anchor className="h-16 w-16 !cursor-pointer overflow-hidden" href="/">
+          <Logo />
         </Anchor>
         <div className=" sm:w-[180px] lg:w-[280px]"></div>
         <div className="mx-auto w-full max-w-3xl flex-row-center"></div>
