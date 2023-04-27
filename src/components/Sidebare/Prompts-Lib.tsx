@@ -8,12 +8,25 @@ import {
   ScrollArea,
   ActionIcon,
   Text,
-  Badge,
   Spoiler,
   Card,
   MultiSelect,
   Loader,
+  Box,
+  useMantineTheme,
 } from "@mantine/core";
+
+const Badge = ({ children = "" }) => (
+  <Box
+    sx={({ colorScheme, colors }) => ({
+      backgroundColor: colors.dark[colorScheme === "dark" ? 7 : 1],
+      color: colors[colorScheme === "dark" ? "dark" : "gray"][1],
+    })}
+    className=" rounded px-2 pb-[2px] text-sm"
+  >
+    {children}
+  </Box>
+);
 
 const useFetchPrompts = () => {
   const [filterQuery, setFilterQuery] = React.useState<never[] | string[]>([]);
@@ -64,6 +77,7 @@ export const PromptsLib = () => {
     useFetchPrompts();
   const { push } = useMarkedPrompts();
   const { mutate } = api.prompts.popularity.useMutation();
+  const { colors } = useMantineTheme();
   return (
     <div className="h-full">
       <form onSubmit={onSubmit} className="gap-2 flex-row-start">
@@ -96,15 +110,23 @@ export const PromptsLib = () => {
           {data?.map(({ text, tags, id, popularity }: PromptT) => (
             <Card key={text} p="xl" shadow="sm">
               <Card.Section className="mb-1 text-left">
-                <Spoiler maxHeight={52} showLabel="Show more" hideLabel="Hide">
+                <Spoiler
+                  maxHeight={52}
+                  showLabel="Show more"
+                  hideLabel="Hide"
+                  styles={{
+                    control: {
+                      color: colors.gray[4],
+                      fontWeight: 600,
+                    },
+                  }}
+                >
                   <Text color="dimmed">{text}</Text>
                 </Spoiler>
               </Card.Section>
               <Card.Section className="flex-wrap gap-2 pb-2 pt-1 flex-row-start">
                 {tags.map((tag) => (
-                  <Badge key={tag} variant="filled" color="gray">
-                    {tag}
-                  </Badge>
+                  <Badge key={tag}>{tag}</Badge>
                 ))}
               </Card.Section>
               <Card.Section withBorder className="gap-2 pr-1 flex-row-end">
