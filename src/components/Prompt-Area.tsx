@@ -5,6 +5,7 @@ import { useFetchForm, useStore } from "../hooks";
 import { BsStopFill } from "react-icons/bs";
 import { PromptBuilder } from ".";
 import { type UseFormSetFocus } from "react-hook-form";
+import { useMediaQuery } from "@mantine/hooks";
 
 const useFocus = (setFocus: UseFormSetFocus<{ promptText: string }>) => {
   React.useEffect(() => {
@@ -42,6 +43,7 @@ export const PromptArea = () => {
   React.useEffect(() => {
     updateStatus("idle");
   }, [updateStatus]);
+  const isMobile = useMediaQuery("(max-width: 640px)");
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -51,10 +53,10 @@ export const PromptArea = () => {
         {...register("promptText")}
         placeholder="What do you want to know?"
         minRows={1}
-        maxRows={3}
+        maxRows={isMobile ? 4 : 24}
         autosize
         className="w-full grow resize-none"
-        size="md"
+        size="lg"
         onKeyDown={queryStatus === "loading" ? undefined : onKeyPress}
         styles={{ icon: { pointerEvents: "all" } }}
         icon={
