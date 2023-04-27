@@ -43,24 +43,18 @@ export const Whatsnew = () => {
         <h2 className="m-0 font-bold ">What{"'"}s new</h2>
       </div>
       <div className="space-y-3">
-        {data.map((o, i) => {
-          const date = new Date(o.date);
-          return (
-            <div key={i} className="">
-              <div className="flex-row-between">
-                <Text size="lg">
-                  <b>{o.title}</b>
-                </Text>
-                <Text color="dimmed" className="italic">
-                  {date.getDate()}.{date.getMonth() + 1}.{date.getFullYear()}
-                </Text>
-              </div>
-              <Text color="dimmed" size="lg">
-                {o.description}
+        {data.map((o, i) => (
+          <div key={i} className="">
+            <div className="flex-row-between">
+              <Text size="lg">
+                <b>{o.title}</b>
               </Text>
             </div>
-          );
-        })}
+            <Text color="dimmed" size="lg">
+              {o.description}
+            </Text>
+          </div>
+        ))}
       </div>
       {/* <Divider my="sm" />
       <div>
