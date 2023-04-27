@@ -61,10 +61,9 @@ model Profile {
 }
 
 model Whatsnew {
-  id          String   @id @default(cuid())
+  id          String @id @default(cuid())
   title       String
   description String
-  date        DateTime @default(now())
 }
 
 model VerificationToken {
