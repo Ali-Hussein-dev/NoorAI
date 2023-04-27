@@ -9,3 +9,4 @@ export * from "./Footer";
 export * from "./Router-Transition";
 export * from "./Prompt-Builder";
 export * from "./Initial-Chats-View";
+export * from "./Logo";
