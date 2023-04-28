@@ -1,4 +1,4 @@
-import { MdContentCopy, MdSend } from "react-icons/md";
+import { MdSend } from "react-icons/md";
 import { TiStarOutline } from "react-icons/ti";
 import * as React from "react";
 import { notifications } from "@mantine/notifications";
@@ -163,6 +163,7 @@ export const PromptsLib = () => {
                       if ("clipboard" in navigator) {
                         navigator.clipboard.writeText(text);
                       }
+                      // ts-expect-error just ignore
                       methods.methods.setValue("promptText", text);
                       mutate({ id });
                     }}

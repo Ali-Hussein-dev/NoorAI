@@ -1,7 +1,7 @@
 import { ActionIcon, Textarea, Loader } from "@mantine/core";
 import * as React from "react";
 import { MdSend } from "react-icons/md";
-import { useFetchForm, useStore } from "../hooks";
+import { useStore } from "../hooks";
 import { BsStopFill } from "react-icons/bs";
 import { PromptBuilder } from ".";
 import { useFormContext, type UseFormSetFocus } from "react-hook-form";

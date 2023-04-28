@@ -31,6 +31,7 @@ const ChatPage = () => {
       <Head>
         <title>{"Chat Page"}</title>
       </Head>
+      {/* // @ts-expect-error it true but no problem */}
       <FormProvider {...methods}>
         <AppShell
           padding={0}
