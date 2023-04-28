@@ -15,6 +15,7 @@ import {
   Box,
   useMantineTheme,
 } from "@mantine/core";
+import { useFormContext } from "react-hook-form";
 
 const Badge = ({ children = "" }) => (
   <Box
@@ -78,6 +79,7 @@ export const PromptsLib = () => {
   const { push } = useMarkedPrompts();
   const { mutate } = api.prompts.popularity.useMutation();
   const { colors } = useMantineTheme();
+  const methods = useFormContext();
   return (
     <div className="h-full">
       <form onSubmit={onSubmit} className="gap-2 flex-row-start">
@@ -161,15 +163,12 @@ export const PromptsLib = () => {
                       if ("clipboard" in navigator) {
                         navigator.clipboard.writeText(text);
                       }
-                      notifications.show({
-                        message: "Prompt Copied",
-                        withCloseButton: true,
-                        color: "lime",
-                      });
+                      methods.methods.setValue("promptText", text);
                       mutate({ id });
                     }}
                   >
-                    <MdContentCopy />
+                    {/* <MdContentCopy /> */}
+                    use
                   </ActionIcon>
                 </Card.Section>
               </Card>
