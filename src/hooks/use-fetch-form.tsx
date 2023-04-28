@@ -139,8 +139,8 @@ export const useFetchForm = (param?: { promptText: string }) => {
   return { methods, onSubmit, stopStreaming };
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const FormCtx = React.createContext<ReturnType<typeof useFetchForm>>(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   null as any
 );
 
