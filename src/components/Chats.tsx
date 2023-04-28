@@ -177,7 +177,6 @@ const ChatPair = ({
   const [dir, setDir] = React.useState("ltr");
   React.useEffect(() => {
     const lang = franc(input);
-    console.log("LANG:", lang);
     const dir = ["arb", "heb", "pes", "prs", "zlm"].includes(lang)
       ? "rtl"
       : "ltr";

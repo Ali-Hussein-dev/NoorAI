@@ -14,7 +14,6 @@ export const profileRouter = createTRPCRouter({
         userProfile = await prisma.profile.create({
           data: { userId: id, tier: "free" },
         });
-        console.log("created user profile");
       }
       return userProfile;
     }),
