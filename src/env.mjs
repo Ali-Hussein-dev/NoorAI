@@ -31,6 +31,7 @@ const server = z.object({
   // UPSTASH_REDIS_TOKEN: z.string().min(1),
 
   DATABASE_URL: z.string().url(),
+  DIRECT_URL: z.string().url(),
 });
 
 /**
@@ -68,7 +69,7 @@ const processEnv = {
   // UPSTASH_REDIS_TOKEN: process.env.UPSTASH_REDIS_TOKEN,
 
   DATABASE_URL: process.env.DATABASE_URL,
-
+  DIRECT_URL: process.env.DIRECT_URL,
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 };
 
