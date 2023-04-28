@@ -124,12 +124,12 @@ export const PromptsLib = () => {
                     }}
                   >
                     <Text color="dimmed">{text}</Text>
+                    <div className="flex-wrap gap-2 pb-1 pt-2 flex-row-start">
+                      {tags.map((tag) => (
+                        <Badge key={tag}>{tag}</Badge>
+                      ))}
+                    </div>
                   </Spoiler>
-                </Card.Section>
-                <Card.Section className="flex-wrap gap-2 pb-2 pt-1 flex-row-start">
-                  {tags.map((tag) => (
-                    <Badge key={tag}>{tag}</Badge>
-                  ))}
                 </Card.Section>
                 <Card.Section withBorder className="gap-2 pr-1 flex-row-end">
                   <Text size="sm" color="dimmed" className="w-full">
