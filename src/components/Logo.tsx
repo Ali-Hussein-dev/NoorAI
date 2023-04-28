@@ -3,7 +3,6 @@ import { useMantineTheme } from "@mantine/core";
 //======================================
 export const Logo = () => {
   const { colorScheme, colors } = useMantineTheme();
-  console.log(colors.dark[0]);
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
