@@ -1,10 +1,10 @@
 import { ActionIcon, Textarea, Loader } from "@mantine/core";
 import * as React from "react";
 import { MdSend } from "react-icons/md";
-import { useFetchForm, useStore } from "../hooks";
+import { useFetchFormCtx, useStore } from "../hooks";
 import { BsStopFill } from "react-icons/bs";
 import { PromptBuilder } from ".";
-import { type UseFormSetFocus } from "react-hook-form";
+import { useWatch, type UseFormSetFocus } from "react-hook-form";
 import { useMediaQuery } from "@mantine/hooks";
 
 const useFocus = (setFocus: UseFormSetFocus<{ promptText: string }>) => {
@@ -28,10 +28,10 @@ const useFocus = (setFocus: UseFormSetFocus<{ promptText: string }>) => {
 //======================================prompt-area
 export const PromptArea = () => {
   const {
-    methods: { watch, handleSubmit, register, setValue, setFocus },
+    methods: { handleSubmit, register, setValue, setFocus, control },
     onSubmit,
     stopStreaming,
-  } = useFetchForm();
+  } = useFetchFormCtx();
   const onKeyPress: React.KeyboardEventHandler = (e) => {
     if (e.code === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -44,6 +44,7 @@ export const PromptArea = () => {
     updateStatus("idle");
   }, [updateStatus]);
   const isMobile = useMediaQuery("(max-width: 640px)");
+  const promptText = useWatch({ name: "promptText", control });
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -72,7 +73,7 @@ export const PromptArea = () => {
           <ActionIcon
             type="submit"
             size="md"
-            disabled={!watch("promptText") || queryStatus === "loading"}
+            disabled={!promptText || queryStatus === "loading"}
             variant="transparent"
           >
             {queryStatus == "loading" ? (

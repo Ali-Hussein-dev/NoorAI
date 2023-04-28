@@ -138,3 +138,14 @@ export const useFetchForm = (param?: { promptText: string }) => {
   };
   return { methods, onSubmit, stopStreaming };
 };
+
+const FormCtx = React.createContext<ReturnType<typeof useFetchForm>>(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  null as any
+);
+
+export const FormProv: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => <FormCtx.Provider value={useFetchForm()}> {children} </FormCtx.Provider>;
+
+export const useFetchFormCtx = () => React.useContext(FormCtx);

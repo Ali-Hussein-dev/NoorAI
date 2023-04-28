@@ -1,9 +1,9 @@
-import { MdContentCopy, MdSend } from "react-icons/md";
+import { MdSend } from "react-icons/md";
 import { TiStarOutline } from "react-icons/ti";
 import * as React from "react";
 import { notifications } from "@mantine/notifications";
 import { api } from "@/utils/api";
-import { useMarkedPrompts } from "@/hooks";
+import { useFetchFormCtx, useMarkedPrompts } from "@/hooks";
 import {
   ScrollArea,
   ActionIcon,
@@ -14,6 +14,7 @@ import {
   Loader,
   Box,
   useMantineTheme,
+  Button,
 } from "@mantine/core";
 
 const Badge = ({ children = "" }) => (
@@ -78,6 +79,27 @@ export const PromptsLib = () => {
   const { push } = useMarkedPrompts();
   const { mutate } = api.prompts.popularity.useMutation();
   const { colors } = useMantineTheme();
+  const {
+    methods: { setValue },
+  } = useFetchFormCtx();
+
+  const onUsePrompt = (id: string, text: string) => {
+    setValue("promptText", text);
+    mutate({ id });
+  };
+  const onFavoritePrompt = (id: string, text: string, tags: string[]) => {
+    push({
+      text,
+      tags: tags.map((s) => ({ name: s })),
+      id,
+    });
+    notifications.show({
+      message: "Prompt Saved for later use",
+      withCloseButton: true,
+      color: "lime",
+    });
+    mutate({ id });
+  };
   return (
     <div className="h-full">
       <form onSubmit={onSubmit} className="gap-2 flex-row-start">
@@ -131,7 +153,10 @@ export const PromptsLib = () => {
                     </div>
                   </Spoiler>
                 </Card.Section>
-                <Card.Section withBorder className="gap-2 pr-1 flex-row-end">
+                <Card.Section
+                  withBorder
+                  className="gap-2 pr-1 pt-1 flex-row-end"
+                >
                   <Text size="sm" color="dimmed" className="w-full">
                     {popularity > 0
                       ? `Used ${popularity} ${
@@ -139,38 +164,17 @@ export const PromptsLib = () => {
                         }`
                       : ""}
                   </Text>
-                  <ActionIcon
-                    onClick={() => {
-                      push({
-                        text,
-                        tags: tags.map((s) => ({ name: s })),
-                        id,
-                      });
-                      notifications.show({
-                        message: "Prompt Saved for later use",
-                        withCloseButton: true,
-                        color: "lime",
-                      });
-                      mutate({ id });
-                    }}
-                  >
+                  <ActionIcon onClick={() => onFavoritePrompt(id, text, tags)}>
                     <TiStarOutline />
                   </ActionIcon>
-                  <ActionIcon
-                    onClick={() => {
-                      if ("clipboard" in navigator) {
-                        navigator.clipboard.writeText(text);
-                      }
-                      notifications.show({
-                        message: "Prompt Copied",
-                        withCloseButton: true,
-                        color: "lime",
-                      });
-                      mutate({ id });
-                    }}
+                  <Button
+                    type="button"
+                    onClick={() => onUsePrompt(id, text)}
+                    size="xs"
+                    variant="default"
                   >
-                    <MdContentCopy />
-                  </ActionIcon>
+                    Use
+                  </Button>
                 </Card.Section>
               </Card>
             ))}
