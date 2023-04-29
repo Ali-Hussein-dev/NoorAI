@@ -12,10 +12,15 @@ export const promptsRouter = createTRPCRouter({
       return res;
     }),
   tags: publicProcedure.query(async () => {
-    const res = await prisma.prompt.findMany({ select: { tags: true } });
-    const values = Object.values(res).map((o) => o.tags);
-    // return tags array
-    return [...new Set(values.flat())].sort();
+    try {
+      const res = await prisma.prompt.findMany({ select: { tags: true } });
+      const values = Object.values(res).map((o) => o.tags);
+      // return tags array
+      return [...new Set(values.flat())].sort();
+    } catch (error) {
+      console.error("🚀tags:publicProcedure.query", error);
+      return ["Email-Marketing", "SEO", "productivity", "YouTube"];
+    }
   }),
   popularity: publicProcedure
     .input(z.object({ id: z.string() }))
