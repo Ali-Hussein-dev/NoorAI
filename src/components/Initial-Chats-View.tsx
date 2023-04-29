@@ -37,7 +37,7 @@ export const CallToActions = () => {
 //======================================
 export const Whatsnew = () => {
   const store = useStoreCtx();
-  return store.whatsnew ? (
+  return store.whatsnew?.length > 0 ? (
     <Paper p="md" className="w-full">
       <div className="mb-3">
         <h2 className="m-0 font-bold ">What{"'"}s new</h2>
