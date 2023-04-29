@@ -16,6 +16,7 @@ import {
   useMantineTheme,
   Button,
 } from "@mantine/core";
+import { useStoreCtx } from "@/context/store-ctx";
 
 const Badge = ({ children = "" }) => (
   <Box
@@ -31,18 +32,14 @@ const Badge = ({ children = "" }) => (
 
 const useFetchPrompts = () => {
   const [filterQuery, setFilterQuery] = React.useState<never[] | string[]>([]);
-  const tags = api.prompts.tags.useQuery(undefined, {
-    cacheTime: 60 * 60 * 24,
-    staleTime: 60 * 60,
-  });
-
+  const { tags } = useStoreCtx();
   const res = api.prompts.prompts.useMutation();
   const { mutate } = res;
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     mutate({ tags: filterQuery });
   };
-  return { filterQuery, setFilterQuery, ...res, onSubmit, tags: tags.data };
+  return { filterQuery, setFilterQuery, ...res, onSubmit, tags };
 };
 
 //======================================

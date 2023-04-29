@@ -3,12 +3,17 @@ import { prisma } from "@/server/db";
 
 export const mainRouter = createTRPCRouter({
   whatsnew: publicProcedure.query(async () => {
-    const res = await prisma.whatsnew.findMany({
-      orderBy: {
-        id: "asc",
-      },
-      take: 3,
-    });
-    return res;
+    try {
+      const res = await prisma.whatsnew.findMany({
+        orderBy: {
+          id: "asc",
+        },
+        take: 3,
+      });
+      return res;
+    } catch (error) {
+      console.error("🚀whatsnew:publicProcedure.query", error);
+      return [];
+    }
   }),
 });
