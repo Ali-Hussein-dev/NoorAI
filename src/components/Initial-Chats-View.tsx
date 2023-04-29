@@ -1,7 +1,7 @@
 import { Divider, Text, Paper, Button } from "@mantine/core";
 import * as React from "react";
 import { BsGithub, BsTwitter } from "react-icons/bs";
-import { api } from "@/utils";
+import { useStoreCtx } from "@/context/store-ctx";
 
 const cta = [
   {
@@ -36,14 +36,14 @@ export const CallToActions = () => {
 };
 //======================================
 export const Whatsnew = () => {
-  const { data } = api.main.whatsnew.useQuery(undefined, {});
-  return data ? (
+  const store = useStoreCtx();
+  return store.whatsnew ? (
     <Paper p="md" className="w-full">
       <div className="mb-3">
         <h2 className="m-0 font-bold ">What{"'"}s new</h2>
       </div>
       <div className="space-y-3">
-        {data.map((o, i) => (
+        {store.whatsnew?.map((o, i) => (
           <div key={i} className="">
             <div className="flex-row-between">
               <Text size="lg">
