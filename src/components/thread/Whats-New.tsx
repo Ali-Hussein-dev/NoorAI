@@ -38,21 +38,16 @@ export const CallToActions = () => {
 export const Whatsnew = () => {
   const store = useStoreCtx();
   return store.whatsnew?.length || 0 > 0 ? (
-    <Paper p="md" className="w-full">
-      <div className="mb-3">
-        <h2 className="m-0 font-bold ">What{"'"}s new</h2>
-      </div>
+    <div className="w-full">
       <div className="space-y-3">
         {store.whatsnew?.map((o, i) => (
-          <div key={i} className="">
+          <div key={i}>
             <div className="flex-row-between">
               <Text size="lg">
                 <b>{o.title}</b>
               </Text>
             </div>
-            <Text color="dimmed" size="lg">
-              {o.description}
-            </Text>
+            <Text size="lg">{o.description}</Text>
           </div>
         ))}
       </div>
@@ -64,14 +59,6 @@ export const Whatsnew = () => {
       </div> */}
       <Divider my="sm" />
       <CallToActions />
-    </Paper>
-  ) : null;
-};
-//======================================
-export const InitialChatsView = () => {
-  return (
-    <div className="pb-12 pt-8">
-      <Whatsnew />
     </div>
-  );
+  ) : null;
 };

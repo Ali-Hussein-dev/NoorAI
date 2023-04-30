@@ -9,7 +9,6 @@ import { BsStopFill } from "react-icons/bs";
 import ReactMarkdown from "react-markdown";
 import { MdDelete, MdOutlineContentCopy } from "react-icons/md";
 import { TbReload } from "react-icons/tb";
-import { type Language } from "prism-react-renderer";
 import {
   ActionIcon,
   Avatar,
@@ -20,56 +19,55 @@ import {
   Button,
   Textarea,
   Spoiler,
+  Accordion,
 } from "@mantine/core";
-import remarkGfm from "remark-gfm";
 import { useClipboard } from "@mantine/hooks";
 import * as React from "react";
-import dynamic from "next/dynamic";
 import { FiEdit3 } from "react-icons/fi";
 import { franc } from "franc";
-import { InitialChatsView } from "@/components";
 import { useSession } from "next-auth/react";
+import { Whatsnew, Markdown } from "@/components";
+import { HiPlus } from "react-icons/hi";
 
-const Prism = dynamic(() => import("@mantine/prism").then((c) => c.Prism), {
-  ssr: false,
-});
-
-//======================================
-export const Markdown = ({ content }: { content: string }) => {
-  const theme = useMantineTheme();
+export const ThreadContainer = ({
+  list,
+}: {
+  list: { value: string; comp: React.ReactNode }[];
+}) => {
   return (
-    <div
-      style={{
-        color:
-          theme.colorScheme === "dark"
-            ? theme.colors.gray[6]
-            : theme.colors.gray[7],
-      }}
-      className="prose w-full max-w-full overflow-hidden"
+    <Accordion
+      defaultValue="whatsnew"
+      className="pb-12 pt-8"
+      variant="contained"
     >
-      <ReactMarkdown
-        remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
-        components={{
-          code({ inline, className, children, ...props }) {
-            const match = /language-(\w+)/.exec(className || "language-js");
-            const codeValue = String(children).replace(/\n$/, "");
-            return !inline && match ? (
-              <Prism withLineNumbers language={match[1] as Language}>
-                {codeValue}
-              </Prism>
-            ) : (
-              <code className={className} {...props}>
-                {children}
-              </code>
-            );
-          },
-        }}
-      >
-        {content}
-      </ReactMarkdown>
-    </div>
+      {list.map((o, i) => (
+        <Accordion.Item key={i} value={o.value} className="border-none">
+          <Accordion.Control
+            chevron={<HiPlus size="1rem" />}
+            styles={{
+              chevron: {
+                "&[data-rotate]": {
+                  transform: "rotate(45deg)",
+                },
+              },
+            }}
+            className="text-xl"
+          >
+            {o.value}
+          </Accordion.Control>
+          <Accordion.Panel>{o.comp}</Accordion.Panel>
+        </Accordion.Item>
+      ))}
+    </Accordion>
   );
 };
+
+const list = [
+  {
+    value: "What's New",
+    comp: <Whatsnew />,
+  },
+];
 export const UserMsgEdit = ({ input = "", i = 0, conversationId = "" }) => {
   const {
     methods: { register, getValues },
@@ -234,10 +232,9 @@ export const Chats = () => {
   ) as ConversationT;
   const thread = conversation?.thread || [];
 
-  if (thread.length < 1 && status !== "loading") return <InitialChatsView />;
-
   return (
     <section className="w-full pb-5 pt-4">
+      <ThreadContainer list={list} />
       <div className="gap-4 flex-col-center">
         {thread.map((o, i) => (
           <ChatPair
