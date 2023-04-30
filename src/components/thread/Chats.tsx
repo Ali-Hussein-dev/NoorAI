@@ -5,7 +5,7 @@ import {
   useFetchForm,
 } from "@/hooks";
 import { useRouter } from "next/router";
-import { BsStopFill } from "react-icons/bs";
+import { BsStars, BsStopFill } from "react-icons/bs";
 import ReactMarkdown from "react-markdown";
 import { MdDelete, MdOutlineContentCopy } from "react-icons/md";
 import { TbReload } from "react-icons/tb";
@@ -26,31 +26,39 @@ import * as React from "react";
 import { FiEdit3 } from "react-icons/fi";
 import { franc } from "franc";
 import { useSession } from "next-auth/react";
-import { Whatsnew, Markdown } from "@/components";
+import { Whatsnew, Markdown, TemplateEditor } from "@/components";
 import { HiPlus } from "react-icons/hi";
 
-export const ThreadContainer = ({
-  list,
-}: {
-  list: { value: string; comp: React.ReactNode }[];
-}) => {
+const list = [
+  {
+    value: "What's New",
+    icon: <BsStars />,
+    comp: <Whatsnew />,
+  },
+  {
+    value: "Template Editor",
+    icon: <FiEdit3 />,
+    comp: <TemplateEditor />,
+  },
+];
+// type Props = {
+//   list: { value: string; comp: React.ReactNode, icon: React.ReactNode } [];
+// }
+export const ThreadContainer = () => {
+  const { query } = useRouter();
   return (
     <Accordion
       defaultValue="whatsnew"
       className="pb-12 pt-8"
-      variant="contained"
+      variant="filled"
+      transitionDuration={500}
+      key={query.chatId as string}
     >
       {list.map((o, i) => (
         <Accordion.Item key={i} value={o.value} className="border-none">
           <Accordion.Control
             chevron={<HiPlus size="1rem" />}
-            styles={{
-              chevron: {
-                "&[data-rotate]": {
-                  transform: "rotate(45deg)",
-                },
-              },
-            }}
+            icon={o.icon}
             className="text-xl"
           >
             {o.value}
@@ -62,12 +70,6 @@ export const ThreadContainer = ({
   );
 };
 
-const list = [
-  {
-    value: "What's New",
-    comp: <Whatsnew />,
-  },
-];
 export const UserMsgEdit = ({ input = "", i = 0, conversationId = "" }) => {
   const {
     methods: { register, getValues },
@@ -234,7 +236,7 @@ export const Chats = () => {
 
   return (
     <section className="w-full pb-5 pt-4">
-      <ThreadContainer list={list} />
+      <ThreadContainer />
       <div className="gap-4 flex-col-center">
         {thread.map((o, i) => (
           <ChatPair
