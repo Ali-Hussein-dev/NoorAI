@@ -1,4 +1,4 @@
-import { Divider, Text, Paper, Button } from "@mantine/core";
+import { Divider, Text, Button } from "@mantine/core";
 import * as React from "react";
 import { BsGithub, BsTwitter } from "react-icons/bs";
 import { useStoreCtx } from "@/context/store-ctx";
@@ -6,7 +6,7 @@ import { useStoreCtx } from "@/context/store-ctx";
 const cta = [
   {
     label: "Follow on Twitter",
-    href: "https://twitter.com/noorai_io",
+    href: "https://twitter.com/NoorAI_APP",
     icon: <BsTwitter size="15" />,
   },
   {
@@ -16,7 +16,7 @@ const cta = [
   },
   {
     label: "Suggest a feature",
-    href: "https://twitter.com/noorai_io",
+    href: "https://twitter.com/NoorAI_APP",
     icon: undefined,
   },
 ];
