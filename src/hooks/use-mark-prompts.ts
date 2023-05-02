@@ -2,7 +2,10 @@ import { create } from "zustand";
 import { persist, devtools, createJSONStorage } from "zustand/middleware";
 
 type TagT = { name: string };
-interface PromptT {
+/**
+ * PromptT for marked prompts
+ */
+export interface PromptT {
   id: string;
   text: string;
   tags: TagT[];
