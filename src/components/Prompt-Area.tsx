@@ -149,7 +149,7 @@ export const PromptArea = () => {
             />
           </form>
         </Popover.Target>
-        <Popover.Dropdown className="space-y-4" px="xs">
+        <Popover.Dropdown className="space-y-2" px="xs">
           {promptsSuggestions?.map((prompt) => (
             <Button
               key={prompt.id}
@@ -160,11 +160,14 @@ export const PromptArea = () => {
               styles={{
                 root: {
                   width: "100%",
-                  // textOverflow: "ellipsis",
                 },
                 inner: {
-                  textOverflow: "ellipsis",
                   justifyContent: "start",
+                },
+                label: {
+                  height: "auto",
+                  display: "block",
+                  textOverflow: "ellipsis",
                 },
               }}
             >
