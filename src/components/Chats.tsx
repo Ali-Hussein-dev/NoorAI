@@ -42,7 +42,7 @@ export const Markdown = ({ content }: { content: string }) => {
       style={{
         color:
           theme.colorScheme === "dark"
-            ? theme.colors.gray[6]
+            ? theme.colors.gray[5]
             : theme.colors.gray[7],
       }}
       className="prose w-full max-w-full overflow-hidden"
@@ -117,7 +117,7 @@ export const UserMsgEdit = ({ input = "", i = 0, conversationId = "" }) => {
         <div className="flex grow items-start justify-between gap-2">
           <Spoiler
             style={{
-              color: theme.colors.gray[theme.colorScheme === "dark" ? 7 : 6],
+              color: theme.colors.gray[theme.colorScheme === "dark" ? 6 : 6],
             }}
             className="prose w-full max-w-full grow overflow-hidden"
             maxHeight={155}
