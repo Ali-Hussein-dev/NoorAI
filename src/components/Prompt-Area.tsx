@@ -8,7 +8,7 @@ import {
   useMarkedPrompts,
   useStore,
 } from "../hooks";
-import { BsStopFill } from "react-icons/bs";
+import { BsCommand, BsStopFill } from "react-icons/bs";
 import { PromptBuilder } from ".";
 import {
   useWatch,
@@ -133,18 +133,24 @@ export const PromptArea = () => {
                 )
               }
               rightSection={
-                <ActionIcon
-                  type="submit"
-                  size="md"
-                  disabled={!promptText || queryStatus === "loading"}
-                  variant="transparent"
-                >
-                  {queryStatus == "loading" ? (
-                    <Loader color="orange" variant="dots" size="sm" />
-                  ) : (
-                    <MdSend size="17" />
-                  )}
-                </ActionIcon>
+                !promptText ? (
+                  <div className="gap-3 pr-4 flex-row-start">
+                    <BsCommand /> K
+                  </div>
+                ) : (
+                  <ActionIcon
+                    type="submit"
+                    size="md"
+                    disabled={queryStatus === "loading"}
+                    variant="transparent"
+                  >
+                    {queryStatus == "loading" ? (
+                      <Loader color="orange" variant="dots" size="sm" />
+                    ) : (
+                      <MdSend size="17" />
+                    )}
+                  </ActionIcon>
+                )
               }
             />
           </form>
