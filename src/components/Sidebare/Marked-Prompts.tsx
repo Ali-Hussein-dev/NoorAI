@@ -200,16 +200,26 @@ const PromptCard = ({
       ) : (
         <Card shadow="sm" p="xl" pb="md">
           <Card.Section className="mb-2 text-left">
-            <Spoiler maxHeight={52} showLabel="Show more" hideLabel="Hide">
+            <Spoiler
+              maxHeight={52}
+              showLabel="Show more"
+              hideLabel="Hide"
+              styles={({ colors }) => ({
+                control: {
+                  color: colors.gray[4],
+                  fontWeight: 600,
+                },
+              })}
+            >
               <Text color="dimmed">{text}</Text>
+              <div className="gap-x-2 pb-2 pt-1 flex-row-start">
+                {tags.map((obj, i) => (
+                  <Badge key={i} variant="filled" color="gray">
+                    {obj.name}
+                  </Badge>
+                ))}
+              </div>
             </Spoiler>
-          </Card.Section>
-          <Card.Section className="gap-x-2 pb-2 pt-1 flex-row-start">
-            {tags.map((obj, i) => (
-              <Badge key={i} variant="filled" color="gray">
-                {obj.name}
-              </Badge>
-            ))}
           </Card.Section>
           <Card.Section className="gap-x-2 pb-1 pr-2 flex-row-end" withBorder>
             <ActionIcon
