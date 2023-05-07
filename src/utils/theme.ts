@@ -26,6 +26,11 @@ export const themeOverride: MantineThemeOverride = {
       //   textDecorationColor: "inherit",
       // textDecoration: "inherit",
     },
+    body: {
+      background: colorScheme === "dark" ? colors.dark[9] : colors.gray[2],
+      color: colorScheme === "dark" ? colors.dark[2] : colors.gray[6],
+    },
+
     // scrollbar
     "::-webkit-scrollbar": {
       width: 8,

@@ -21,7 +21,14 @@ const ChatHistory = dynamic(() => import("..").then((a) => a.ChatHistory), {
 
 function PromptsTabs() {
   return (
-    <Tabs defaultValue="1">
+    <Tabs
+      defaultValue="1"
+      styles={{
+        tabsList: {
+          border: "none",
+        },
+      }}
+    >
       <Tabs.List grow>
         {[
           { icon: <AiOutlineHistory />, label: "History" },

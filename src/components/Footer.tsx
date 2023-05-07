@@ -1,9 +1,14 @@
-import { Footer as MantineFooter } from "@mantine/core";
+import { Footer as MantineFooter, useMantineTheme } from "@mantine/core";
 
 //======================================
 export const Footer = () => {
+  const { colorScheme, colors } = useMantineTheme();
   return (
-    <MantineFooter height={60} className="w-full gap-3 flex-row-center">
+    <MantineFooter
+      height={60}
+      className="w-full gap-3 flex-row-center"
+      bg={colorScheme === "dark" ? colors.dark[9] : colors.gray[2]}
+    >
       <span>
         @{new Date().getFullYear()} <b>NoorAI</b>
       </span>
