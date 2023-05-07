@@ -42,7 +42,7 @@ export const UserDropdown = () => {
         },
       }}
     >
-      <Avatar radius="xl" size="md" src={sessionData?.user.image} />
+      <Avatar radius="xl" src={sessionData?.user.image} />
     </Link>
   );
 };
@@ -55,12 +55,13 @@ export const Header = ({
   setOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const { data: sessionData } = useSession();
-
   return (
     <MantineHeader
-      height={{ base: 60 }}
+      height={{ base: 50 }}
       p="md"
-      className="flex w-full items-center"
+      className="flex w-full items-center shadow"
+      bg="inherit"
+      withBorder={false}
     >
       <div className="w-full flex-row-start">
         <MediaQuery largerThan="sm" styles={{ display: "none" }}>

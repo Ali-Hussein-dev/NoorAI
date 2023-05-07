@@ -38,26 +38,25 @@ const ChatPage = (props: StoreCtxT) => {
         <StoreCtxProv value={props}>
           <AppShell
             padding={0}
-            styles={{
-              main: {
-                background:
-                  theme.colorScheme === "dark"
-                    ? theme.colors.dark[9]
-                    : theme.colors.gray[2],
-                color:
-                  theme.colorScheme === "dark"
-                    ? theme.colors.dark[2]
-                    : theme.colors.gray[6],
-              },
-            }}
             navbar={
               <Navbar
-                py="md"
+                py={0}
                 px={6}
                 hiddenBreakpoint="sm"
                 hidden={!opened}
-                width={{ sm: 200, lg: 300 }}
-                className=""
+                width={{ sm: 280, lg: 300 }}
+                bg={
+                  theme.colorScheme === "dark"
+                    ? theme.colors.dark[9]
+                    : theme.colors.gray[2]
+                }
+                color={
+                  theme.colorScheme === "dark"
+                    ? theme.colors.dark[2]
+                    : theme.colors.gray[6]
+                }
+                styles={{}}
+                withBorder={false}
               >
                 <Sidebar />
               </Navbar>
