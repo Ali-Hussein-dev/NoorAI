@@ -57,9 +57,9 @@ export const Header = ({
   const { data: sessionData } = useSession();
   return (
     <MantineHeader
-      height={{ base: 50 }}
+      height={{ base: 60 }}
       p="md"
-      className="flex w-full items-center shadow"
+      className="flex w-full items-center md:px-5"
       bg="inherit"
       withBorder={false}
     >
