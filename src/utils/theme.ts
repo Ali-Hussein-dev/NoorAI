@@ -54,5 +54,8 @@ export const themeOverride: MantineThemeOverride = {
       },
       borderColor: "transparent",
     },
+    ".mantine-Button-root": {
+      color: colorScheme === "dark" ? colors.dark[1] : colors.gray[8],
+    },
   }),
 };
