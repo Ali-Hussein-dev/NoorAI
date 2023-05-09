@@ -197,7 +197,7 @@ const ChatPair = ({
           backgroundColor:
             theme.colorScheme === "dark"
               ? theme.colors.dark[7]
-              : theme.colors.gray[1],
+              : theme.colors.gray[0],
         })}
         radius="sm"
         className="group flex items-start gap-x-2 px-3 pb-2 pt-5 md:pr-4"
