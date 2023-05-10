@@ -43,11 +43,13 @@ export const Whatsnew = () => {
         {store.whatsnew?.map((o, i) => (
           <div key={i}>
             <div className="flex-row-between">
-              <Text size="lg">
-                <b>{o.title}</b>
+              <Text size="lg" fw="700">
+                {o.title}
               </Text>
             </div>
-            <Text size="lg">{o.description}</Text>
+            <Text size="lg" color="dimmed">
+              {o.description}
+            </Text>
           </div>
         ))}
       </div>
