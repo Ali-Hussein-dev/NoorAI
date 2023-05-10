@@ -1,13 +1,8 @@
-import {
-  useStore,
-  type ConversationT,
-  useRegenerate,
-  useFetchForm,
-} from "@/hooks";
 import { useRouter } from "next/router";
-import { BsStars, BsStopFill } from "react-icons/bs";
+import { BsCheckSquare, BsStars, BsStopFill } from "react-icons/bs";
 import ReactMarkdown from "react-markdown";
 import { MdDelete, MdOutlineContentCopy } from "react-icons/md";
+import { HiPlus } from "react-icons/hi";
 import { TbReload } from "react-icons/tb";
 import {
   ActionIcon,
@@ -26,25 +21,27 @@ import * as React from "react";
 import { FiEdit3 } from "react-icons/fi";
 import { franc } from "franc";
 import { useSession } from "next-auth/react";
+import {
+  useStore,
+  type ConversationT,
+  useRegenerate,
+  useFetchForm,
+} from "@/hooks";
 import { Whatsnew, Markdown, TemplateEditor } from "@/components";
-import { HiPlus } from "react-icons/hi";
 
-const list = [
-  {
-    value: "What's New",
-    icon: <BsStars />,
-    comp: <Whatsnew />,
-  },
-  {
-    value: "Template Editor",
-    icon: <FiEdit3 />,
-    comp: <TemplateEditor />,
-  },
-];
-// type Props = {
-//   list: { value: string; comp: React.ReactNode, icon: React.ReactNode } [];
-// }
 export const ThreadContainer = () => {
+  const list = [
+    {
+      value: "What's New",
+      icon: <BsStars />,
+      comp: <Whatsnew />,
+    },
+    {
+      value: "Template Editor (Expermintal)",
+      icon: <FiEdit3 />,
+      comp: <TemplateEditor />,
+    },
+  ];
   const { query } = useRouter();
   return (
     <Accordion
@@ -174,19 +171,23 @@ const ChatPair = ({
   i: number;
   conversationId: string;
 }) => {
-  const [dir, setDir] = React.useState("ltr");
+  const [dir, setDir] = React.useState({ input: "ltr", output: "ltr" });
   React.useEffect(() => {
-    const lang = franc(input);
-    const dir = ["arb", "heb", "pes", "prs", "zlm"].includes(lang)
-      ? "rtl"
-      : "ltr";
-    setDir(dir);
-  }, [input]);
-  const clipboard = useClipboard();
+    const langs = ["arb", "heb", "pes", "prs", "zlm"];
+    const inputDir = langs.includes(franc(input)) ? "rtl" : "ltr";
+    const outputDir = langs.includes(franc(content)) ? "rtl" : "ltr";
+    setDir({ input: inputDir, output: outputDir });
+  }, [input, content]);
+
+  const clipboard = useClipboard({ timeout: 1000 });
   const { data: sessionData } = useSession();
+
   return (
-    <div key={i} className="w-full" dir={dir}>
-      <div className="group flex w-full items-start gap-x-2 px-2 py-4">
+    <div className="w-full">
+      <div
+        dir={dir.input}
+        className="group flex w-full items-start gap-x-2 px-2 py-4"
+      >
         <Avatar radius="xl" src={sessionData?.user.image}>
           <Text color="dimmed">{i + 1}</Text>
         </Avatar>
@@ -201,7 +202,7 @@ const ChatPair = ({
         })}
         radius="sm"
         className="group flex items-start gap-x-2 px-3 pb-2 pt-5 md:pr-4"
-        dir={dir}
+        dir={dir.output}
       >
         <Avatar radius="xl">
           <Text color="dimmed">N</Text>
@@ -218,7 +219,11 @@ const ChatPair = ({
           onClick={() => clipboard.copy(content)}
           className="opacity-0 group-hover:opacity-100"
         >
-          <MdOutlineContentCopy size="17" />
+          {clipboard.copied ? (
+            <BsCheckSquare size="17" />
+          ) : (
+            <MdOutlineContentCopy size="17" />
+          )}
         </ActionIcon>
       </Paper>
     </div>
@@ -226,12 +231,12 @@ const ChatPair = ({
 };
 //======================================
 export const Chats = () => {
-  const { conversations, status } = useStore();
-  const { regenerate } = useRegenerate();
+  const status = useStore((s) => s.status);
   const { query } = useRouter();
-  const conversation = conversations.find(
-    (o) => o.id === query.chatId
+  const conversation = useStore((s) =>
+    s.conversations.find((o) => o.id === query.chatId)
   ) as ConversationT;
+  const { regenerate } = useRegenerate();
   const thread = conversation?.thread || [];
 
   return (
