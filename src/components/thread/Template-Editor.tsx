@@ -10,11 +10,14 @@ import * as React from "react";
 import { notifications } from "@mantine/notifications";
 
 const RichtEditor = () => {
-  const conversations = useStore((s) => s.conversations);
-
   const { query } = useRouter();
   const textContent =
-    conversations.find((c) => c.id === query.chatId)?.template?.content || "";
+    useStore(
+      (s) =>
+        s.conversations.find((c) => c.id === query.chatId)?.template
+          ?.htmlContent
+    ) || "";
+
   const setTemplate = useStore((s) => s.setTemplate);
   const [isDirty, setIsDirty] = React.useState(false);
   const editor = useEditor({
