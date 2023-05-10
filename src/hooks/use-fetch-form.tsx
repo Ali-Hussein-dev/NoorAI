@@ -39,6 +39,11 @@ export const useFetchForm = (param?: { promptText: string }) => {
 
   const conversation = conversations.find((o) => o.id === conversationId) || {
     thread: [],
+    template: {
+      role: "user",
+      content: "",
+      htmlContent: "",
+    },
   };
   const [controller, setController] = React.useState<null | AbortController>(
     null
@@ -58,23 +63,33 @@ export const useFetchForm = (param?: { promptText: string }) => {
     setController(abortController);
     // eslint-disable-next-line prefer-const
     let threadIndex = conversation.thread.length;
-    const res = await fetch("api/openai-stream", {
-      method: "POST",
-      signal: abortController.signal,
-      body: JSON.stringify({
-        messages: [
+    const template = conversation.template.content;
+    // if users use template, don't send messages history (LLM will be confused)
+    const messagesHistory = !!template
+      ? []
+      : [
           ...conversation?.thread.map((o) => ({
             content: o.input,
             role: o?.message?.role || "user",
           })),
-          {
-            role: "user",
-            content: input,
-          },
-        ],
-        max_tokens: maxLength,
-        temperature,
-      }),
+        ];
+
+    const body = {
+      messages: [
+        ...messagesHistory,
+        {
+          role: "user",
+          content: input,
+        },
+      ],
+      template,
+      max_tokens: maxLength,
+      temperature,
+    };
+    const res = await fetch("api/openai-stream", {
+      method: "POST",
+      signal: abortController.signal,
+      body: JSON.stringify(body),
     });
     // This data is a ReadableStream
     const data = res.body;

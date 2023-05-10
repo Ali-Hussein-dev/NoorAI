@@ -3,6 +3,7 @@ import { persist, devtools, createJSONStorage } from "zustand/middleware";
 import type { ChatCompletionResponseMessage } from "openai";
 import { type FetchStatus, type QueryStatus } from "@tanstack/react-query";
 import type languages from "../content/languages.json";
+import { type HTMLContent } from "@tiptap/react";
 
 /**
  **Request
@@ -32,12 +33,17 @@ export interface ChatPairT {
    */
   message?: ChatCompletionResponseMessage;
 }
-
+type TemplateT = {
+  role: "system";
+  content: string;
+  htmlContent?: HTMLContent;
+};
 export interface ConversationT {
   id: string | string;
   name?: string;
   createdAt: number;
   thread: ChatPairT[];
+  template: TemplateT;
 }
 
 export type ConversationsT = ConversationT[];
@@ -46,6 +52,7 @@ type ValueOf<T> = T[keyof T];
 type LangCodeT = ValueOf<typeof languages>;
 // type LangCodeT = (typeof languages)[keyof typeof languages];
 
+//------------------------------------------------------------Store-state
 export interface StoreStateT {
   id: number;
   filtered: ConversationsT | never[];
@@ -90,7 +97,7 @@ export interface StoreStateT {
   //  search: () => void;
   renameConversation: (id: string, name: string) => void;
   /**
-   * @required filter prompts
+   * @required filter prompts (search history)
    */
   filter: (input: string) => void;
   /**
@@ -106,6 +113,14 @@ export interface StoreStateT {
    * used for editing prompts
    */
   sliceThread: (index: number, conversationId: string) => void;
+  /**
+   * @param conversationId
+   * @param template template content
+   */
+  setTemplate: (
+    conversationId: string,
+    template: Omit<TemplateT, "role">
+  ) => void;
 }
 
 const localStorageKey = "yourchatgpt";
@@ -121,9 +136,13 @@ export const useStore = create<StoreStateT>()(
           conversations: [
             {
               id: "chat",
-              name: "First Topic",
+              name: "Chat Title",
               thread: [],
               createdAt: new Date().getTime(),
+              template: {
+                role: "system",
+                content: "",
+              },
             },
           ],
           whisperLang: "en",
@@ -133,6 +152,7 @@ export const useStore = create<StoreStateT>()(
           setRecordingMode: (mode) =>
             set(() => ({ recordingMode: mode }), false, "setRecordingMode"),
           temperature: 0.5,
+          //-------------------------------------------------------set-temperature
           setTemperature: (temp) =>
             set(
               () => ({ temperature: +temp.toFixed(1) }),
@@ -140,8 +160,38 @@ export const useStore = create<StoreStateT>()(
               "setTemperature"
             ),
           maxLength: 250,
+          //-------------------------------------------------------set-max-length
           setMaxLength: (length) =>
             set(() => ({ maxLength: length }), false, "setMaxLength"),
+
+          //-------------------------------------------------------set-template
+          setTemplate: (conversationId, content) => {
+            return set((s) => {
+              const { conversations } = s;
+              const index = conversations.findIndex(
+                (o) => o.id === conversationId
+              );
+              const conversation = conversations[index] as ConversationT;
+
+              if (index >= -1) {
+                const prvTemplate = conversations[index]?.template || {
+                  role: "system",
+                  content: "",
+                };
+                conversations[index] = {
+                  ...conversation,
+                  template: {
+                    ...prvTemplate,
+                    ...content,
+                  },
+                };
+              }
+              return {
+                conversations,
+              };
+            });
+          },
+          //-------------------------------------------------------push
           push: (id, chatPair, threadIndex) => {
             return set(
               (state) => {
@@ -179,6 +229,7 @@ export const useStore = create<StoreStateT>()(
               "push"
             );
           },
+          //-------------------------------------------------------create-conversation
           createConversation: (id) =>
             set(
               (s) =>
@@ -195,6 +246,7 @@ export const useStore = create<StoreStateT>()(
               false,
               "createConversation"
             ),
+          //-------------------------------------------------------delete-conversation
           deleteConversation: (id) =>
             set(
               (s) => {
@@ -208,6 +260,7 @@ export const useStore = create<StoreStateT>()(
               false,
               "deleteConversation"
             ),
+          //-------------------------------------------------------rename-conversation
           renameConversation: (id, name) =>
             set(
               (s) => {
@@ -226,6 +279,7 @@ export const useStore = create<StoreStateT>()(
               false,
               "renameConversation"
             ),
+          //-------------------------------------------------------slice-thread
           filter: (input) =>
             set((s) => {
               const { conversations } = s;
@@ -245,7 +299,9 @@ export const useStore = create<StoreStateT>()(
               }
               return { filtered };
             }),
+          //-------------------------------------------------------update-status
           updateStatus: (status) => set(() => ({ status: status })),
+          //-------------------------------------------------------del-chat-pair
           delChatPair: (index, conversationId) =>
             set((s) => {
               const { conversations } = s;
@@ -257,6 +313,7 @@ export const useStore = create<StoreStateT>()(
                 ...s,
               };
             }),
+          //-------------------------------------------------------drop-last-chat-pair
           dropLastTheardElement: (id) =>
             set(
               (s) => {
@@ -268,6 +325,7 @@ export const useStore = create<StoreStateT>()(
               false,
               "regenerate"
             ),
+          //-------------------------------------------------------slice-thread
           sliceThread: (index, conversationId) =>
             set(
               (s) => {
