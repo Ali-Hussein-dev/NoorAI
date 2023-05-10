@@ -148,7 +148,10 @@ export const UserMsgEdit = ({ input = "", i = 0, conversationId = "" }) => {
                 color="red"
                 size="lg"
                 disabled={status == "loading"}
-                onClick={() => delChatPair(i, conversationId)}
+                onClick={() => {
+                  delChatPair(i, conversationId);
+                  useStore.persist.rehydrate();
+                }}
                 className="ml-0 opacity-0 group-hover:opacity-100"
               >
                 <MdDelete size="20" />
