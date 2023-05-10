@@ -63,7 +63,7 @@ export const useFetchForm = (param?: { promptText: string }) => {
     setController(abortController);
     // eslint-disable-next-line prefer-const
     let threadIndex = conversation.thread.length;
-    const template = conversation.template.content;
+    const template = conversation?.template?.content;
     // if users use template, don't send messages history (LLM will be confused)
     const messagesHistory = !!template
       ? []
