@@ -6,9 +6,9 @@ export const mainRouter = createTRPCRouter({
     try {
       const res = await prisma.whatsnew.findMany({
         orderBy: {
-          id: "asc",
+          id: "desc",
         },
-        take: 3,
+        take: 5,
       });
       return res;
     } catch (error) {
