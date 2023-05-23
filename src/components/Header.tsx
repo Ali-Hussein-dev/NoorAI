@@ -58,9 +58,8 @@ export const Header = ({
   return (
     <MantineHeader
       height={{ base: 60 }}
-      p="md"
       className="flex w-full items-center md:px-5"
-      bg="inherit"
+      bg="transparent"
       withBorder={false}
     >
       <div className="w-full flex-row-start">
