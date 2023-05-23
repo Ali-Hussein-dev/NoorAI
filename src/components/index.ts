@@ -13,3 +13,5 @@ export * from "./thread/Whats-New";
 export * from "./thread/Markdown";
 export * from "./thread/Template-Editor";
 export * from "./thread/Chats";
+
+export * from "./Hero/Hero";
