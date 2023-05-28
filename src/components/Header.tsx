@@ -13,6 +13,7 @@ import {
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { Logo } from "@/components";
+import { useRouter } from "next/router";
 
 export function ToggleTheme() {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
@@ -55,9 +56,10 @@ export const Header = ({
   setOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const { data: sessionData } = useSession();
+  const { pathname } = useRouter();
   return (
     <MantineHeader
-      height={{ base: 60 }}
+      height={{ base: 70 }}
       className="flex w-full items-center md:px-5"
       bg="transparent"
       withBorder={false}
@@ -77,13 +79,14 @@ export const Header = ({
         <div className=" sm:w-[180px] lg:w-[280px]"></div>
         <div className="mx-auto w-full max-w-3xl flex-row-center"></div>
         <div className="gap-x-3 flex-row-center">
-          <ToggleTheme />
-          {sessionData ? (
+          {pathname !== "/" && <ToggleTheme />}
+
+          {sessionData && pathname !== "/" ? (
             <UserDropdown />
           ) : (
             <Link href="/signin">
-              <Button variant="outline" color="gray" radius="md">
-                Login
+              <Button variant="outline" color="gray" size="lg">
+                Sign in
               </Button>
             </Link>
           )}
