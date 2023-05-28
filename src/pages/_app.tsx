@@ -7,12 +7,16 @@ import {
   ColorSchemeProvider,
   type ColorScheme,
   MantineProvider,
-  TypographyStylesProvider,
 } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
 import * as React from "react";
 import { Analytics } from "@vercel/analytics/react";
 import { RouterTransition } from "@/components";
+import { Inter } from "next/font/google";
+const font = Inter({
+  subsets: ["latin", "latin-ext", "cyrillic"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+});
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -38,9 +42,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
         >
           <Notifications position="top-center" />
           <RouterTransition />
-          <TypographyStylesProvider>
+          <div className={font.className}>
             <Component {...pageProps} />
-          </TypographyStylesProvider>
+          </div>
           <Analytics />
         </MantineProvider>
       </ColorSchemeProvider>
