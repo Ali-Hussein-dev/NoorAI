@@ -6,10 +6,10 @@
     hsla(26, 22%, 43%, 0.07),
     hsla(00, 1%, 17%, 0.01)
   );
-  .heroHeading {
-    background: linear-gradient(180deg, #ffffff 0%, hsl(0, 0%, 67%) 100%),
-      #ffffff;
-    background-clip: text;
-    color: transparent;
-  }
+}
+
+.heroHeading {
+  background: linear-gradient(180deg, #ffffff 0%, hsl(0, 0%, 67%) 100%), #ffffff;
+  background-clip: text;
+  color: transparent;
 }
