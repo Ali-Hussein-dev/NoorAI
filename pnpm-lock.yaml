@@ -38,7 +38,6 @@ specifiers:
   '@upstash/redis': ^1.20.6
   '@vercel/analytics': ^0.1.11
   autoprefixer: ^10.4.7
-  clsx: ^1.2.1
   eslint: ^8.34.0
   eslint-config-next: ^13.4.4
   eventsource-parser: ^1.0.0
@@ -96,7 +95,6 @@ dependencies:
   '@upstash/ratelimit': 0.4.3
   '@upstash/redis': 1.20.6
   '@vercel/analytics': 0.1.11_react@18.2.0
-  clsx: 1.2.1
   eventsource-parser: 1.0.0
   franc: 6.1.0
   immer: 9.0.21
@@ -2180,11 +2178,6 @@ packages:
 
   /clsx/1.1.1:
     resolution: {integrity: sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==}
-    engines: {node: '>=6'}
-    dev: false
-
-  /clsx/1.2.1:
-    resolution: {integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==}
     engines: {node: '>=6'}
     dev: false
 

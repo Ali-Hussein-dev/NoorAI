@@ -1,6 +1,5 @@
 import {
   ActionIcon,
-  Badge,
   Button,
   Card,
   Collapse,
@@ -15,7 +14,7 @@ import * as React from "react";
 import { notifications } from "@mantine/notifications";
 import { useMarkedPrompts } from "@/hooks";
 import { useDisclosure } from "@mantine/hooks";
-
+import { Badge } from "./Prompts-Lib";
 const EditPromptForm = (props: {
   text: string;
   id: string;
@@ -202,21 +201,19 @@ const PromptCard = ({
           <Card.Section className="mb-2 text-left">
             <Spoiler
               maxHeight={52}
-              showLabel="Show more"
+              showLabel=" . . ."
               hideLabel="Hide"
               styles={({ colors }) => ({
                 control: {
-                  color: colors.gray[4],
+                  color: colors.gray[6],
                   fontWeight: 600,
                 },
               })}
             >
               <Text color="dimmed">{text}</Text>
-              <div className="gap-x-2 pb-2 pt-1 flex-row-start">
+              <div className="flex-wrap gap-2 pb-2 pt-1 flex-row-start">
                 {tags.map((obj, i) => (
-                  <Badge key={i} variant="filled" color="gray">
-                    {obj.name}
-                  </Badge>
+                  <Badge key={i}>{obj.name}</Badge>
                 ))}
               </div>
             </Spoiler>

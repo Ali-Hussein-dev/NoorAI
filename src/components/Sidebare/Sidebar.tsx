@@ -42,7 +42,12 @@ function PromptsTabs() {
       </Tabs.List>
 
       <Tabs.Panel value="1" className="pt-2">
-        <ScrollArea scrollHideDelay={50} h="70vh" className="pt-1">
+        <ScrollArea
+          scrollHideDelay={50}
+          h="75vh"
+          className="pt-1"
+          offsetScrollbars
+        >
           <ChatHistory />
         </ScrollArea>
       </Tabs.Panel>
@@ -50,7 +55,12 @@ function PromptsTabs() {
         <PromptsLib />
       </Tabs.Panel>
       <Tabs.Panel value="3" className="pt-2">
-        <ScrollArea h="70vh" scrollHideDelay={50} className="pt-1">
+        <ScrollArea
+          h="75vh"
+          scrollHideDelay={50}
+          className="pt-1"
+          offsetScrollbars
+        >
           <MarkedPrompts />
         </ScrollArea>
       </Tabs.Panel>
@@ -64,7 +74,7 @@ export const Sidebar = () => {
       <div className="w-full grow space-y-2">
         <PromptsTabs />
       </div>
-      <div className="sticky bottom-0 w-full gap-2 border-t border-neutral-600 pb-2 pt-3 flex-row-center">
+      <div className="sticky bottom-0 w-full gap-2 pb-2 flex-row-center">
         <OpenaiConfig />
         <InfoModal />
       </div>

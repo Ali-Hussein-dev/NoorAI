@@ -1,11 +1,11 @@
 import Head from "next/head";
-import clsx from "clsx";
 import {
   AppShell,
   Navbar,
   useMantineTheme,
   Paper,
   TypographyStylesProvider,
+  clsx,
 } from "@mantine/core";
 import * as React from "react";
 import { useRouter } from "next/router";
