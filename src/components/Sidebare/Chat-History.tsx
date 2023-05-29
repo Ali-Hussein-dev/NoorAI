@@ -2,7 +2,6 @@ import { useStore } from "../../hooks";
 import { useRouter } from "next/router";
 import * as React from "react";
 import Link from "next/link";
-import clsx from "clsx";
 import {
   MdClear,
   MdDelete,
@@ -16,6 +15,7 @@ import {
   Text,
   TextInput,
   Tooltip,
+  Box,
 } from "@mantine/core";
 import { useColorScheme } from "@mantine/hooks";
 import { BsPlus } from "react-icons/bs";
@@ -30,12 +30,18 @@ const ConversationLink = ({ id, name }: { id: string; name: string }) => {
   const threadLength =
     conversations[conversations.findIndex((c) => c.id === id)]?.thread.length ||
     0;
+  const isMatched = query.chatId === id;
   return (
-    <div
-      className={clsx(
-        "mx-w-fit group relative h-10 w-full cursor-pointer gap-2 rounded-sm flex-row-between",
-        query.chatId === id && "bg-zinc-700/20"
-      )}
+    <Box
+      className="mx-w-fit group relative h-10 w-full cursor-pointer gap-2 rounded-sm flex-row-between"
+      sx={({ colors, colorScheme }) => ({
+        background:
+          isMatched && colorScheme === "dark"
+            ? colors.dark[7]
+            : isMatched && colorScheme === "light"
+            ? colors.gray[3]
+            : "transparent",
+      })}
     >
       {editing ? (
         <>
@@ -115,7 +121,7 @@ const ConversationLink = ({ id, name }: { id: string; name: string }) => {
           </div>
         </>
       )}
-    </div>
+    </Box>
   );
 };
 //---------------------------------------------------

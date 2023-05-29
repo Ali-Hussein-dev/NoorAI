@@ -18,13 +18,13 @@ import {
 } from "@mantine/core";
 import { useStoreCtx } from "@/context/store-ctx";
 
-const Badge = ({ children = "" }) => (
+export const Badge = ({ children = "" }) => (
   <Box
     sx={({ colorScheme, colors }) => ({
-      backgroundColor: colors.dark[colorScheme === "dark" ? 7 : 1],
-      color: colors[colorScheme === "dark" ? "dark" : "gray"][1],
+      backgroundColor: colors.dark[colorScheme === "dark" ? 7 : 0],
+      color: colors[colorScheme === "dark" ? "dark" : "gray"][0],
     })}
-    className=" rounded px-2 pb-[2px] text-sm"
+    className="rounded px-2 pb-[2px] text-sm font-light"
   >
     {children}
   </Box>
@@ -133,7 +133,7 @@ export const PromptsLib = () => {
                 <Card.Section className="mb-1 text-left">
                   <Spoiler
                     maxHeight={52}
-                    showLabel="Show more"
+                    showLabel=" . . ."
                     hideLabel="Hide"
                     styles={{
                       control: {
