@@ -78,7 +78,7 @@ export const InfoModal = () => {
         variant="default"
         leftIcon={<BsInfoCircle size="17" />}
         onClick={open}
-        className="w-full"
+        className="w-full shadow"
       >
         <Text>Info</Text>
       </Button>

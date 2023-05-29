@@ -21,7 +21,7 @@ export function ToggleTheme() {
 
   return (
     <ActionIcon
-      size="lg"
+      size={26}
       onClick={() => toggleColorScheme()}
       title="Toggle color scheme"
     >
@@ -43,7 +43,7 @@ export const UserDropdown = () => {
         },
       }}
     >
-      <Avatar radius="xl" src={sessionData?.user.image} />
+      <Avatar radius="xl" src={sessionData?.user.image} size={28} />
     </Link>
   );
 };

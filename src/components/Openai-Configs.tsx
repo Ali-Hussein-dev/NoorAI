@@ -168,10 +168,9 @@ export const OpenaiConfig = () => {
       </Drawer>
       <Button
         variant="default"
-        color="gray"
         onClick={open}
         leftIcon={<RiSettings3Line size="17" />}
-        className="w-full"
+        className="w-full shadow"
       >
         Settings
       </Button>
