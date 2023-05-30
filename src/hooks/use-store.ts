@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist, devtools, createJSONStorage } from "zustand/middleware";
 import type { ChatCompletionResponseMessage } from "openai";
 import { type FetchStatus, type QueryStatus } from "@tanstack/react-query";
-import type languages from "../content/languages.json";
+// import type languages from "../content/languages.json";
 import { type HTMLContent } from "@tiptap/react";
 
 /**
@@ -48,8 +48,8 @@ export interface ConversationT {
 
 export type ConversationsT = ConversationT[];
 // const langCodes= Object.values(languages) as const;
-type ValueOf<T> = T[keyof T];
-type LangCodeT = ValueOf<typeof languages>;
+// type ValueOf<T> = T[keyof T];
+// type LangCodeT = ValueOf<typeof languages>;
 // type LangCodeT = (typeof languages)[keyof typeof languages];
 
 //------------------------------------------------------------Store-state
@@ -65,10 +65,10 @@ export interface StoreStateT {
   status: QueryStatus | FetchStatus;
   updateStatus: (s: QueryStatus | FetchStatus) => void;
   // Whisper configs
-  whisperLang: LangCodeT;
-  setWhisperLang: (lang: LangCodeT) => void;
-  recordingMode: "transcriptions" | "translations";
-  setRecordingMode: (mode: "transcriptions" | "translations") => void;
+  // whisperLang: LangCodeT;
+  // setWhisperLang: (lang: LangCodeT) => void;
+  // recordingMode: "transcriptions" | "translations";
+  // setRecordingMode: (mode: "transcriptions" | "translations") => void;
   //------------------------------
   // configs
   temperature: number;
@@ -145,12 +145,12 @@ export const useStore = create<StoreStateT>()(
               },
             },
           ],
-          whisperLang: "en",
-          setWhisperLang: (lang) =>
-            set(() => ({ whisperLang: lang }), false, "setWhisperLang"),
-          recordingMode: "transcriptions",
-          setRecordingMode: (mode) =>
-            set(() => ({ recordingMode: mode }), false, "setRecordingMode"),
+          // whisperLang: "en",
+          // setWhisperLang: (lang) =>
+          //   set(() => ({ whisperLang: lang }), false, "setWhisperLang"),
+          // recordingMode: "transcriptions",
+          // setRecordingMode: (mode) =>
+          //   set(() => ({ recordingMode: mode }), false, "setRecordingMode"),
           temperature: 0.5,
           //-------------------------------------------------------set-temperature
           setTemperature: (temp) =>
