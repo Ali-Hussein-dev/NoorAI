@@ -1,4 +1,4 @@
-type conditionalParams = {
+type ConditionalParams = {
   /**
    * run a callback fn while streaming data
    */
@@ -18,28 +18,21 @@ interface RequiredParams {
   options: RequestInit;
 }
 
-// type FetcherParams = RequiredParams["stream"] extends true ? (RequiredParams & conditionalParams) : RequiredParams;
+type FetcherParams = RequiredParams &
+  (
+    | {
+        stream: false;
+      }
+    | ({
+        stream: true;
+      } & ConditionalParams)
+  );
 
-// todo: needs to fix it
-type FetcherParams = RequiredParams & conditionalParams;
-
-export const fetcher = async ({
-  url,
-  onStream,
-  onStreamFinished,
-  stream,
-  options,
-}: FetcherParams) => {
-  console.log({
-    url,
-    onStream,
-    onStreamFinished,
-    stream,
-    options,
-  });
-
+export const fetcher = async (params: FetcherParams) => {
+  const { url, options, stream } = params;
   const res = await fetch(url, options);
   if (stream) {
+    const { onStream, onStreamFinished } = params;
     // This data is a ReadableStream
     const data = res.body;
     if (!data) {
