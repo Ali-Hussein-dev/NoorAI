@@ -125,7 +125,7 @@ const ResponseLength = () => {
           value={value}
           onChange={handleChange}
           size="xs"
-          className="max-w-[50px]"
+          className="max-w-[3.5em]"
           hideControls
         />
       </div>
