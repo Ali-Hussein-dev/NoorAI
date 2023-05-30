@@ -10,14 +10,12 @@ const instructions = [
   "Before you response, follow these instructions:",
   "1. Be concise with your answer",
   "2. Don't repeat what I say",
-  "3. present the answer in markdown",
-  "4. If you are unsure, or don't know, just say 'Sorry, I do not know'",
 ].join("\n");
 const handler = async (req: Request): Promise<Response> => {
   const {
     messages,
-    temperature = 0.5,
-    max_tokens = 100,
+    temperature = 0.7,
+    max_tokens = 200,
     template,
   } = await req.json();
 
