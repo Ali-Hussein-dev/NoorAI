@@ -1,6 +1,6 @@
 import {
-  Select,
-  SegmentedControl,
+  // Select,
+  // SegmentedControl,
   Divider,
   Button,
   Paper,
@@ -11,9 +11,9 @@ import {
 } from "@mantine/core";
 import * as React from "react";
 import { RiSettings3Line } from "react-icons/ri";
-import { IoChevronDown } from "react-icons/io5";
 import { useDisclosure } from "@mantine/hooks";
-import languages from "../content/languages.json";
+// import { IoChevronDown } from "react-icons/io5";
+// import languages from "../content/languages.json";
 import { useStore } from "@/hooks";
 
 /**
@@ -21,70 +21,70 @@ import { useStore } from "@/hooks";
  * whisper: lang code
  * langauges object: label: code
  */
-type langKeyT = keyof typeof languages;
+// type langKeyT = keyof typeof languages;
 
-const getCode = (label: langKeyT) => {
-  for (const [key, code] of Object.entries(languages)) {
-    if (key === label) {
-      return code;
-    }
-  }
-  return null;
-};
-const getName = (code: string) => {
-  for (const [key, value] of Object.entries(languages)) {
-    if (value === code) {
-      return key;
-    }
-  }
-  return null;
-};
-//======================================
-export const SelectModel = () => {
-  const whisperLang = useStore((state) => state.whisperLang);
-  const setWhisperLang = useStore((state) => state.setWhisperLang);
-  const [value, setValue] = React.useState<string | null>(getName(whisperLang));
-  return (
-    <Select
-      placeholder="Recording Language"
-      label="Recording Language"
-      searchable
-      data={Object.keys(languages)}
-      rightSection={<IoChevronDown size="1rem" />}
-      value={value}
-      onChange={(langName: langKeyT) => {
-        setValue(langName);
-        const code = getCode(langName);
-        code && setWhisperLang(code);
-      }}
-      dropdownPosition="bottom"
-      className="mb-1"
-    />
-  );
-};
+// const getCode = (label: langKeyT) => {
+//   for (const [key, code] of Object.entries(languages)) {
+//     if (key === label) {
+//       return code;
+//     }
+//   }
+//   return null;
+// };
+// const getName = (code: string) => {
+//   for (const [key, value] of Object.entries(languages)) {
+//     if (value === code) {
+//       return key;
+//     }
+//   }
+//   return null;
+// };
+// //======================================
+// export const SelectModel = () => {
+//   const whisperLang = useStore((state) => state.whisperLang);
+//   const setWhisperLang = useStore((state) => state.setWhisperLang);
+//   const [value, setValue] = React.useState<string | null>(getName(whisperLang));
+//   return (
+//     <Select
+//       placeholder="Recording Language"
+//       label="Recording Language"
+//       searchable
+//       data={Object.keys(languages)}
+//       rightSection={<IoChevronDown size="1rem" />}
+//       value={value}
+//       onChange={(langName: langKeyT) => {
+//         setValue(langName);
+//         const code = getCode(langName);
+//         code && setWhisperLang(code);
+//       }}
+//       dropdownPosition="bottom"
+//       className="mb-1"
+//     />
+//   );
+// };
 
-//======================================
-export const RecordingMode = () => {
-  const recordingMode = useStore((state) => state.recordingMode);
-  const setRecordingMode = useStore((state) => state.setRecordingMode);
-  const [value, setValue] = React.useState(recordingMode);
-  return (
-    <div className="space-y-1 pt-2">
-      <Text size="md">Choose Recording mode</Text>
-      <SegmentedControl
-        value={value}
-        onChange={(value: "transcriptions" | "translations") => {
-          setValue(value);
-          setRecordingMode(value);
-        }}
-        data={[
-          { label: "Transcripe", value: "transcriptions" },
-          { label: "Translate into English", value: "translations" },
-        ]}
-      />
-    </div>
-  );
-};
+// //======================================
+// export const RecordingMode = () => {
+//   const recordingMode = useStore((state) => state.recordingMode);
+//   const setRecordingMode = useStore((state) => state.setRecordingMode);
+//   const [value, setValue] = React.useState(recordingMode);
+//   return (
+//     <div className="space-y-1 pt-2">
+//       <Text size="md">Choose Recording mode</Text>
+//       <SegmentedControl
+//         value={value}
+//         onChange={(value: "transcriptions" | "translations") => {
+//           setValue(value);
+//           setRecordingMode(value);
+//         }}
+//         data={[
+//           { label: "Transcripe", value: "transcriptions" },
+//           { label: "Translate into English", value: "translations" },
+//         ]}
+//       />
+//     </div>
+//   );
+// };
 const Temperature = () => {
   const temperature = useStore((state) => state.temperature);
   const setTemperature = useStore((state) => state.setTemperature);
@@ -125,7 +125,7 @@ const ResponseLength = () => {
           value={value}
           onChange={handleChange}
           size="xs"
-          className="max-w-[50px]"
+          className="max-w-[3.5em]"
           hideControls
         />
       </div>

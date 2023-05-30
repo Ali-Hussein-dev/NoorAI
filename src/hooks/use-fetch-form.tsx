@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { notifications } from "@mantine/notifications";
 import { useSession } from "next-auth/react";
+import { fetcher } from "@/utils";
 
 interface FormData {
   promptText: string;
@@ -56,7 +57,7 @@ export const useFetchForm = (param?: { promptText: string }) => {
       updateStatus("success");
     }
   };
-  const fetchStreaming = async (input: string) => {
+  const fetchingManager = async (input: string) => {
     updateStatus("loading");
     reset({ promptText: "" });
     const abortController = new AbortController();
@@ -86,66 +87,42 @@ export const useFetchForm = (param?: { promptText: string }) => {
       max_tokens: maxLength,
       temperature,
     };
-    const res = await fetch("api/openai-stream", {
-      method: "POST",
-      signal: abortController.signal,
-      body: JSON.stringify(body),
+    // fetching...
+    await fetcher({
+      url: "api/openai-stream",
+      options: {
+        signal: abortController.signal,
+        body: JSON.stringify(body),
+        method: "POST",
+      },
+      stream: true,
+      onStream(chunkValue) {
+        push(
+          conversationId,
+          {
+            input: input,
+            message: { role: "user", content: chunkValue },
+          },
+          threadIndex
+        );
+      },
+      onStreamFinished() {
+        threadIndex += 1;
+        updateStatus("success");
+      },
     });
-    // This data is a ReadableStream
-    const data = res.body;
-    if (!data) {
-      return;
-    }
-    const reader = data.getReader();
-    const decoder = new TextDecoder("utf-8");
-    let done = false;
-
-    while (!done) {
-      try {
-        const { value, done: doneReading } = await reader.read();
-        done = doneReading;
-        const chunkValue = decoder.decode(value);
-        if (chunkValue) {
-          push(
-            conversationId,
-            {
-              input: input,
-              message: { role: "user", content: chunkValue },
-            },
-            threadIndex
-          );
-        }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (error: unknown | any) {
-        if (error?.name === "AbortError") {
-          console.log("Stream stopped by user");
-        } else {
-          console.error("Error in reading stream:", error);
-        }
-        break;
-      }
-    }
-    window.scrollTo({
-      top: document.body.scrollHeight,
-      behavior: "smooth",
-    });
-    updateStatus("success");
-    if (done) {
-      threadIndex += 1;
-      return;
-    }
   };
   const onSubmit = async ({ promptText: input }: FormData) => {
     if (!sessionData?.user) {
       notifications.show({
         title: "Login required",
-        message: "You have to login to continue use the app",
+        message: "You have to log in to continue using the app",
         withCloseButton: true,
         color: "red",
       });
       return;
     }
-    await fetchStreaming(input.trim());
+    await fetchingManager(input.trim());
     window.scrollTo({
       top: document.body.scrollHeight,
       behavior: "smooth",
