@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 const systemInstruction =
-  "Before you respond, follow these instructions:\n - Be concise with your answer\n, - Don't repeat what I say";
+  "Before you respond, follow these instructions:\n - Be concise with your answer,\n - Don't repeat what I say";
 
 type Configs = {
   model: string;
