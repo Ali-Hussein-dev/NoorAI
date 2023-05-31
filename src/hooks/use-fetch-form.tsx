@@ -94,6 +94,7 @@ export const useFetchForm = (param?: { promptText: string }) => {
       (o) => o.id === conversationId
     );
     const thread = conversations[conversationIndex]?.thread || [];
+    const currentContent = thread.at(-1)?.message?.content || "";
     // fetching...
     await fetcher({
       url: "api/openai-stream",
@@ -104,8 +105,6 @@ export const useFetchForm = (param?: { promptText: string }) => {
       },
       stream: true,
       onStream(chunkValue) {
-        // find thread
-        const currentContent = thread.at(-1)?.message?.content || "";
         // update the DOM
         push({
           threadIndex,
