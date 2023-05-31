@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useStore } from ".";
+import { useModelConfigs, useStore } from ".";
 import { useRouter } from "next/router";
 import React from "react";
 import { notifications } from "@mantine/notifications";
@@ -35,8 +35,8 @@ export const useFetchForm = (param?: { promptText: string }) => {
   const conversations = useStore((s) => s.conversations);
   const push = useStore((s) => s.push);
   const updateStatus = useStore((s) => s.updateStatus);
-  const temperature = useStore((s) => s.temperature);
-  const maxLength = useStore((s) => s.maxLength);
+
+  const { temperature, maxLength } = useModelConfigs((s) => s.configs);
 
   const conversation = conversations.find((o) => o.id === conversationId) || {
     thread: [],
