@@ -1,6 +1,9 @@
 import { create } from "zustand";
 import { persist, devtools, createJSONStorage } from "zustand/middleware";
-import type { ChatCompletionResponseMessage } from "openai";
+import type {
+  ChatCompletionResponseMessage,
+  ChatCompletionResponseMessageRoleEnum,
+} from "openai";
 import { type FetchStatus, type QueryStatus } from "@tanstack/react-query";
 // import type languages from "../content/languages.json";
 import { type HTMLContent } from "@tiptap/react";
@@ -51,7 +54,6 @@ export type ConversationsT = ConversationT[];
 // type ValueOf<T> = T[keyof T];
 // type LangCodeT = ValueOf<typeof languages>;
 // type LangCodeT = (typeof languages)[keyof typeof languages];
-
 //------------------------------------------------------------Store-state
 export interface StoreStateT {
   id: number;
@@ -76,7 +78,13 @@ export interface StoreStateT {
    * @params id: conversation id from router
    * @param chatPair { input: string, response: {text:string}[] }
    */
-  push: (id: number | string, chatPair: ChatPairT, threadIndex: number) => void;
+  push: (params: {
+    threadIndex: number;
+    conversationIndex: number;
+    role: ChatCompletionResponseMessageRoleEnum;
+    chunkValue: string;
+    input: string;
+  }) => void;
   /**
    * @required
    * create an empty conversation when creating a new chat (new chat button)
@@ -175,33 +183,28 @@ export const useStore = create<StoreStateT>()(
             });
           },
           //-------------------------------------------------------push
-          push: (id, chatPair, threadIndex) => {
+          push: ({
+            threadIndex,
+            conversationIndex,
+            chunkValue,
+            input,
+            role,
+          }) => {
             return set(
               (state) => {
-                const { conversations } = state;
-
-                const index = state.conversations.findIndex((o) => o.id === id);
-
-                if (index >= -1) {
-                  const thread = conversations[index]?.thread;
-                  const currentChatpair = thread?.[threadIndex];
-
-                  const meregedChatPair = {
-                    ...chatPair,
-                    message: {
-                      content:
-                        (currentChatpair?.message?.content || "") +
-                          chatPair.message?.content || "",
-                      role: chatPair?.message?.role || "user",
-                    },
-                  };
-                  (thread || [])[threadIndex] = meregedChatPair;
-                } else {
-                  console.warn("push action: index is not found", {
-                    index,
-                    conversationId: id,
-                  });
-                }
+                const conversations = state.conversations;
+                const thread =
+                  state.conversations[conversationIndex]?.thread || [];
+                const currentContent =
+                  thread[threadIndex]?.message?.content || "";
+                const meregedChatPair = {
+                  input,
+                  message: {
+                    content: currentContent + chunkValue,
+                    role,
+                  },
+                };
+                (thread || [])[threadIndex] = meregedChatPair;
 
                 return {
                   ...state,
