@@ -37,6 +37,7 @@ export const useFetchForm = (param?: { promptText: string }) => {
   const updateStatus = useStore((s) => s.updateStatus);
 
   const { temperature, maxLength } = useModelConfigs((s) => s.configs);
+  const systemInstruction = useModelConfigs((s) => s.systemInstruction);
 
   const conversation = conversations.find((o) => o.id === conversationId) || {
     thread: [],
@@ -86,6 +87,7 @@ export const useFetchForm = (param?: { promptText: string }) => {
       template,
       max_tokens: maxLength,
       temperature,
+      systemInstruction,
     };
     // fetching...
     await fetcher({

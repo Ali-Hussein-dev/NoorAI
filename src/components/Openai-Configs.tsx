@@ -8,13 +8,15 @@ import {
   Text,
   Slider,
   NumberInput,
+  Textarea,
+  TextInput,
 } from "@mantine/core";
 import * as React from "react";
 import { RiSettings3Line } from "react-icons/ri";
 import { useDisclosure } from "@mantine/hooks";
 // import { IoChevronDown } from "react-icons/io5";
 // import languages from "../content/languages.json";
-import { useStore } from "@/hooks";
+import { useModelConfigs } from "@/hooks";
 
 /**
  * label: lang name
@@ -86,22 +88,25 @@ import { useStore } from "@/hooks";
 //   );
 // };
 const Temperature = () => {
-  const temperature = useStore((state) => state.temperature);
-  const setTemperature = useStore((state) => state.setTemperature);
+  const temperature = useModelConfigs((state) => state.configs.temperature);
+  const setTemperature = useModelConfigs((state) => state.setConfigs);
   const [value, setValue] = React.useState(temperature);
   return (
     <div className="pb-4">
-      <Text className="mb-1">Deterministic to creative</Text>
+      <Text className="mb-1" color="dimmed">
+        Deterministic to creative ({temperature})
+      </Text>
       <Slider
         min={0}
         max={1}
         step={0.1}
         value={value}
         onChange={(value: number) => {
-          setValue(value);
-          setTemperature(value);
+          const temperature = +value.toFixed(1);
+          setValue(temperature);
+          setTemperature({ temperature });
         }}
-        label={(value) => value.toFixed(1)}
+        label={null}
         // marks={marks}
         color="gray"
         size="md"
@@ -110,17 +115,17 @@ const Temperature = () => {
   );
 };
 const ResponseLength = () => {
-  const maxLength = useStore((s) => s.maxLength);
-  const setMaxLength = useStore((s) => s.setMaxLength);
+  const maxLength = useModelConfigs((state) => state.configs.maxLength);
+  const setConfigs = useModelConfigs((state) => state.setConfigs);
   const [value, setValue] = React.useState(maxLength);
   const handleChange = (value: number) => {
     setValue(value);
-    setMaxLength(value);
+    setConfigs({ maxLength: value });
   };
   return (
     <div className="pb-4">
       <div className="mb-2 w-full gap-x-2 flex-row-between ">
-        <Text className="">Response Length</Text>
+        <Text color="dimmed">Response Length</Text>
         <NumberInput
           value={value}
           onChange={handleChange}
@@ -142,14 +147,57 @@ const ResponseLength = () => {
     </div>
   );
 };
+
+const SystemInstruction = () => {
+  const systemInstructions = useModelConfigs(
+    (state) => state.systemInstruction
+  );
+  const setSystemInstruction = useModelConfigs(
+    (state) => state.setSystemInstruction
+  );
+  return (
+    <Textarea
+      label={
+        <Text color="dimmed" ml={2}>
+          System Intstructions
+        </Text>
+      }
+      value={systemInstructions}
+      minRows={3}
+      maxRows={8}
+      autosize
+      onChange={(e) => {
+        setSystemInstruction(e.currentTarget.value);
+      }}
+    />
+  );
+};
+
+const Model = () => {
+  const model = useModelConfigs((state) => state.configs.model);
+
+  return (
+    <TextInput
+      value={model}
+      disabled
+      label={
+        <Text color="dimmed" ml={2}>
+          Model used
+        </Text>
+      }
+    />
+  );
+};
 //======================================
 export const Content = () => {
   return (
     <Paper className="h-full space-y-4 md:w-[200px] lg:w-[270px]">
-      <div className="min-h-[400px]">
-        <Divider label="Text Settings" labelPosition="center" />
+      <div className="min-h-[400px] space-y-2">
+        <Divider label="Global Settings" labelPosition="center" />
+        <Model />
         <Temperature />
         <ResponseLength />
+        <SystemInstruction />
         {/* <Divider label="Recording Settings" labelPosition="center" />
         <SelectModel />
         <RecordingMode /> */}
