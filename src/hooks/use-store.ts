@@ -195,7 +195,8 @@ export const useStore = create<StoreStateT>()(
                 const conversations = state.conversations;
                 const thread =
                   state.conversations[conversationIndex]?.thread || [];
-                const currentContent = thread.at(-1)?.message?.content || "";
+                const currentContent =
+                  thread[threadIndex]?.message?.content || "";
                 const meregedChatPair = {
                   input,
                   message: {
