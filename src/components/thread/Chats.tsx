@@ -46,7 +46,7 @@ export const ThreadContainer = () => {
   return (
     <Accordion
       defaultValue="whatsnew"
-      className="pb-12 pt-8"
+      className="pb-12"
       variant="filled"
       transitionDuration={500}
       key={query.chatId as string}
@@ -241,9 +241,8 @@ export const Chats = () => {
   ) as ConversationT;
   const { regenerate } = useRegenerate();
   const thread = conversation?.thread || [];
-  console.log(thread.at(-1)?.input);
   return (
-    <section className="w-full pb-5 pt-4">
+    <section className="w-full pb-5">
       <ThreadContainer />
       <div className="gap-4 flex-col-center">
         {thread.map((o, i) => (
