@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useStore } from ".";
+import { useModelConfigs, useStore } from ".";
 import { useRouter } from "next/router";
 import React from "react";
 import { notifications } from "@mantine/notifications";
@@ -11,16 +11,12 @@ interface FormData {
 }
 export const useRegenerate = () => {
   const drop = useStore((s) => s.dropLastTheardElement);
-  const conversations = useStore((s) => s.conversations);
   const { query } = useRouter();
   const { onSubmit, stopStreaming } = useFetchForm();
-  const regenerate = () => {
-    const prompt =
-      conversations.find((o) => o.id === query.chatId)?.thread.at(-1)?.input ||
-      "";
+  const regenerate = (lastPrompt: string) => {
     drop(query.chatId as string);
     useStore.persist.rehydrate();
-    onSubmit({ promptText: prompt });
+    onSubmit({ promptText: lastPrompt });
   };
   return { regenerate, stopStreaming };
 };
@@ -35,8 +31,9 @@ export const useFetchForm = (param?: { promptText: string }) => {
   const conversations = useStore((s) => s.conversations);
   const push = useStore((s) => s.push);
   const updateStatus = useStore((s) => s.updateStatus);
-  const temperature = useStore((s) => s.temperature);
-  const maxLength = useStore((s) => s.maxLength);
+
+  const { temperature, maxLength } = useModelConfigs((s) => s.configs);
+  const systemInstruction = useModelConfigs((s) => s.systemInstruction);
 
   const conversation = conversations.find((o) => o.id === conversationId) || {
     thread: [],
@@ -86,6 +83,7 @@ export const useFetchForm = (param?: { promptText: string }) => {
       template,
       max_tokens: maxLength,
       temperature,
+      systemInstruction,
     };
     // fetching...
     await fetcher({

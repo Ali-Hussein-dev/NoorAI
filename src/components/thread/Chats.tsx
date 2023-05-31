@@ -241,7 +241,7 @@ export const Chats = () => {
   ) as ConversationT;
   const { regenerate } = useRegenerate();
   const thread = conversation?.thread || [];
-
+  console.log(thread.at(-1)?.input);
   return (
     <section className="w-full pb-5 pt-4">
       <ThreadContainer />
@@ -261,7 +261,8 @@ export const Chats = () => {
             variant="default"
             type="button"
             onClick={() => {
-              regenerate();
+              const lastPrompt = thread.at(-1)?.input;
+              lastPrompt && regenerate(lastPrompt);
             }}
           >
             {status === "loading" ? "Stop" : "Regenerate"}
