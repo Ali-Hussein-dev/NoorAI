@@ -85,6 +85,14 @@ export const useFetchForm = (param?: { promptText: string }) => {
       temperature,
       systemInstruction,
     };
+    const userId = sessionData?.user.id;
+    if (!userId) {
+      console.info(userId);
+      return;
+    }
+    const conversationIndex = conversations.findIndex(
+      (o) => o.id === conversationId
+    );
     // fetching...
     await fetcher({
       url: "api/openai-stream",
@@ -95,14 +103,16 @@ export const useFetchForm = (param?: { promptText: string }) => {
       },
       stream: true,
       onStream(chunkValue) {
-        push(
-          conversationId,
-          {
-            input: input,
-            message: { role: "user", content: chunkValue },
-          },
-          threadIndex
-        );
+        // update the DOM
+        push({
+          threadIndex,
+          conversationIndex,
+          input,
+          role: "assistant",
+          chunkValue,
+        });
+        useStore.persist.rehydrate();
+        console.log("streaming...");
       },
       onStreamFinished() {
         threadIndex += 1;
