@@ -82,7 +82,7 @@ export interface StoreStateT {
     threadIndex: number;
     conversationIndex: number;
     role: ChatCompletionResponseMessageRoleEnum;
-    content: string;
+    chunkValue: string;
     input: string;
   }) => void;
   /**
@@ -183,15 +183,23 @@ export const useStore = create<StoreStateT>()(
             });
           },
           //-------------------------------------------------------push
-          push: ({ threadIndex, conversationIndex, content, input, role }) => {
+          push: ({
+            threadIndex,
+            conversationIndex,
+            chunkValue,
+            input,
+            role,
+          }) => {
             return set(
               (state) => {
                 const conversations = state.conversations;
-                const thread = state.conversations[conversationIndex]?.thread;
+                const thread =
+                  state.conversations[conversationIndex]?.thread || [];
+                const currentContent = thread.at(-1)?.message?.content || "";
                 const meregedChatPair = {
                   input,
                   message: {
-                    content,
+                    content: currentContent + chunkValue,
                     role,
                   },
                 };
