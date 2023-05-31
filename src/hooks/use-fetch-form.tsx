@@ -11,16 +11,12 @@ interface FormData {
 }
 export const useRegenerate = () => {
   const drop = useStore((s) => s.dropLastTheardElement);
-  const conversations = useStore((s) => s.conversations);
   const { query } = useRouter();
   const { onSubmit, stopStreaming } = useFetchForm();
-  const regenerate = () => {
-    const prompt =
-      conversations.find((o) => o.id === query.chatId)?.thread.at(-1)?.input ||
-      "";
+  const regenerate = (lastPrompt: string) => {
     drop(query.chatId as string);
     useStore.persist.rehydrate();
-    onSubmit({ promptText: prompt });
+    onSubmit({ promptText: lastPrompt });
   };
   return { regenerate, stopStreaming };
 };
