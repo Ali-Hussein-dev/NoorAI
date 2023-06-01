@@ -80,8 +80,8 @@ export const useFetchForm = (param?: { promptText: string }) => {
           content: input,
         },
       ],
+      template,
       configs: {
-        template,
         max_tokens: maxLength,
         temperature,
       },
