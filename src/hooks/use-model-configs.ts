@@ -7,7 +7,7 @@ const systemInstruction =
 type Configs = {
   model: string;
   temperature: number;
-  maxLength: number;
+  max_tokens: number;
 };
 interface ModelConfigsState {
   configs: Configs;
@@ -24,7 +24,7 @@ export const useModelConfigs = create<ModelConfigsState>()(
         configs: {
           model: "gpt-3.5-turbo",
           temperature: 0.7,
-          maxLength: 250,
+          max_tokens: 250,
         },
         systemInstruction,
         setSystemInstruction: (systemInstruction) => set({ systemInstruction }),

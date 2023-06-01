@@ -114,18 +114,19 @@ const Temperature = () => {
     </div>
   );
 };
-const ResponseLength = () => {
-  const maxLength = useModelConfigs((state) => state.configs.maxLength);
+
+const OutputLength = () => {
+  const max_tokens = useModelConfigs((state) => state.configs.max_tokens);
   const setConfigs = useModelConfigs((state) => state.setConfigs);
-  const [value, setValue] = React.useState(maxLength);
+  const [value, setValue] = React.useState(max_tokens);
   const handleChange = (value: number) => {
     setValue(value);
-    setConfigs({ maxLength: value });
+    setConfigs({ max_tokens: value });
   };
   return (
     <div className="pb-4">
       <div className="mb-2 w-full gap-x-2 flex-row-between ">
-        <Text color="dimmed">Response Length</Text>
+        <Text color="dimmed">Output Length</Text>
         <NumberInput
           value={value}
           onChange={handleChange}
@@ -196,7 +197,7 @@ export const Content = () => {
         <Divider label="Global Settings" labelPosition="center" />
         <Model />
         <Temperature />
-        <ResponseLength />
+        <OutputLength />
         <SystemInstruction />
         {/* <Divider label="Recording Settings" labelPosition="center" />
         <SelectModel />
