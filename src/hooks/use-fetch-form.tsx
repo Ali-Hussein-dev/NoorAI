@@ -32,7 +32,7 @@ export const useFetchForm = (param?: { promptText: string }) => {
   const push = useStore((s) => s.push);
   const updateStatus = useStore((s) => s.updateStatus);
 
-  const { temperature, maxLength } = useModelConfigs((s) => s.configs);
+  const { temperature, max_tokens } = useModelConfigs((s) => s.configs);
   const systemInstruction = useModelConfigs((s) => s.systemInstruction);
 
   const conversation = conversations.find((o) => o.id === conversationId) || {
@@ -81,8 +81,10 @@ export const useFetchForm = (param?: { promptText: string }) => {
         },
       ],
       template,
-      max_tokens: maxLength,
-      temperature,
+      configs: {
+        max_tokens,
+        temperature,
+      },
       systemInstruction,
     };
     const userId = sessionData?.user.id;
