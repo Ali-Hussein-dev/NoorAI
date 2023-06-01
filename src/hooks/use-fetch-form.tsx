@@ -80,9 +80,11 @@ export const useFetchForm = (param?: { promptText: string }) => {
           content: input,
         },
       ],
-      template,
-      max_tokens: maxLength,
-      temperature,
+      configs: {
+        template,
+        max_tokens: maxLength,
+        temperature,
+      },
       systemInstruction,
     };
     const userId = sessionData?.user.id;
