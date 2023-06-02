@@ -6,7 +6,7 @@ export const Footer = () => {
   return (
     <MantineFooter
       height={60}
-      className="w-full gap-3 flex-row-center"
+      className="mx-auto w-full max-w-7xl gap-3 flex-row-center"
       bg={colorScheme === "dark" ? colors.dark[9] : colors.gray[2]}
     >
       <span>
