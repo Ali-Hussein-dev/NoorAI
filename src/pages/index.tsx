@@ -4,8 +4,6 @@ import { Footer, Header, Hero } from "@/components";
 import * as React from "react";
 
 const Home: NextPage = () => {
-  const [opened, setOpened] = React.useState(false);
-
   return (
     <>
       <Head>
@@ -14,7 +12,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Header opened={opened} setOpened={setOpened} />
+        <Header />
         <div className="flex min-h-screen flex-col">
           <Hero />
         </div>

@@ -15,3 +15,5 @@ export * from "./thread/Template-Editor";
 export * from "./thread/Chats";
 
 export * from "./Hero/Hero";
+
+export * from "./Chat-Header";
