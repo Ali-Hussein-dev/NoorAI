@@ -43,17 +43,17 @@ export const Hero = () => {
   return (
     <>
       <GridBG />
-      <section className={" grid h-[90vh] grow place-items-center"}>
+      <section className=" grid h-[80vh] grow place-items-center">
         <div className="space-y-6 pb-14 flex-col-center">
           <div>
             <h1
               className={
                 style.heroHeading +
-                " pb-2 text-center text-6xl font-extrabold uppercase tracking-tight"
+                " pb-2 text-center text-4xl font-extrabold uppercase tracking-tight sm:text-4xl md:text-5xl"
               }
             >
-              Transparent, <br />
-              Intuitive, Powerfull
+              Intuitive <br />
+              Transparent <br className="sm:hidden" /> Powerfull
             </h1>
             <p className="text-center text-lg text-zinc-400">
               (expirmental project)

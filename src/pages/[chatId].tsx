@@ -6,18 +6,21 @@ import {
   Paper,
   TypographyStylesProvider,
   clsx,
+  Anchor,
+  Burger,
+  MediaQuery,
 } from "@mantine/core";
 import * as React from "react";
 import { useRouter } from "next/router";
 import { useStore } from "../hooks";
-import { Header, PromptArea, Sidebar } from "@/components";
+import { ChatHeader, PromptArea, Sidebar } from "@/components";
 import { useDidUpdate } from "@mantine/hooks";
 import dynamic from "next/dynamic";
 import { useFetchFormCtx, FormProv } from "@/hooks";
 import { appRouter } from "@/server/api/root";
 import { createServerSideHelpers } from "@trpc/react-query/server";
 import { StoreCtxProv, type StoreCtxT } from "@/context/store-ctx";
-
+import { Logo } from "@/components";
 const Chats = dynamic(() => import("../components").then((c) => c.Chats), {
   ssr: false,
 });
@@ -45,6 +48,7 @@ const ChatPage = (props: StoreCtxT) => {
           <StoreCtxProv value={props}>
             <AppShell
               padding={0}
+              pos="relative"
               navbar={
                 <Navbar
                   py={0}
@@ -65,31 +69,45 @@ const ChatPage = (props: StoreCtxT) => {
                   styles={{}}
                   withBorder={false}
                 >
+                  <div className="px-3 flex-row-between">
+                    <Logo />
+                    <MediaQuery largerThan="sm" styles={{ display: "none" }}>
+                      <Burger
+                        opened={opened}
+                        onClick={() => setOpened((o) => !o)}
+                        size="sm"
+                      />
+                    </MediaQuery>
+                  </div>
                   <Sidebar />
                 </Navbar>
               }
               footer={undefined}
-              header={<Header opened={opened} setOpened={setOpened} />}
+              // header={}
             >
               {/* Content */}
-              <div className="flex h-full w-full flex-col px-2 md:px-4">
-                <div className="mx-auto w-full max-w-3xl grow">
-                  <React.Suspense fallback={<div>Loading...</div>}>
-                    <Chats />
-                  </React.Suspense>
+              <div className="flex h-full w-full flex-col">
+                <ChatHeader opened={opened} setOpened={setOpened} />
+                <div className="flex h-full w-full flex-col px-2 md:px-4">
+                  <div className="mx-auto w-full max-w-3xl grow">
+                    <React.Suspense fallback={<div>Loading...</div>}>
+                      <Chats />
+                    </React.Suspense>
+                  </div>
+
+                  <Paper
+                    p={0}
+                    radius={0}
+                    className={clsx(
+                      "sticky bottom-0 z-10 flex w-full items-start justify-center backdrop-blur-sm",
+                      theme.colorScheme === "dark"
+                        ? "bg-[#101113]/40"
+                        : `bg-[#E9ECEF]/30`
+                    )}
+                  >
+                    <PromptArea />
+                  </Paper>
                 </div>
-                <Paper
-                  p={0}
-                  radius={0}
-                  className={clsx(
-                    "sticky bottom-0 z-10 flex w-full items-start justify-center backdrop-blur-sm",
-                    theme.colorScheme === "dark"
-                      ? "bg-[#101113]/40"
-                      : `bg-[#E9ECEF]/30`
-                  )}
-                >
-                  <PromptArea />
-                </Paper>
               </div>
             </AppShell>
           </StoreCtxProv>

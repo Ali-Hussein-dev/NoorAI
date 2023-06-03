@@ -10,8 +10,6 @@ import Head from "next/head";
 
 //======================================
 const Profile = () => {
-  const [opened, setOpened] = React.useState(false);
-
   const { data: sessionData, status } = useSession();
   const { push, back } = useRouter();
   const { data: userProfile } = api.profile.get.useQuery(
@@ -33,11 +31,11 @@ const Profile = () => {
         <title>Profile | {sessionData.user.name}</title>
       </Head>
       <AppShell
-        header={<Header opened={opened} setOpened={setOpened} />}
+        header={<Header />}
         footer={<Footer />}
         styles={({ colorScheme, colors }) => ({
           main: {
-            backgroundColor: colors.gray[colorScheme === "dark" ? 9 : 0],
+            backgroundColor: colors.dark[colorScheme === "dark" ? 9 : 0],
             color: colors.dark[colorScheme === "dark" ? 0 : 9],
           },
         })}

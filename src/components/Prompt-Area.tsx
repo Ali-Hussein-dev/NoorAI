@@ -115,7 +115,7 @@ export const PromptArea = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <Textarea
               {...register("promptText")}
-              placeholder="What do you want to know?"
+              placeholder="Send message"
               minRows={1}
               maxRows={isMobile ? 4 : 24}
               autosize
