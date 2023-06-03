@@ -70,12 +70,7 @@ const ChatPage = (props: StoreCtxT) => {
                   withBorder={false}
                 >
                   <div className="px-3 flex-row-between">
-                    <Anchor
-                      className="h-12 w-24 !cursor-pointer overflow-hidden "
-                      href="/"
-                    >
-                      <Logo />
-                    </Anchor>
+                    <Logo />
                     <MediaQuery largerThan="sm" styles={{ display: "none" }}>
                       <Burger
                         opened={opened}
