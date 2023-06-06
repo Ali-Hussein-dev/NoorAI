@@ -74,6 +74,7 @@ const handler = async (req: ExtendedRequest, res: NextApiResponse) => {
         streaming: true,
         callbacks,
         openAIApiKey: env.OPENAI_API_KEY,
+        timeout: 2500,
         ...configs,
       },
     ];
