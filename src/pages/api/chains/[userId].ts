@@ -72,7 +72,6 @@ const handler = async (req: ExtendedRequest, res: NextApiResponse) => {
       {
         modelName: "gpt-3.5-turbo",
         streaming: true,
-        callbacks,
         openAIApiKey: env.OPENAI_API_KEY,
         timeout: 2500,
         ...configs,
@@ -90,7 +89,7 @@ const handler = async (req: ExtendedRequest, res: NextApiResponse) => {
         chatHistory,
       },
     });
-    await chain.call({ input: lastMessage });
+    await chain.call({ input: lastMessage }, callbacks);
 
     res.end();
   } catch (error) {
