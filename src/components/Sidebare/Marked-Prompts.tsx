@@ -9,10 +9,10 @@ import {
   Text,
   Textarea,
 } from "@mantine/core";
-import { MdContentCopy, MdOutlineDelete, MdOutlineEdit } from "react-icons/md";
+import { MdOutlineDelete, MdOutlineEdit } from "react-icons/md";
 import * as React from "react";
 import { notifications } from "@mantine/notifications";
-import { useMarkedPrompts } from "@/hooks";
+import { useFetchFormCtx, useMarkedPrompts } from "@/hooks";
 import { useDisclosure } from "@mantine/hooks";
 import { Badge } from "./Prompts-Lib";
 const EditPromptForm = (props: {
@@ -184,7 +184,12 @@ const PromptCard = ({
 }) => {
   const [isEditing, setIsEditing] = React.useState(false);
   const drop = useMarkedPrompts((s) => s.drop);
-
+  const {
+    methods: { setValue },
+  } = useFetchFormCtx();
+  const onUsePrompt = (text: string) => {
+    setValue("promptText", text);
+  };
   return (
     <>
       {isEditing ? (
@@ -218,7 +223,7 @@ const PromptCard = ({
               </div>
             </Spoiler>
           </Card.Section>
-          <Card.Section className="gap-x-2 pb-1 pr-2 flex-row-end" withBorder>
+          <Card.Section className="gap-x-2 pb-1 pt-1 flex-row-end" withBorder>
             <ActionIcon
               onClick={() => {
                 drop(id);
@@ -234,20 +239,14 @@ const PromptCard = ({
             <ActionIcon onClick={() => setIsEditing(true)}>
               <MdOutlineEdit />
             </ActionIcon>
-            <ActionIcon
-              onClick={() => {
-                if ("clipboard" in navigator) {
-                  navigator.clipboard.writeText(text);
-                }
-                notifications.show({
-                  message: "Prompt Copied",
-                  withCloseButton: true,
-                  color: "lime",
-                });
-              }}
+            <Button
+              type="button"
+              onClick={() => onUsePrompt(text)}
+              size="xs"
+              variant="default"
             >
-              <MdContentCopy />
-            </ActionIcon>
+              Use
+            </Button>
           </Card.Section>
         </Card>
       )}
