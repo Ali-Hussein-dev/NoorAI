@@ -20,7 +20,7 @@ export const Markdown = ({ content }: { content: string }) => {
             ? theme.colors.gray[6]
             : theme.colors.gray[7],
       }}
-      className="prose w-full max-w-full overflow-hidden"
+      className="prose w-full max-w-[40rem] overflow-hidden"
     >
       <ReactMarkdown
         remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
