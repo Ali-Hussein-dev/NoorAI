@@ -170,7 +170,7 @@ export const ChatHistory = () => {
             ) : undefined
           }
         />
-        <Tooltip label="New Topic">
+        <Tooltip label="New Thread">
           <ActionIcon
             variant="default"
             color="gray"
