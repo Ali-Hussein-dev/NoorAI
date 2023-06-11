@@ -32,7 +32,7 @@ const ConversationLink = ({ id, name }: { id: string; name: string }) => {
     conversations[conversations.findIndex((c) => c.id === id)];
   const threadLength = conversation?.thread.length || 0;
   const isMatched = query.chatId === id;
-  const withTemplate = !!conversation?.template;
+  const withTemplate = !!conversation?.template?.content;
   return (
     <Box
       className="mx-w-fit group relative h-10 w-full cursor-pointer gap-2 rounded-sm flex-row-between"
