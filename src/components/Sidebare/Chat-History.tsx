@@ -18,7 +18,8 @@ import {
   Box,
 } from "@mantine/core";
 import { useColorScheme } from "@mantine/hooks";
-import { BsPlus } from "react-icons/bs";
+import { BsChatSquareText, BsPlus } from "react-icons/bs";
+import { HiOutlineTemplate } from "react-icons/hi";
 
 const ConversationLink = ({ id, name }: { id: string; name: string }) => {
   const { push, query } = useRouter();
@@ -27,10 +28,11 @@ const ConversationLink = ({ id, name }: { id: string; name: string }) => {
   const { renameConversation, deleteConversation, conversations } = useStore();
   const theme = useColorScheme();
   const { colors } = useMantineTheme();
-  const threadLength =
-    conversations[conversations.findIndex((c) => c.id === id)]?.thread.length ||
-    0;
+  const conversation =
+    conversations[conversations.findIndex((c) => c.id === id)];
+  const threadLength = conversation?.thread.length || 0;
   const isMatched = query.chatId === id;
+  const withTemplate = !!conversation?.template?.content;
   return (
     <Box
       className="mx-w-fit group relative h-10 w-full cursor-pointer gap-2 rounded-sm flex-row-between"
@@ -85,10 +87,25 @@ const ConversationLink = ({ id, name }: { id: string; name: string }) => {
             href={`/${id}`}
             className="w-full gap-1 px-1 text-sm capitalize no-underline flex-row-between"
           >
-            <Text c={theme === "dark" ? colors.gray[6] : colors.gray[7]}>
-              {input.split(" ").splice(0, 5).join(" ")}{" "}
-              {input.split(" ").length > 5 ? "..." : ""}
-            </Text>
+            <div className="gap-1 flex-row-start">
+              <ActionIcon
+                sx={({ colorScheme, colors }) => ({
+                  color:
+                    colorScheme === "dark" ? colors.gray[7] : colors.dark[1],
+                })}
+              >
+                {withTemplate ? (
+                  <HiOutlineTemplate size="17" />
+                ) : (
+                  <BsChatSquareText size="15" />
+                )}
+              </ActionIcon>
+
+              <Text c={theme === "dark" ? colors.gray[6] : colors.gray[7]}>
+                {input.split(" ").splice(0, 5).join(" ")}{" "}
+                {input.split(" ").length > 5 ? "..." : ""}
+              </Text>
+            </div>
             {threadLength > 0 && (
               <Text className="block group-hover:hidden" color="dimmed">
                 {threadLength}
@@ -153,7 +170,7 @@ export const ChatHistory = () => {
             ) : undefined
           }
         />
-        <Tooltip label="New Topic">
+        <Tooltip label="New Thread">
           <ActionIcon
             variant="default"
             color="gray"
