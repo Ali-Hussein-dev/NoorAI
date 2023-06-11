@@ -11,13 +11,12 @@ import { notifications } from "@mantine/notifications";
 
 const RichtEditor = () => {
   const { query } = useRouter();
-  const textContent =
+  const chatId = query.chatId as string;
+  const savedTextContent =
     useStore(
-      (s) =>
-        s.conversations.find((c) => c.id === query.chatId)?.template
-          ?.htmlContent
+      (s) => s.conversations.find((c) => c.id === chatId)?.template?.htmlContent
     ) || "";
-
+  // const [defaultContent, setDefaultContent] = React.useState(textContent)
   const setTemplate = useStore((s) => s.setTemplate);
   const [isDirty, setIsDirty] = React.useState(false);
   const editor = useEditor({
@@ -27,10 +26,10 @@ const RichtEditor = () => {
       TextAlign.configure({ types: ["heading", "paragraph"] }),
       Placeholder.configure({ placeholder: "Your template" }),
     ],
-    content: textContent,
+    content: savedTextContent,
     onUpdate: ({ editor }) => {
       const editorContent = editor?.getText() || "";
-      if (editorContent !== textContent) {
+      if (editorContent !== savedTextContent) {
         setIsDirty(true);
       } else {
         setIsDirty(false);
@@ -39,11 +38,11 @@ const RichtEditor = () => {
   });
 
   const onSave = () => {
-    console.log(editor?.getText());
-    setTemplate(query.chatId as string, {
+    setTemplate(chatId, {
       content: editor?.getText() || "",
       htmlContent: editor?.getHTML(),
     });
+    setIsDirty(false);
     notifications.show({
       message: "Template Saved!",
       withCloseButton: false,
@@ -51,6 +50,14 @@ const RichtEditor = () => {
       autoClose: 500,
     });
   };
+  // const onCancel = () => {
+  //   setTemplate(chatId, {
+  //     content: textContent,
+  //   })
+  //   setDefaultContent(textContent)
+  //   setIsDirty(false);
+  //   useStore.persist.rehydrate()
+  // }
   return (
     <>
       <RichTextEditor editor={editor}>
@@ -86,12 +93,18 @@ const RichtEditor = () => {
         </RichTextEditor.Toolbar>
         <RichTextEditor.Content />
       </RichTextEditor>
-      <div className="pt-1 flex-row-start">
-        {isDirty ? (
-          <Button type="button" variant="default" onClick={onSave}>
-            Save
-          </Button>
-        ) : null}
+      <div className="gap-3 pt-2 flex-row-end">
+        {/* <Button type="button" color="gray" onClick={onCancel} hidden={!isDirty}>
+          Cancel
+        </Button> */}
+        <Button
+          type="button"
+          variant="default"
+          onClick={onSave}
+          hidden={!isDirty}
+        >
+          Save
+        </Button>
       </div>
     </>
   );
