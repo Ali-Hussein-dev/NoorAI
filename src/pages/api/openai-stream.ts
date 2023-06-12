@@ -20,7 +20,7 @@ const handler = async (req: Request): Promise<Response> => {
       {
         role: "system",
 
-        content: systemInstruction + "\n" + template || "",
+        content: `${systemInstruction}\n '${template || ""}'`,
       },
       ...messages,
     ],
