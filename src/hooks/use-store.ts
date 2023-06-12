@@ -46,7 +46,7 @@ export interface ConversationT {
   name?: string;
   createdAt: number;
   thread: ChatPairT[];
-  template: TemplateT;
+  template?: TemplateT;
 }
 
 export type ConversationsT = ConversationT[];
@@ -143,9 +143,18 @@ export const useStore = create<StoreStateT>()(
               name: "Chat Title",
               thread: [],
               createdAt: new Date().getTime(),
+            },
+            {
+              id: "template",
+              name: "Dictionary template",
+              thread: [],
+              createdAt: new Date().getTime(),
               template: {
                 role: "system",
-                content: "",
+                content:
+                  "Act as dictionary, explain the following, give 2 examples and 2 synonyms.",
+                htmlContent:
+                  "<p>Act as dictionary, explain the following, give 2 examples and 2 synonyms.<p>",
               },
             },
           ],

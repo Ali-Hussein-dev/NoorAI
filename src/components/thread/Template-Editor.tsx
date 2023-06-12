@@ -47,7 +47,7 @@ const RichtEditor = () => {
       message: "Template Saved!",
       withCloseButton: false,
       color: "dark",
-      autoClose: 500,
+      autoClose: 2000,
     });
   };
   // const onCancel = () => {
