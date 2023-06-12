@@ -153,6 +153,8 @@ export const useStore = create<StoreStateT>()(
                 role: "system",
                 content:
                   "Act as dictionary, explain the following, give 2 examples and 2 synonyms.",
+                htmlContent:
+                  "<p>Act as dictionary, explain the following, give 2 examples and 2 synonyms.<p>",
               },
             },
           ],
