@@ -140,8 +140,9 @@ export const PromptArea = () => {
                 <div className="flex h-full flex-col items-center justify-end p-2 pb-3">
                   {!promptText ? (
                     <div className="gap-3 flex-row-start">
-                      <div className="gap-3 border-r border-zinc-700 pr-4 flex-row-start">
-                        <BsCommand /> K
+                      <div className="gap-3 border-r border-zinc-700 pr-4 opacity-0 flex-row-start lg:opacity-100">
+                        <BsCommand />
+                        <span>K</span>
                       </div>
                       <Mic {...recorderControls} />
                     </div>
