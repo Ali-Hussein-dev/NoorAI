@@ -9,7 +9,7 @@ import {
   useStore,
 } from "../hooks";
 import { BsCommand, BsStopFill } from "react-icons/bs";
-import { PromptBuilder } from ".";
+import { PromptBuilder, Mic } from ".";
 import {
   useWatch,
   type UseFormSetFocus,
@@ -86,6 +86,7 @@ export const PromptArea = () => {
     methods: { handleSubmit, register, setValue, setFocus, control },
     onSubmit,
     stopStreaming,
+    recorderControls,
   } = useFetchFormCtx();
   const onKeyPress: React.KeyboardEventHandler = (e) => {
     if (e.code === "Enter" && !e.shiftKey) {
@@ -124,33 +125,42 @@ export const PromptArea = () => {
               onKeyDown={queryStatus === "loading" ? undefined : onKeyPress}
               styles={{ icon: { pointerEvents: "all" } }}
               icon={
-                queryStatus === "loading" ? (
-                  <ActionIcon type="button" onClick={stopStreaming}>
-                    <BsStopFill className="z-10 text-red-700" size="20" />
-                  </ActionIcon>
-                ) : (
-                  <PromptBuilder setValue={setValue} />
-                )
+                <div className="flex h-full flex-col items-center justify-end p-2 pb-3">
+                  {queryStatus === "loading" ? (
+                    <ActionIcon type="button" onClick={stopStreaming}>
+                      <BsStopFill className="z-10 text-red-700" size="20" />
+                    </ActionIcon>
+                  ) : (
+                    <PromptBuilder setValue={setValue} />
+                  )}
+                </div>
               }
+              rightSectionWidth="auto"
               rightSection={
-                !promptText ? (
-                  <div className="gap-3 pr-4 flex-row-start">
-                    <BsCommand /> K
-                  </div>
-                ) : (
-                  <ActionIcon
-                    type="submit"
-                    size="md"
-                    disabled={queryStatus === "loading"}
-                    variant="transparent"
-                  >
-                    {queryStatus == "loading" ? (
-                      <Loader color="orange" variant="dots" size="sm" />
-                    ) : (
-                      <MdSend size="17" />
-                    )}
-                  </ActionIcon>
-                )
+                <div className="flex h-full flex-col items-center justify-end p-2 pb-3">
+                  {!promptText ? (
+                    <div className="gap-3 flex-row-start">
+                      <div className="gap-3 border-r border-zinc-700 pr-4 opacity-0 flex-row-start lg:opacity-100">
+                        <BsCommand />
+                        <span>K</span>
+                      </div>
+                      <Mic {...recorderControls} />
+                    </div>
+                  ) : (
+                    <ActionIcon
+                      type="submit"
+                      size="md"
+                      disabled={queryStatus === "loading"}
+                      variant="transparent"
+                    >
+                      {queryStatus == "loading" ? (
+                        <Loader color="orange" variant="dots" size="sm" />
+                      ) : (
+                        <MdSend size="17" />
+                      )}
+                    </ActionIcon>
+                  )}
+                </div>
               }
             />
           </form>
