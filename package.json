@@ -43,11 +43,13 @@
     "@upstash/ratelimit": "^0.4.3",
     "@upstash/redis": "^1.20.6",
     "@vercel/analytics": "^0.1.11",
+    "audiobuffer-to-wav": "^1.0.0",
     "eventsource-parser": "^1.0.0",
     "franc": "^6.1.0",
     "immer": "^9.0.19",
     "next": "^13.4.4",
     "next-auth": "^4.20.1",
+    "next-multiparty": "^0.7.0",
     "openai": "^3.2.1",
     "prisma": "^4.11.0",
     "react": "18.2.0",
@@ -61,6 +63,7 @@
     "zustand": "^4.3.6"
   },
   "devDependencies": {
+    "@types/audiobuffer-to-wav": "^1.0.2",
     "@types/eslint": "^8.21.1",
     "@types/node": "^18.14.0",
     "@types/prettier": "^2.7.2",

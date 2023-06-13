@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useModelConfigs, useStore } from ".";
+import { useAudio, useModelConfigs, useStore } from ".";
 import { useRouter } from "next/router";
 import React from "react";
 import { notifications } from "@mantine/notifications";
@@ -23,6 +23,20 @@ export const useRegenerate = () => {
 export const useFetchForm = (param?: { promptText: string }) => {
   const methods = useForm<FormData>({
     defaultValues: { promptText: param?.promptText },
+  });
+
+  // transcription hook
+  const recorderControls = useAudio({
+    onSuccess: (transcription) => {
+      methods.setValue("promptText", transcription);
+      console.info("set transcription");
+    },
+    onError: () => {
+      notifications.show({
+        title: "Error",
+        message: "Something went wrong",
+      });
+    },
   });
 
   const { query } = useRouter();
@@ -138,7 +152,7 @@ export const useFetchForm = (param?: { promptText: string }) => {
       behavior: "smooth",
     });
   };
-  return { methods, onSubmit, stopStreaming };
+  return { methods, onSubmit, stopStreaming, recorderControls };
 };
 
 const FormCtx = React.createContext<ReturnType<typeof useFetchForm>>(
