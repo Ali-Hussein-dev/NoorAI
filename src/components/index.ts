@@ -17,3 +17,5 @@ export * from "./thread/Chats";
 export * from "./Hero/Hero";
 
 export * from "./Chat-Header";
+
+export * from "./Mic";
