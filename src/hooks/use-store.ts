@@ -5,7 +5,6 @@ import type {
   ChatCompletionResponseMessageRoleEnum,
 } from "openai";
 import { type FetchStatus, type QueryStatus } from "@tanstack/react-query";
-// import type languages from "../content/languages.json";
 import { type HTMLContent } from "@tiptap/react";
 
 /**
@@ -50,10 +49,6 @@ export interface ConversationT {
 }
 
 export type ConversationsT = ConversationT[];
-// const langCodes= Object.values(languages) as const;
-// type ValueOf<T> = T[keyof T];
-// type LangCodeT = ValueOf<typeof languages>;
-// type LangCodeT = (typeof languages)[keyof typeof languages];
 //------------------------------------------------------------Store-state
 export interface StoreStateT {
   id: number;
@@ -66,13 +61,7 @@ export interface StoreStateT {
    */
   status: QueryStatus | FetchStatus;
   updateStatus: (s: QueryStatus | FetchStatus) => void;
-  // Whisper configs
-  // whisperLang: LangCodeT;
-  // setWhisperLang: (lang: LangCodeT) => void;
-  // recordingMode: "transcriptions" | "translations";
-  // setRecordingMode: (mode: "transcriptions" | "translations") => void;
   //------------------------------
-  // configs
   /**
    * @required push
    * @params id: conversation id from router
@@ -158,12 +147,6 @@ export const useStore = create<StoreStateT>()(
               },
             },
           ],
-          // whisperLang: "en",
-          // setWhisperLang: (lang) =>
-          //   set(() => ({ whisperLang: lang }), false, "setWhisperLang"),
-          // recordingMode: "transcriptions",
-          // setRecordingMode: (mode) =>
-          //   set(() => ({ recordingMode: mode }), false, "setRecordingMode"),
           //-------------------------------------------------------set-template
           setTemplate: (conversationId, content) => {
             return set((s) => {

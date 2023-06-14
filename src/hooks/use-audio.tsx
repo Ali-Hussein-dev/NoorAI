@@ -15,14 +15,25 @@ const blobToAudioBuffer = async (blob: Blob) => {
 type UseAudioProps = {
   onSuccess: (transcription: string) => void;
   onError?: (e: unknown) => void;
+  // configs will be passed to createTranscription function
+  configs?: {
+    prompt?: string;
+    responseFormat?: "json" | "text" | "verbose_json" | "vtt";
+    temperature?: number;
+    // https://github.com/meikidd/iso-639-1/blob/master/src/data.js
+    language?: string;
+  };
 };
 
-export const useAudio = ({ onSuccess, onError }: UseAudioProps) => {
+export const useAudio = ({
+  onSuccess,
+  onError,
+  configs = {},
+}: UseAudioProps) => {
   const mediaRecorderRef = React.useRef<null | MediaRecorder>(null);
   const [state, setState] = React.useState({
     isRecording: false,
     isSubmitting: false,
-    processingText: "",
     textResponse: "",
   });
 
@@ -53,15 +64,15 @@ export const useAudio = ({ onSuccess, onError }: UseAudioProps) => {
     }
     updateState({
       isRecording: false,
-      processingText: "Processing...",
     });
     mediaRecorderRef.current.stop();
 
     const onDataAvailable = async (event: BlobEvent) => {
+      updateState({ isSubmitting: true });
       await submitAudio(event.data);
       mediaRecorderRef.current?.removeEventListener(
         "dataavailable",
-        onDataAvailable
+        onDataAvailable,
       );
     };
 
@@ -69,7 +80,6 @@ export const useAudio = ({ onSuccess, onError }: UseAudioProps) => {
   };
 
   const submitAudio = async (audioBlob: Blob) => {
-    updateState({ isSubmitting: true });
     try {
       const audioBuffer = await blobToAudioBuffer(audioBlob);
       const wavArrayBuffer = audioBufferToWav(audioBuffer);
@@ -81,12 +91,13 @@ export const useAudio = ({ onSuccess, onError }: UseAudioProps) => {
       const response = await fetch("/api/transcription", {
         method: "POST",
         body: formData,
+        ...configs,
       });
 
       if (!response.ok) {
         onError &&
           onError(
-            new Error(`API error: ${response.status} ${response.statusText}`)
+            new Error(`API error: ${response.status} ${response.statusText}`),
           );
         return;
       }

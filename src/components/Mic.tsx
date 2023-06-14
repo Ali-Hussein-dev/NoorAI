@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import { notifications } from "@mantine/notifications";
 import { BsStopFill } from "react-icons/bs";
 import * as React from "react";
-import { useAudio } from "../hooks";
+import { useAudio, useWhisper } from "../hooks";
 
 type MicProps = ReturnType<typeof useAudio>;
 //======================================
@@ -14,9 +14,14 @@ export const Mic = ({
   stopRecording,
   isSubmitting,
 }: MicProps) => {
+  const whisperLang = useWhisper((s) => s.whisperLang);
   const { data: sessionData } = useSession();
   return (
-    <Tooltip label="Start recording, Lang: En" position="left" withArrow>
+    <Tooltip
+      label={`Start recording, Lang: ${whisperLang}`}
+      position="left"
+      withArrow
+    >
       <ActionIcon
         type="button"
         variant={isRecording ? "default" : "transparent"}
