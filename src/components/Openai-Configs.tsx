@@ -1,5 +1,5 @@
 import {
-  // Select,
+  Select,
   // SegmentedControl,
   Divider,
   Button,
@@ -14,56 +14,56 @@ import {
 import * as React from "react";
 import { RiSettings3Line } from "react-icons/ri";
 import { useDisclosure } from "@mantine/hooks";
-// import { IoChevronDown } from "react-icons/io5";
-// import languages from "../content/languages.json";
-import { useModelConfigs } from "@/hooks";
+import { IoChevronDown } from "react-icons/io5";
+import languages from "../content/languages.json";
+import { useModelConfigs, useWhisper } from "@/hooks";
 
 /**
  * label: lang name
  * whisper: lang code
  * langauges object: label: code
  */
-// type langKeyT = keyof typeof languages;
+type langKeyT = keyof typeof languages;
 
-// const getCode = (label: langKeyT) => {
-//   for (const [key, code] of Object.entries(languages)) {
-//     if (key === label) {
-//       return code;
-//     }
-//   }
-//   return null;
-// };
-// const getName = (code: string) => {
-//   for (const [key, value] of Object.entries(languages)) {
-//     if (value === code) {
-//       return key;
-//     }
-//   }
-//   return null;
-// };
-// //======================================
-// export const SelectModel = () => {
-//   const whisperLang = useStore((state) => state.whisperLang);
-//   const setWhisperLang = useStore((state) => state.setWhisperLang);
-//   const [value, setValue] = React.useState<string | null>(getName(whisperLang));
-//   return (
-//     <Select
-//       placeholder="Recording Language"
-//       label="Recording Language"
-//       searchable
-//       data={Object.keys(languages)}
-//       rightSection={<IoChevronDown size="1rem" />}
-//       value={value}
-//       onChange={(langName: langKeyT) => {
-//         setValue(langName);
-//         const code = getCode(langName);
-//         code && setWhisperLang(code);
-//       }}
-//       dropdownPosition="bottom"
-//       className="mb-1"
-//     />
-//   );
-// };
+const getCode = (label: langKeyT) => {
+  for (const [key, code] of Object.entries(languages)) {
+    if (key === label) {
+      return code;
+    }
+  }
+  return null;
+};
+
+const getName = (code: string) => {
+  for (const [key, value] of Object.entries(languages)) {
+    if (value === code) {
+      return key;
+    }
+  }
+  return null;
+};
+//======================================
+export const SelectWhisperLanguage = () => {
+  const whisperLang = useWhisper((state) => state.whisperLang);
+  const setWhisperLang = useWhisper((state) => state.setWhisperLang);
+  const [value, setValue] = React.useState<string | null>(getName(whisperLang));
+  return (
+    <Select
+      label={<Text color="dimmed"> Recording Language</Text>}
+      searchable
+      data={Object.keys(languages)}
+      rightSection={<IoChevronDown size="1rem" />}
+      value={value}
+      onChange={(langName: langKeyT) => {
+        setValue(langName);
+        const code = getCode(langName);
+        code && setWhisperLang(code);
+      }}
+      dropdownPosition="bottom"
+      className="mb-1"
+    />
+  );
+};
 
 // //======================================
 // export const RecordingMode = () => {
@@ -194,14 +194,15 @@ export const Content = () => {
   return (
     <Paper className="h-full space-y-4 md:w-[200px] lg:w-[270px]">
       <div className="min-h-[400px] space-y-2">
-        <Divider label="Global Settings" labelPosition="center" />
+        <Divider label="Text Settings" labelPosition="center" />
         <Model />
         <Temperature />
         <OutputLength />
         <SystemInstruction />
-        {/* <Divider label="Recording Settings" labelPosition="center" />
-        <SelectModel />
-        <RecordingMode /> */}
+
+        <Divider label="Audio Settings" labelPosition="center" my="lg" />
+        <SelectWhisperLanguage />
+        {/* <RecordingMode /> */}
       </div>
     </Paper>
   );
