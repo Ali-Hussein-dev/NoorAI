@@ -23,7 +23,7 @@ const useFocus = (setFocus: UseFormSetFocus<{ promptText: string }>) => {
   React.useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleKeyDown = (e: any) => {
-      if (e.ctrlKey && e.key === "k") {
+      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
         e.preventDefault();
 
         setFocus("promptText", { shouldSelect: true });
