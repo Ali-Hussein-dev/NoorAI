@@ -208,12 +208,9 @@ const ChatPair = ({
         dir={dir.output}
       >
         <Avatar radius="xl">
-          <Text color="dimmed">N</Text>
+          <Text>N</Text>
         </Avatar>
-        <div
-          onClick={() => clipboard.copy(content)}
-          className="grow cursor-default"
-        >
+        <div className="grow">
           <Markdown content={content} />
         </div>
         <ActionIcon
