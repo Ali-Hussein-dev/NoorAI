@@ -1,9 +1,8 @@
 import { useRouter } from "next/router";
-import { BsCheckSquare, BsStars, BsStopFill } from "react-icons/bs";
+import { BsCheckSquare, BsStars } from "react-icons/bs";
 import ReactMarkdown from "react-markdown";
 import { MdDelete, MdOutlineContentCopy } from "react-icons/md";
 import { HiPlus } from "react-icons/hi";
-import { TbReload } from "react-icons/tb";
 import {
   ActionIcon,
   Avatar,
@@ -21,12 +20,7 @@ import * as React from "react";
 import { FiEdit3 } from "react-icons/fi";
 import { franc } from "franc";
 import { useSession } from "next-auth/react";
-import {
-  useStore,
-  type ConversationT,
-  useRegenerate,
-  useFetchForm,
-} from "@/hooks";
+import { useStore, type ConversationT, useFetchForm } from "@/hooks";
 import { Whatsnew, Markdown, TemplateEditor } from "@/components";
 
 export const ThreadContainer = () => {
