@@ -16,6 +16,7 @@ interface RequiredParams {
    * fetch options
    */
   options: RequestInit;
+  onAbort: () => void;
 }
 
 type FetcherParams = RequiredParams &
@@ -27,9 +28,14 @@ type FetcherParams = RequiredParams &
         stream: true;
       } & ConditionalParams)
   );
+const decoder = new TextDecoder();
+
+function decodeAIStream(chunk?: Uint8Array): string {
+  return decoder.decode(chunk);
+}
 
 export const fetcher = async (params: FetcherParams) => {
-  const { url, options, stream } = params;
+  const { url, options, stream, onAbort } = params;
   const res = await fetch(url, options);
   if (stream) {
     const { onStream, onStreamFinished } = params;
@@ -39,20 +45,20 @@ export const fetcher = async (params: FetcherParams) => {
       return;
     }
     const reader = data.getReader();
-    const decoder = new TextDecoder("utf-8");
     let done = false;
     // streaming...
     while (!done) {
       try {
         const { value, done: doneReading } = await reader.read();
         done = doneReading;
-        const chunkValue = decoder.decode(value);
+        const chunkValue = decodeAIStream(value);
         if (chunkValue) {
           onStream(chunkValue);
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: unknown | any) {
         if (error?.name === "AbortError") {
+          onAbort();
           console.log("Stream stopped by user");
         } else {
           console.error("Error in reading stream:", error);

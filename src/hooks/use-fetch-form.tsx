@@ -61,13 +61,13 @@ export const useFetchForm = (param?: { promptText: string }) => {
     null
   );
   const { data: sessionData } = useSession();
-  const stopStreaming = () => {
+  const stopStreaming = React.useCallback(() => {
     if (controller) {
       controller.abort();
       setController(null);
       updateStatus("success");
     }
-  };
+  }, [controller, updateStatus]);
   const fetchingManager = async (input: string) => {
     updateStatus("loading");
     reset({ promptText: "" });
@@ -116,6 +116,10 @@ export const useFetchForm = (param?: { promptText: string }) => {
         signal: abortController.signal,
         body: JSON.stringify(body),
         method: "POST",
+      },
+      onAbort() {
+        setController(null);
+        updateStatus("success");
       },
       stream: true,
       onStream(chunkValue) {
