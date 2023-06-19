@@ -7,6 +7,8 @@ import {
   useFetchFormCtx,
   useMarkedPrompts,
   useStore,
+  useRegenerate,
+  ConversationT,
 } from "../hooks";
 import { BsCommand, BsStopFill } from "react-icons/bs";
 import { PromptBuilder, Mic } from ".";
@@ -17,6 +19,8 @@ import {
   type UseFormSetValue,
 } from "react-hook-form";
 import { useClickOutside, useMediaQuery } from "@mantine/hooks";
+import { TbReload } from "react-icons/tb";
+import { useRouter } from "next/router";
 
 //-----------------------------------------------------useFocus
 const useFocus = (setFocus: UseFormSetFocus<{ promptText: string }>) => {
@@ -101,11 +105,36 @@ export const PromptArea = () => {
   }, [updateStatus]);
   const { ref, promptsSuggestions, onPromptSuggestionSelect, promptText } =
     useSuggestions({ control, setValue });
-
+  const status = useStore((s) => s.status);
+  const { query } = useRouter();
+  const conversation = useStore((s) =>
+    s.conversations.find((o) => o.id === query.chatId)
+  ) as ConversationT;
+  const thread = conversation?.thread || [];
+  const { regenerate } = useRegenerate();
   const isMobile = useMediaQuery("(max-width: 640px)");
 
   return (
     <div className="mx-auto mb-2 w-full max-w-3xl shadow-lg md:mb-8" ref={ref}>
+      {thread.length > 0 && (
+        <div className="mx-auto max-w-fit pb-2">
+          <Button
+            leftIcon={
+              status == "loading" ? (
+                <BsStopFill className="text-red-700" />
+              ) : (
+                <TbReload />
+              )
+            }
+            variant="default"
+            type="button"
+            onClick={status === "loading" ? stopStreaming : regenerate}
+            className="shadow"
+          >
+            {status === "loading" ? "Stop" : "Regenerate"}
+          </Button>
+        </div>
+      )}
       <Popover
         width="target"
         position="top"
@@ -126,13 +155,7 @@ export const PromptArea = () => {
               styles={{ icon: { pointerEvents: "all" } }}
               icon={
                 <div className="flex h-full flex-col items-center justify-end p-2 pb-3">
-                  {queryStatus === "loading" ? (
-                    <ActionIcon type="button" onClick={stopStreaming}>
-                      <BsStopFill className="z-10 text-red-700" size="20" />
-                    </ActionIcon>
-                  ) : (
-                    <PromptBuilder setValue={setValue} />
-                  )}
+                  <PromptBuilder setValue={setValue} />
                 </div>
               }
               rightSectionWidth="auto"

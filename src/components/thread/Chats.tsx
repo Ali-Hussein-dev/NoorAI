@@ -231,15 +231,13 @@ const ChatPair = ({
 };
 //======================================
 export const Chats = () => {
-  const status = useStore((s) => s.status);
   const { query } = useRouter();
   const conversation = useStore((s) =>
     s.conversations.find((o) => o.id === query.chatId)
   ) as ConversationT;
-  const { regenerate } = useRegenerate();
   const thread = conversation?.thread || [];
   return (
-    <section className="w-full pb-5">
+    <section className="w-full pb-20">
       <ThreadContainer />
       <div className="gap-4 flex-col-center">
         {thread.map((o, i) => (
@@ -251,19 +249,6 @@ export const Chats = () => {
             conversationId={conversation.id}
           />
         ))}
-        {thread.length > 0 && (
-          <Button
-            leftIcon={status == "loading" ? <BsStopFill /> : <TbReload />}
-            variant="default"
-            type="button"
-            onClick={() => {
-              const lastPrompt = thread.at(-1)?.input;
-              lastPrompt && regenerate(lastPrompt);
-            }}
-          >
-            {status === "loading" ? "Stop" : "Regenerate"}
-          </Button>
-        )}
       </div>
     </section>
   );

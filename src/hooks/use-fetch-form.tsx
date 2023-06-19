@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useAudio, useModelConfigs, useStore } from ".";
+import { ConversationT, useAudio, useModelConfigs, useStore } from ".";
 import { useRouter } from "next/router";
 import React from "react";
 import { notifications } from "@mantine/notifications";
@@ -12,11 +12,19 @@ interface FormData {
 export const useRegenerate = () => {
   const drop = useStore((s) => s.dropLastTheardElement);
   const { query } = useRouter();
+
+  const conversation = useStore((s) =>
+    s.conversations.find((o) => o.id === query.chatId)
+  ) as ConversationT;
+  const thread = conversation?.thread || [];
   const { onSubmit, stopStreaming } = useFetchForm();
-  const regenerate = (lastPrompt: string) => {
+
+  const regenerate = () => {
+    const lastPrompt = thread.at(-1)?.input;
+
     drop(query.chatId as string);
     useStore.persist.rehydrate();
-    onSubmit({ promptText: lastPrompt });
+    lastPrompt && onSubmit({ promptText: lastPrompt });
   };
   return { regenerate, stopStreaming };
 };
