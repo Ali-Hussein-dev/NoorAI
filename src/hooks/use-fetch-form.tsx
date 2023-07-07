@@ -96,6 +96,7 @@ export const useFetchForm = (param?: { promptText: string }) => {
 
     const body = {
       messages: [
+        { role: "assistant", content: systemInstruction },
         ...messagesHistory,
         {
           role: "user",
@@ -117,13 +118,17 @@ export const useFetchForm = (param?: { promptText: string }) => {
     const conversationIndex = conversations.findIndex(
       (o) => o.id === conversationId
     );
+    const url = template ? "api/openai-stream" : `api/chains/${userId}`;
     // fetching...
     await fetcher({
-      url: "api/openai-stream",
+      url: url, // "api/openai-stream",
       options: {
         signal: abortController.signal,
         body: JSON.stringify(body),
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
       },
       onAbort() {
         setController(null);

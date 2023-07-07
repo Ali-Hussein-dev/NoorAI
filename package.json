@@ -47,6 +47,7 @@
     "eventsource-parser": "^1.0.0",
     "franc": "^6.1.0",
     "immer": "^9.0.19",
+    "langchain": "^0.0.91",
     "next": "^13.4.4",
     "next-auth": "^4.20.1",
     "next-multiparty": "^0.7.0",
