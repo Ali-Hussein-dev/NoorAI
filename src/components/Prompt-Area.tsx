@@ -1,4 +1,11 @@
-import { ActionIcon, Textarea, Loader, Popover, Button } from "@mantine/core";
+import {
+  ActionIcon,
+  Textarea,
+  Loader,
+  Popover,
+  Button,
+  Tooltip,
+} from "@mantine/core";
 import * as React from "react";
 import { MdSend } from "react-icons/md";
 import { TiStarOutline } from "react-icons/ti";
@@ -116,25 +123,6 @@ export const PromptArea = () => {
 
   return (
     <div className="mx-auto mb-2 w-full max-w-3xl shadow-lg md:mb-8" ref={ref}>
-      {thread.length > 0 && (
-        <div className="mx-auto max-w-fit pb-2">
-          <Button
-            leftIcon={
-              status == "loading" ? (
-                <BsStopFill className="text-red-700" />
-              ) : (
-                <TbReload />
-              )
-            }
-            variant="default"
-            type="button"
-            onClick={status === "loading" ? stopStreaming : regenerate}
-            className="shadow"
-          >
-            {status === "loading" ? "Stop" : "Regenerate"}
-          </Button>
-        </div>
-      )}
       <Popover
         width="target"
         position="top"
@@ -153,11 +141,34 @@ export const PromptArea = () => {
               size="lg"
               onKeyDown={queryStatus === "loading" ? undefined : onKeyPress}
               styles={{ icon: { pointerEvents: "all" } }}
-              // icon={
-              //   <div className="flex h-full flex-col items-center justify-end p-2 pb-3">
-              //     <PromptBuilder setValue={setValue} />
-              //   </div>
-              // }
+              icon={
+                thread.length > 0 ? (
+                  <div className="flex h-full flex-col items-center justify-end p-2 pb-2">
+                    <Tooltip
+                      label={
+                        status === "loading"
+                          ? "Stop streaming"
+                          : "Regenerate response"
+                      }
+                      position="right"
+                      withArrow
+                    >
+                      <ActionIcon
+                        onClick={
+                          status === "loading" ? stopStreaming : regenerate
+                        }
+                        size="lg"
+                      >
+                        {status == "loading" ? (
+                          <BsStopFill className="text-red-700" />
+                        ) : (
+                          <TbReload />
+                        )}
+                      </ActionIcon>
+                    </Tooltip>
+                  </div>
+                ) : undefined
+              }
               rightSectionWidth="auto"
               rightSection={
                 <div className="flex h-full flex-col items-center justify-end p-2 pb-3">
