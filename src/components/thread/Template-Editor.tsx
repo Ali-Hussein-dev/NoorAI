@@ -3,11 +3,13 @@ import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import TextAlign from "@tiptap/extension-text-align";
 import Placeholder from "@tiptap/extension-placeholder";
-import { Button, Text } from "@mantine/core";
+import { Button, Modal, Text } from "@mantine/core";
 import { useStore } from "@/hooks";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { notifications } from "@mantine/notifications";
+import { useDisclosure } from "@mantine/hooks";
+import { FiEdit3 } from "react-icons/fi";
 
 const RichtEditor = () => {
   const { query } = useRouter();
@@ -110,22 +112,26 @@ const RichtEditor = () => {
   );
 };
 export const TemplateEditor = () => {
+  const [opened, { open, close }] = useDisclosure(false);
   return (
-    <div className="prose max-w-full">
-      <RichtEditor />
-      <div className="p-1">
-        <Text fw="700">When to use it?</Text>
-        <Text color="dimmed">
-          The rule of thumb is to use it when you have prompts that you use
-          FREQUENTLY, such as Generate YouTube title about [topic], act as
-          dictionary, email replier ...etc. It is not expected to ask follow-up
-          questions because the model reads only the last message you send.
-        </Text>
-        <Text color="dimmed">
-          I am very excited about it, if you have any question feel free to send
-          me a DM on Twitter. Best, Ali
-        </Text>
-      </div>
-    </div>
+    <>
+      <Modal opened={opened} onClose={close} title="Template Editor" size="lg">
+        <RichtEditor />
+        <div className="p-1">
+          <Text fw="700">When to use it?</Text>
+          <Text color="dimmed">
+            The rule of thumb is to use it when you have prompts that you use
+            FREQUENTLY such as &quot;generate YouTube title about
+            something&quot;, &quot;act as dictionary&quot;...etc.
+            <br />
+            It is not expected to ask follow-up questions because the language
+            model reads only the last message you send.
+          </Text>
+        </div>
+      </Modal>
+      <Button onClick={open} leftIcon={<FiEdit3 />} variant="default">
+        Create Template
+      </Button>
+    </>
   );
 };

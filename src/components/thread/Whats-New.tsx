@@ -1,4 +1,4 @@
-import { Divider, Text, Button } from "@mantine/core";
+import { Divider, Text, Button, Title } from "@mantine/core";
 import * as React from "react";
 import { BsGithub, BsTwitter } from "react-icons/bs";
 import { useStoreCtx } from "@/context/store-ctx";
@@ -23,10 +23,10 @@ const cta = [
 //======================================
 export const CallToActions = () => {
   return (
-    <div className="gap-2 flex-row-start">
+    <div className="flex flex-wrap items-center justify-center gap-2 md:justify-start">
       {cta.map((o, i) => (
         <a key={i} href={o.href} target="_blank">
-          <Button key={i} leftIcon={o.icon} variant="default">
+          <Button key={i} leftIcon={o.icon} variant="default" size="sm">
             {o.label}
           </Button>
         </a>
@@ -39,6 +39,9 @@ export const Whatsnew = () => {
   const store = useStoreCtx();
   return store.whatsnew?.length || 0 > 0 ? (
     <div className="w-full">
+      <Title order={2} mb="sm">
+        What{"'"}s New
+      </Title>
       <div className="space-y-3">
         {store.whatsnew?.map((o, i) => (
           <div key={i}>
@@ -53,12 +56,6 @@ export const Whatsnew = () => {
           </div>
         ))}
       </div>
-      {/* <Divider my="sm" />
-      <div>
-        <Text size="lg">
-          <b>+100 prompts in library</b>
-        </Text>
-      </div> */}
       <Divider my="sm" />
       <CallToActions />
     </div>

@@ -12,7 +12,7 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import * as React from "react";
-import { HiCursorClick } from "react-icons/hi";
+import { LuBuilding2 } from "react-icons/lu";
 import { usePromptBuilder } from "@/hooks";
 // import { useMediaQuery } from "@mantine/hooks";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
@@ -276,11 +276,9 @@ export const PromptBuilder = <T,>({ setValue }: { setValue: T }) => {
           </div>
         </div>
       </Modal>
-      <Tooltip label="Prompt builder" withArrow position="right">
-        <ActionIcon onClick={open}>
-          <HiCursorClick />
-        </ActionIcon>
-      </Tooltip>
+      <Button leftIcon={<LuBuilding2 />} onClick={open} variant="default">
+        Prompt Builder
+      </Button>
     </>
   );
 };
