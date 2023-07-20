@@ -11,7 +11,7 @@ import {
   ConversationT,
 } from "../hooks";
 import { BsCommand, BsStopFill } from "react-icons/bs";
-import { PromptBuilder, Mic } from ".";
+import { Mic } from ".";
 import {
   useWatch,
   type UseFormSetFocus,
@@ -153,11 +153,11 @@ export const PromptArea = () => {
               size="lg"
               onKeyDown={queryStatus === "loading" ? undefined : onKeyPress}
               styles={{ icon: { pointerEvents: "all" } }}
-              icon={
-                <div className="flex h-full flex-col items-center justify-end p-2 pb-3">
-                  <PromptBuilder setValue={setValue} />
-                </div>
-              }
+              // icon={
+              //   <div className="flex h-full flex-col items-center justify-end p-2 pb-3">
+              //     <PromptBuilder setValue={setValue} />
+              //   </div>
+              // }
               rightSectionWidth="auto"
               rightSection={
                 <div className="flex h-full flex-col items-center justify-end p-2 pb-3">

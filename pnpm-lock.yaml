@@ -58,11 +58,11 @@ specifiers:
   react: 18.2.0
   react-dom: 18.2.0
   react-hook-form: ^7.43.5
-  react-icons: ^4.8.0
+  react-icons: ^4.10.1
   react-markdown: ^8.0.5
   remark-gfm: ^3.0.1
   superjson: 1.9.1
-  tailwind-custom-utilities: ^1.0.2
+  tailwind-custom-utilities: ^1.0.3
   tailwindcss: ^3.2.0
   typescript: ^4.9.5
   zod: ^3.20.6
@@ -110,7 +110,7 @@ dependencies:
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-hook-form: 7.43.9_react@18.2.0
-  react-icons: 4.8.0_react@18.2.0
+  react-icons: 4.10.1_react@18.2.0
   react-markdown: 8.0.7_yuz6bkerhkjfjuf6zeb7j6ybc4
   remark-gfm: 3.0.1
   superjson: 1.9.1
@@ -134,7 +134,7 @@ devDependencies:
   postcss: 8.4.21
   prettier: 2.8.7
   prettier-plugin-tailwindcss: 0.2.7_prettier@2.8.7
-  tailwind-custom-utilities: 1.0.2
+  tailwind-custom-utilities: 1.0.3
   tailwindcss: 3.3.1_postcss@8.4.21
   typescript: 4.9.5
 
@@ -5014,8 +5014,8 @@ packages:
       react: 18.2.0
     dev: false
 
-  /react-icons/4.8.0_react@18.2.0:
-    resolution: {integrity: sha512-N6+kOLcihDiAnj5Czu637waJqSnwlMNROzVZMhfX68V/9bu9qHaMIJC4UdozWoOk57gahFCNHwVvWzm0MTzRjg==}
+  /react-icons/4.10.1_react@18.2.0:
+    resolution: {integrity: sha512-/ngzDP/77tlCfqthiiGNZeYFACw85fUjZtLbedmJ5DTlNDIwETxhwBzdOJ21zj4iJdvc0J3y7yOsX3PpxAJzrw==}
     peerDependencies:
       react: '*'
     dependencies:
@@ -5593,8 +5593,8 @@ packages:
     resolution: {integrity: sha512-4kl5w+nCB44EVRdO0g/UGoOp3vlwgycUVtkk/7DPyeLZUCuNFFKCFG6/t/DgHLrUPHjrZg6s5tNm+56Q2B0xyg==}
     dev: false
 
-  /tailwind-custom-utilities/1.0.2:
-    resolution: {integrity: sha512-Zl0VXqdXJwv72cqZprbQJx81gkeSIu6qiji+yaW2YEHIt8DO72CNv/lkOTqbhSTSt9V3ZCYjjFTgAaHGpQpnLQ==}
+  /tailwind-custom-utilities/1.0.3:
+    resolution: {integrity: sha512-efEyvyT6azTwS4/D4cd2zAwDJ6JoyCtN7wqvXqayp4Fv9l9ofqpK4hm3E2hhadfm1C4Em602ZZ8fUWKrwNUq9w==}
     dev: true
 
   /tailwindcss/3.3.1_postcss@8.4.21:

@@ -1,8 +1,7 @@
 import { useRouter } from "next/router";
-import { BsCheckSquare, BsStars } from "react-icons/bs";
+import { BsCheckSquare } from "react-icons/bs";
 import ReactMarkdown from "react-markdown";
 import { MdDelete, MdOutlineContentCopy } from "react-icons/md";
-import { HiPlus } from "react-icons/hi";
 import {
   ActionIcon,
   Avatar,
@@ -13,51 +12,29 @@ import {
   Button,
   Textarea,
   Spoiler,
-  Accordion,
 } from "@mantine/core";
 import { useClipboard } from "@mantine/hooks";
 import * as React from "react";
 import { FiEdit3 } from "react-icons/fi";
 import { franc } from "franc";
 import { useSession } from "next-auth/react";
-import { useStore, type ConversationT, useFetchForm } from "@/hooks";
-import { Whatsnew, Markdown, TemplateEditor } from "@/components";
+import {
+  useStore,
+  type ConversationT,
+  useFetchForm,
+  useFetchFormCtx,
+} from "@/hooks";
+import { Markdown, TemplateEditor, PromptBuilder } from "@/components";
 
 export const ThreadContainer = () => {
-  const list = [
-    {
-      value: "What's New",
-      icon: <BsStars />,
-      comp: <Whatsnew />,
-    },
-    {
-      value: "Template Editor (Expermintal)",
-      icon: <FiEdit3 />,
-      comp: <TemplateEditor />,
-    },
-  ];
-  const { query } = useRouter();
+  const {
+    methods: { setValue },
+  } = useFetchFormCtx();
   return (
-    <Accordion
-      defaultValue="whatsnew"
-      className="pb-12"
-      variant="filled"
-      transitionDuration={500}
-      key={query.chatId as string}
-    >
-      {list.map((o, i) => (
-        <Accordion.Item key={i} value={o.value} className="border-none">
-          <Accordion.Control
-            chevron={<HiPlus size="1rem" />}
-            icon={o.icon}
-            className="text-xl"
-          >
-            {o.value}
-          </Accordion.Control>
-          <Accordion.Panel>{o.comp}</Accordion.Panel>
-        </Accordion.Item>
-      ))}
-    </Accordion>
+    <div className="mb-2 flex-wrap gap-1 border-zinc-800 pb-1 flex-row-center sm:mx-2 sm:gap-4">
+      <PromptBuilder setValue={setValue} />
+      <TemplateEditor />
+    </div>
   );
 };
 
@@ -223,6 +200,7 @@ const ChatPair = ({
     </div>
   );
 };
+
 //======================================
 export const Chats = () => {
   const { query } = useRouter();
@@ -231,9 +209,11 @@ export const Chats = () => {
   ) as ConversationT;
   const thread = conversation?.thread || [];
   return (
-    <section className="w-full pb-20">
+    <section
+      className={`h-full w-full ${thread.length < 1 ? "flex-col-center" : ""}`}
+    >
       <ThreadContainer />
-      <div className="gap-4 flex-col-center">
+      <div className="gap-4 pb-20 flex-col-center">
         {thread.map((o, i) => (
           <ChatPair
             key={o.input + i}
