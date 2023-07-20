@@ -6,7 +6,6 @@ import {
   Paper,
   TypographyStylesProvider,
   clsx,
-  Anchor,
   Burger,
   MediaQuery,
 } from "@mantine/core";
