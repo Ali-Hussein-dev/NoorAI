@@ -1,4 +1,4 @@
-import { Divider, Text, Button } from "@mantine/core";
+import { Divider, Text, Button, Title } from "@mantine/core";
 import * as React from "react";
 import { BsGithub, BsTwitter } from "react-icons/bs";
 import { useStoreCtx } from "@/context/store-ctx";
@@ -39,6 +39,9 @@ export const Whatsnew = () => {
   const store = useStoreCtx();
   return store.whatsnew?.length || 0 > 0 ? (
     <div className="w-full">
+      <Title order={2} mb="sm">
+        What{"'"}s New
+      </Title>
       <div className="space-y-3">
         {store.whatsnew?.map((o, i) => (
           <div key={i}>
