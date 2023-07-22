@@ -276,7 +276,12 @@ export const PromptBuilder = <T,>({ setValue }: { setValue: T }) => {
           </div>
         </div>
       </Modal>
-      <Button leftIcon={<LuBuilding2 />} onClick={open} variant="default">
+      <Button
+        leftIcon={<LuBuilding2 />}
+        onClick={open}
+        variant="default"
+        size="lg"
+      >
         Prompt Builder
       </Button>
     </>

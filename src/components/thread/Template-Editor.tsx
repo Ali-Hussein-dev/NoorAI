@@ -129,7 +129,7 @@ export const TemplateEditor = () => {
           </Text>
         </div>
       </Modal>
-      <Button onClick={open} leftIcon={<FiEdit3 />} variant="default">
+      <Button onClick={open} leftIcon={<FiEdit3 />} variant="default" size="lg">
         Create Template
       </Button>
     </>

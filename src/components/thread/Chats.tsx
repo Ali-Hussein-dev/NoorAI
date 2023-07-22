@@ -31,7 +31,7 @@ export const ThreadContainer = () => {
     methods: { setValue },
   } = useFetchFormCtx();
   return (
-    <div className="mb-2 flex-wrap gap-1 border-zinc-800 pb-1 flex-row-center sm:mx-2 sm:gap-4">
+    <div className="mb-2 flex-wrap gap-4 border-zinc-800 pb-1 flex-row-center sm:mx-2 sm:gap-5">
       <PromptBuilder setValue={setValue} />
       <TemplateEditor />
     </div>
