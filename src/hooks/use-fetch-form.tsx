@@ -117,9 +117,15 @@ export const useFetchForm = (param?: { promptText: string }) => {
     const conversationIndex = conversations.findIndex(
       (o) => o.id === conversationId
     );
+    const urls = {
+      langchain: "api/langchain",
+      cohere: "api/cohere",
+      hf: "api/hf",
+      openai: "api/openai",
+    };
     // fetching...
     await fetcher({
-      url: "api/openai-stream",
+      url: urls.hf,
       options: {
         signal: abortController.signal,
         body: JSON.stringify(body),
