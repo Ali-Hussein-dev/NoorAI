@@ -19,7 +19,12 @@ const server = z.object({
   ),
   // Add `.min(1) on ID and SECRET if you want to make sure they're not empty
   OPENAI_API_KEY: z.string().min(1),
-  // OPENAI_API_ORG: z.string().min(1),
+  // cohere
+  COHERE_API_KEY: z.string(),
+  // huggingface
+  HF_API_KEY: z.string(),
+  // anthropic
+  ANTHROPIC_API_KEY: z.string(),
 
   GOOGLE_CLIENT_ID: z.string().min(1),
   GOOGLE_CLIENT_SECRET: z.string().min(1),
@@ -52,9 +57,16 @@ const processEnv = {
   NODE_ENV: process.env.NODE_ENV,
   NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
   NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+  //---------------------------------------------------
   // openai
   OPENAI_API_KEY: process.env.OPENAI_API_KEY,
-  // OPENAI_API_ORG: process.env.OPENAI_API_ORG,
+  // cohere
+  COHERE_API_KEY: process.env.COHERE_API_KEY,
+  // huggingface
+  HF_API_KEY: process.env.HF_API_KEY,
+  // anthropic
+  ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY,
+  //---------------------------------------------------
   // google
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
