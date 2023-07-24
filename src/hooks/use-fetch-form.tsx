@@ -51,10 +51,11 @@ export const useFetchForm = (param?: { promptText: string }) => {
   const { reset } = methods;
   const conversationId = query.chatId as string;
   const conversations = useStore((s) => s.conversations);
+  const url = useModelConfigs((s) => s.url);
   const push = useStore((s) => s.push);
   const updateStatus = useStore((s) => s.updateStatus);
 
-  const { temperature, max_tokens } = useModelConfigs((s) => s.configs);
+  const { temperature, max_tokens, model } = useModelConfigs((s) => s.configs);
   const systemInstruction = useModelConfigs((s) => s.systemInstruction);
 
   const conversation = conversations.find((o) => o.id === conversationId) || {
@@ -106,6 +107,7 @@ export const useFetchForm = (param?: { promptText: string }) => {
       configs: {
         max_tokens,
         temperature,
+        model,
       },
       systemInstruction,
     };
@@ -117,15 +119,9 @@ export const useFetchForm = (param?: { promptText: string }) => {
     const conversationIndex = conversations.findIndex(
       (o) => o.id === conversationId
     );
-    const urls = {
-      langchain: "api/langchain",
-      cohere: "api/cohere",
-      hf: "api/hf",
-      openai: "api/openai",
-    };
     // fetching...
     await fetcher({
-      url: urls.hf,
+      url,
       options: {
         signal: abortController.signal,
         body: JSON.stringify(body),

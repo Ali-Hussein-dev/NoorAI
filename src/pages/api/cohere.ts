@@ -10,7 +10,7 @@ async function cohereHandler(req: Request) {
   const prompt = messages.at(-1).content;
   const body = JSON.stringify({
     prompt,
-    model: "command-nightly",
+    model: configs.model,
     max_tokens: 300,
     stop_sequences: [],
     return_likelihoods: "NONE",

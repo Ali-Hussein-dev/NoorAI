@@ -13,11 +13,11 @@ async function openaiHandler(req: Request) {
     messages,
     configs,
     systemInstruction = "",
-    template,
+    template = "",
   } = await req.json();
   const response = await openai.createChatCompletion({
-    model: "gpt-4",
     stream: true,
+    ...configs,
     messages: [
       {
         role: "system",
@@ -26,7 +26,6 @@ async function openaiHandler(req: Request) {
       },
       ...messages,
     ],
-    ...configs,
   });
   // Transform the response into a readable stream
   const stream = OpenAIStream(response);

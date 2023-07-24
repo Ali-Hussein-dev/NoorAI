@@ -11,21 +11,20 @@ export const runtime = "edge";
 
 async function hfHandler(req: Request) {
   // Extract the `messages`,`model` from the body of the request
-  const { messages, model = "OpenAssistant/oasst-sft-4-pythia-12b-epoch-3.5" } =
-    await req.json();
-  console.info(req.url);
+  const { messages, configs } = await req.json();
   // Initialize a text-generation stream using the Hugging Face Inference SDK
   const response = Hf.textGenerationStream({
-    model,
+    model: configs.model,
     inputs: experimental_buildOpenAssistantPrompt(messages),
     // inputs: messages.at(-1).content,
     parameters: {
-      max_new_tokens: 200,
+      max_new_tokens: configs.max_tokens,
+      temperature: configs.temperature,
       // @ts-expect-error (this is a valid parameter specifically in OpenAssistant models)
       typical_p: 0.2,
       repetition_penalty: 1,
       truncate: 1000,
-      return_full_text: false,
+      return_full_text: true,
     },
   });
 
