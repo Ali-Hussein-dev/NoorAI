@@ -11,12 +11,16 @@ export const runtime = "edge";
 
 async function hfHandler(req: Request) {
   // Extract the `messages`,`model` from the body of the request
-  const { messages, configs } = await req.json();
+  const { messages, configs, template = "" } = await req.json();
   // Initialize a text-generation stream using the Hugging Face Inference SDK
+  const prompt = template
+    ? experimental_buildOpenAssistantPrompt([
+        { content: template, role: "user" },
+      ])
+    : experimental_buildOpenAssistantPrompt(messages);
   const response = Hf.textGenerationStream({
     model: configs.model,
-    inputs: experimental_buildOpenAssistantPrompt(messages),
-    // inputs: messages.at(-1).content,
+    inputs: prompt,
     parameters: {
       max_new_tokens: configs.max_tokens,
       temperature: configs.temperature,

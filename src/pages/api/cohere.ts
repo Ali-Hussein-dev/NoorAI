@@ -6,8 +6,16 @@ export const runtime = "edge";
 
 async function cohereHandler(req: Request) {
   // Extract the `prompt` from the body of the request
-  const { messages, configs } = await req.json();
-  const prompt = messages.at(-1).content;
+  const {
+    messages,
+    configs,
+    template = "",
+    systemInstruction,
+  } = await req.json();
+  const prompt = template
+    ? template
+    : `${systemInstruction}\n ${messages.at(-1).content}`;
+
   const body = JSON.stringify({
     prompt,
     model: configs.model,
