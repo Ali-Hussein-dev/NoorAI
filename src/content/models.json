@@ -1,0 +1,32 @@
+[
+  {
+    "url": "api/openai",
+    "provider": "OpenAI",
+    "model": "GPT-3 Turbo",
+    "modelId": "gpt-3.5-turbo"
+  },
+  {
+    "url": "api/openai",
+    "provider": "OpenAI",
+    "model": "Curie",
+    "modelId": "text-curie-001"
+  },
+  {
+    "url": "api/hf",
+    "provider": "OpenAssistant",
+    "model": "Oasst-sft-4-pythia-12b-epoch",
+    "modelId": "OpenAssistant/oasst-sft-4-pythia-12b-epoch-3.5"
+  },
+  {
+    "url": "api/cohere",
+    "provider": "Cohere",
+    "model": "command-medium-nightly",
+    "modelId": "command-medium-nightly"
+  },
+  {
+    "url": "api/cohere",
+    "provider": "Cohere",
+    "model": "command-xlarge-nightly",
+    "modelId": "command-xlarge-nightly"
+  }
+]

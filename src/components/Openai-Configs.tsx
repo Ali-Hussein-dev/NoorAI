@@ -9,7 +9,6 @@ import {
   Slider,
   NumberInput,
   Textarea,
-  TextInput,
 } from "@mantine/core";
 import * as React from "react";
 import { RiSettings3Line } from "react-icons/ri";
@@ -17,6 +16,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { IoChevronDown } from "react-icons/io5";
 import languages from "../content/languages.json";
 import { useModelConfigs, useWhisper } from "@/hooks";
+import models from "../content/models.json";
 
 /**
  * label: lang name
@@ -176,14 +176,21 @@ const SystemInstruction = () => {
 
 const Model = () => {
   const model = useModelConfigs((state) => state.configs.model);
-
+  const setModel = useModelConfigs((state) => state.setModel);
   return (
-    <TextInput
+    <Select
       value={model}
-      disabled
+      data={models.map((o) => ({
+        value: o.modelId,
+        label: o.model,
+        group: o.provider,
+      }))}
+      onChange={(model: string) => {
+        setModel(model);
+      }}
       label={
         <Text color="dimmed" ml={2}>
-          Model used
+          Model
         </Text>
       }
     />
@@ -191,19 +198,24 @@ const Model = () => {
 };
 //======================================
 export const Content = () => {
+  const url = useModelConfigs((state) => state.url);
   return (
-    <Paper className="h-full space-y-4 md:w-[200px] lg:w-[270px]">
-      <div className="min-h-[400px] space-y-2">
-        <Divider label="Text Settings" labelPosition="center" />
-        <Model />
-        <Temperature />
-        <OutputLength />
-        <SystemInstruction />
+    <Paper className="h-full md:w-[200px] lg:w-[270px]">
+      {url}
+      <Divider label="Text Generation" labelPosition="center" />
+      <Model />
+      <Temperature />
+      <OutputLength />
+      <SystemInstruction />
 
-        <Divider label="Audio Settings" labelPosition="center" my="lg" />
-        <SelectWhisperLanguage />
-        {/* <RecordingMode /> */}
-      </div>
+      <Divider
+        label="Audio Generation"
+        labelPosition="center"
+        mb="xs"
+        mt="lg"
+      />
+      <SelectWhisperLanguage />
+      {/* <RecordingMode /> */}
     </Paper>
   );
 };

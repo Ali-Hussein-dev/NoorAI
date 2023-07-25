@@ -113,6 +113,11 @@ const RichtEditor = () => {
 };
 export const TemplateEditor = () => {
   const [opened, { open, close }] = useDisclosure(false);
+  const { query } = useRouter();
+  const chatId = query.chatId as string;
+  const template = useStore((s) =>
+    s.conversations.find((o) => o.id === chatId)
+  )?.template;
   return (
     <>
       <Modal opened={opened} onClose={close} title="Template Editor" size="lg">
@@ -130,7 +135,7 @@ export const TemplateEditor = () => {
         </div>
       </Modal>
       <Button onClick={open} leftIcon={<FiEdit3 />} variant="default" size="lg">
-        Create Template
+        {!!template ? "Edit" : "Create"} Template
       </Button>
     </>
   );
