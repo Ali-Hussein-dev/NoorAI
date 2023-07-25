@@ -198,10 +198,8 @@ const Model = () => {
 };
 //======================================
 export const Content = () => {
-  const url = useModelConfigs((state) => state.url);
   return (
     <Paper className="h-full md:w-[200px] lg:w-[270px]">
-      {url}
       <Divider label="Text Generation" labelPosition="center" />
       <Model />
       <Temperature />
