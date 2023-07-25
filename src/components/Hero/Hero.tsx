@@ -52,11 +52,11 @@ export const Hero = () => {
                 " pb-2 text-center text-4xl font-extrabold uppercase tracking-tight sm:text-4xl md:text-5xl"
               }
             >
-              Intuitive <br />
-              Transparent <br className="sm:hidden" /> Powerfull
+              Intuitive & Powerfull
             </h1>
+            <p className="text-center">Powered by</p>
             <p className="text-center text-lg text-zinc-400">
-              (expirmental project)
+              OpenAI, Cohere, OpenAsistant and more
             </p>
           </div>
           <Link
