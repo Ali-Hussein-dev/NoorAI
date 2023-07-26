@@ -24,7 +24,7 @@ async function openaiHandler(req: Request) {
 
         content: `${systemInstruction}\n`,
       },
-      template ? { role: "user", content: template } : null,
+      ...(template ? [{ role: "user", content: template }] : []),
       ...messages,
     ],
   });
