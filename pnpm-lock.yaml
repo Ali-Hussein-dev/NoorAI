@@ -39,7 +39,7 @@ specifiers:
   '@upstash/ratelimit': ^0.4.3
   '@upstash/redis': ^1.20.6
   '@vercel/analytics': ^0.1.11
-  ai: ^2.1.25
+  ai: ^2.2.28
   audiobuffer-to-wav: ^1.0.0
   autoprefixer: ^10.4.7
   eslint: ^8.34.0
@@ -103,7 +103,7 @@ dependencies:
   '@upstash/ratelimit': 0.4.3
   '@upstash/redis': 1.20.6
   '@vercel/analytics': 0.1.11_react@18.2.0
-  ai: 2.1.25_react@18.2.0
+  ai: 2.2.28_react@18.2.0
   audiobuffer-to-wav: 1.0.0
   eventsource-parser: 1.0.0
   franc: 6.1.0
@@ -1912,8 +1912,8 @@ packages:
       indent-string: 4.0.0
     dev: true
 
-  /ai/2.1.25_react@18.2.0:
-    resolution: {integrity: sha512-CPGD/auacetvHbwt9TsnktOtc32A4S/5LT9/W+f1nZz9N1W1V5/WDEcr2jTglLVmvh8mXXFwLbKT/t9erly+Bg==}
+  /ai/2.2.28_react@18.2.0:
+    resolution: {integrity: sha512-NUPwtXjIghlkhrR8x9nEnzpaKnWVhABe4XsSYIRbwWS1f9M8DxV413W+bpQ52iKkzputuraipHSyjnAtgU88cA==}
     engines: {node: '>=14.6'}
     peerDependencies:
       react: ^18.2.0
