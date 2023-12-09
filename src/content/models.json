@@ -3,7 +3,7 @@
     "url": "api/openai",
     "provider": "OpenAI",
     "model": "GPT-3 Turbo",
-    "modelId": "gpt-3.5-turbo"
+    "modelId": "gpt-3.5-turbo-1106"
   },
   {
     "url": "api/openai",

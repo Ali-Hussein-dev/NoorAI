@@ -25,7 +25,7 @@ export const useModelConfigs = create<ModelConfigsState>()(
     (set) => {
       return {
         configs: {
-          model: "gpt-3.5-turbo",
+          model: "gpt-3.5-turbo-1106",
           temperature: 0.7,
           max_tokens: 250,
         },
