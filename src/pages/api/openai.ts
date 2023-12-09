@@ -18,6 +18,7 @@ async function openaiHandler(req: Request) {
   const response = await openai.createChatCompletion({
     stream: true,
     ...configs,
+    model: "gpt-3.5-turbo-1106",
     messages: [
       {
         role: "system",
